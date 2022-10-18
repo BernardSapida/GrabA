@@ -6,6 +6,7 @@
         <title>Grab.A</title>
         <link rel="icon" href="{{ url('images/GRABA_G_GRAY.png') }}">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/dashboard.css') }}">
     </head>
     <body>
         <div id="app"></div>

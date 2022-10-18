@@ -46,9 +46,9 @@
                         <b-form-invalid-feedback>{{ err_materialCost }}</b-form-invalid-feedback>
                     </b-form-group>
                     <hr>
-                    <div class="d-grid pt-1 mb-3">
-                        <b-button type="submit" class="mb-2" variant="primary" size="sm">Add project</b-button>
-                        <b-button type="button" variant="outline-dark" size="sm" @click="hideModal('add-projectModal')">Close</b-button>
+                    <div class="d-flex align-items-end pt-1 mb-3">
+                        <b-button type="button" class="ml-auto mr-2" variant="outline-dark" size="sm" @click="hideModal('add-projectModal')">Close</b-button>
+                        <b-button type="submit" variant="primary" size="sm">Add project</b-button>
                     </div>
                 </b-form>
             </b-modal>
@@ -58,19 +58,18 @@
             <b-form-group
                 label="Search project"
                 label-for="filter-input"
-                label-cols-sm="3"
-                label-align-sm="right"
+                label-align-sm="left"
                 label-size="sm"
                 class="mb-3"
             >
-                  <b-input-group size="sm">
-                        <b-form-input
-                        id="filter-input"
-                        v-model="filter"
-                        type="search"
-                        placeholder="Type to Search"
-                        ></b-form-input>
-                  </b-input-group>
+                <b-input-group>
+                    <b-form-input
+                    id="filter-input"
+                    v-model="filter"
+                    type="search"
+                    placeholder="Type to Search"
+                    ></b-form-input>
+                </b-input-group>
             </b-form-group>
 
             <!-- Project Table -->
@@ -105,7 +104,6 @@
                         <b-form-input id="edit_projectName" v-model="projectName" :state="state_projectName" trim></b-form-input>
                         <b-form-invalid-feedback>{{ err_projectName }}</b-form-invalid-feedback>
                     </b-form-group>
-
                     <b-form-group
                         class="mb-3"
                         label="Site location"
@@ -115,7 +113,6 @@
                         <b-form-input id="edit_siteLocation" v-model="siteLocation" :state="state_siteLocation" trim></b-form-input>
                         <b-form-invalid-feedback>{{ err_siteLocation }}</b-form-invalid-feedback>
                     </b-form-group>
-
                     <b-form-group
                         class="mb-3"
                         label="Total Material Cost"
@@ -126,9 +123,9 @@
                         <b-form-invalid-feedback>{{ err_materialCost }}</b-form-invalid-feedback>
                     </b-form-group>
                     <hr>
-                    <div class="d-grid pt-1 mb-3">
-                        <b-button type="submit" class="mb-2" variant="primary" size="sm">Save changes</b-button>
-                        <b-button type="button" variant="outline-dark" size="sm" @click="hideModal('edit-projectModal')">Close</b-button>
+                    <div class="d-flex align-items-end pt-1 mb-3">
+                        <b-button type="button" class="ml-auto mr-2" variant="outline-dark" size="sm" @click="hideModal('edit-projectModal')">Close</b-button>
+                        <b-button type="submit" variant="primary" size="sm">Save changes</b-button>
                     </div>
                 </b-form>
             </b-modal>

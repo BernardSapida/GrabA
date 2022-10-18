@@ -3,6 +3,7 @@
     <div id="app">
         <Navigation />
         <section class="container my-5">
+            <b-button id="btn-newPost" class="rounded-circle" variant="primary">+</b-button>
             <div class="row justify-content-between g-2">
                 <div class="col-auto">
                     <b-form-group

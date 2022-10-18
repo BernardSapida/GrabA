@@ -13,7 +13,7 @@
                         <router-link class="nav-link" :to="{name: 'analytics', params: { id: 1 }}">Analytics</router-link>
                     </div>
                 </b-navbar-nav>
-                <b-navbar-nav class="me-right">
+                <b-navbar-nav class="ml-auto">
                     <b-nav-item @click="onLogout">Sign Out</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
