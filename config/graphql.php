@@ -94,9 +94,10 @@ return [
             // An array of middlewares, overrides the global ones
             'execution_middleware' => null,
         ],
-        'user' => [
+        'member' => [
             'query' => [
                 // ExampleQuery::class,
+                'getMember' => App\GraphQL\Queries\MemberQuery::class,
                 
             ],
             'mutation' => [
@@ -104,7 +105,7 @@ return [
             ],
 
             // Laravel HTTP middleware
-            'middleware' => ['auth:admin'],
+            'middleware' => ['auth:member'],
 
             // Which HTTP methods to support; must be given in UPPERCASE!
             'method' => ['GET', 'POST'],
@@ -129,6 +130,7 @@ return [
         // \Rebing\GraphQL\Support\UploadType::class,
         //types
         'ResponseFrontType' => App\GraphQL\Types\ResponseFrontType::class,
+        'MemberType' => App\GraphQL\Types\MemberType::class,
 
         //inputs
         'LoginInput' => App\GraphQL\InputObject\LoginInput::class,

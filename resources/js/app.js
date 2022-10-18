@@ -33,7 +33,32 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-   
+    if (to.matched.some((m) => m.meta.memberAuth === false)) {
+        console.log(store.state.member_api_token)
+        let member_is_authenthicated = store.state.member_api_token;
+
+        if (member_is_authenthicated) {
+            next('/projects');
+        }
+
+        next();
+        return;
+    }
+
+    if (to.matched.some((m) => m.meta.memberAuth === true)) {
+        var access_token = store.state.member_api_token;
+
+        if (access_token) {
+            next();
+        } 
+
+        if (access_token == '') {
+            next('/');
+        }
+
+        return;
+    }
+
     next();
     return;
 });

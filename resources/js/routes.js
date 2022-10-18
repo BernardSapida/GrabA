@@ -8,26 +8,31 @@ export default [
     {
         path: '/',
         name: 'signin',
-        component: Signin
+        component: Signin,
+        meta: { memberAuth: false },
     },
     {
         path: '/signup',
         name: 'signup',
-        component: Signup
+        component: Signup,
+        meta: { memberAuth: false },
     },
     {
         path: '/dashboard/:id',
         name: 'dashboard',
-        component: Dashboard
+        component: Dashboard,
+        meta: { memberAuth: true },
     },
     {
         path: '/projects',
         name: 'projects',
-        component: Projects
+        component: Projects,
+        meta: { memberAuth: true },
     },
     {
         path: '/analytics/:id',
         name: 'analytics',
-        component: Analytics
+        component: Analytics,
+        meta: { memberAuth: true },
     },
 ]

@@ -64,18 +64,20 @@ class Member extends Authenticatable
             if (Hash::check($password, $member->password)) {
                 $response_obj->error = false;
                 $response_obj->message = 'Valid Credentials.';
-                $response_obj->ym_badge = $helper->encryptValue(
-                    $member->id
-                );
+                $response_obj->token = $member->createToken(
+                    'Member Authentication'
+                )->accessToken;
+                $member->token = $response_obj->token;
+                $member->save();
             } else {
                 $response_obj->error = true;
                 $response_obj->message = 'Invalid Credentials.';
-                $response_obj->ym_badge = '';
+                $response_obj->token = '';
             }
         } else {
             $response_obj->error = true;
             $response_obj->message = 'Your account does not exist.';
-            $response_obj->ym_badge = '';
+            $response_obj->token = '';
         }
 
         return $response_obj;
@@ -149,10 +151,10 @@ class Member extends Authenticatable
         }
     }
 
-    public function getAdminMember()
+    public function getLoggedInMember()
     {
-        $members = self::all();
-        return $members;
+        $member = Auth::guard('member')->user();
+        return $member;
     }
 
     public function changePassword($password)

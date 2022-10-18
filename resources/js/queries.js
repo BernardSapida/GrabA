@@ -1,22 +1,30 @@
 import Vue from 'vue';
 import axios from 'axios';
+import store from './store';
 
 let queries = {
     saveLogin: `mutation saveLogin($member: LoginInput) {
         saveLogin(member: $member) {
             error, 
-            message
+            message,
+            token
         }
     }`,
+    getMember: `query getMember {
+        getMember {
+            email,
+        }
+    }`
+        
 };
 
-let grabQueries = [];
+let memberQueries = ['getMember'];
 
 function getApiUrl(queryName) {
     let segment = '';
 
-    if (grabQueries.some((q) => q == queryName)) {
-        segment = '/user';
+    if (memberQueries.some((q) => q == queryName)) {
+        segment = '/member';
     }
 
     return `/graphql${segment}`;
@@ -25,8 +33,8 @@ function getApiUrl(queryName) {
 Vue.prototype.$query = function (queryName, queryVariables) {
     let token;
 
-    if (grabQueries.some((q) => q == queryName)) {
-        token ='test';
+    if (memberQueries.some((q) => q == queryName)) {
+        token = store.state.member_api_token;
     }
 
     let options = {

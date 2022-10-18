@@ -105,7 +105,7 @@
                     },
                 }).then((res) => {
                     this.isSaving = false;
-                    console.log(res)
+
                     if (res.data.errors) {
                         let errors = Object.values(res.data.errors[0].extensions.validation).flat();
                         let errors_keys = Object.keys(res.data.errors[0].extensions.validation).flat();
@@ -123,6 +123,8 @@
 
                     } else {
                         let response = res.data.data.saveLogin;
+                        this.$store.commit('setLogin', response);
+                        this.$router.push({ name: 'projects' });
                         if (response.error) {
                             this.$swal({
                                 title: 'Error',
@@ -132,27 +134,6 @@
                         }
                     }
                 });
-            },
-            submitForm() {
-                this.validateFormInputs();
-            },
-            validateFormInputs() {
-                // Send API request to validate form inputs
-                const result = {
-                    email: "Email address is required",
-                    password: "Password is required",
-                }
-
-                // Looping through the object keys and passing the key and value to the updateStates
-                Object.keys(result).forEach(key => this.updateStates(key, result[key]));
-            },
-            // A function that updates the state of the form inputs and the error message.
-            updateStates(key, response) {
-                if(response == "valid") eval(`this.state_${key} = true`);
-                else {
-                    eval(`this.state_${key} = false`);
-                    eval(`this.err_${key} = '${response}'`);
-                }
             }
         }
     }
