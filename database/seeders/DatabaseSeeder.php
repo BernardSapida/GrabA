@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,28 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            OutreachSeeder::class,
-            AdminSeeder::class,
-            PcgSeeder::class,
-            JourneyStatusSeeder::class,
-            LeadershipStatusSeeder::class,
-            AnnouncementSeeder::class,
-            AreaSeeder::class,
-            CampusSeeder::class,
-            WorkplaceSeeder::class,
-            StatusSeeder::class,
-            AnnouncementSeeder::class,
-            MinistrySeeder::class,
-            MemberSeeder::class,
-            NetworkSeeder::class,
-            MinistryMembersSeeder::class,
-            SwsReportSeeder::class,
-            LgReportSeeder::class,
-            StateSeeder::class,
-            EventTypeSeeder::class,
-            EventSeeder::class,
-            TopicSeeder::class,
-        ]);
+        // \App\Models\User::factory(10)->create();
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }
