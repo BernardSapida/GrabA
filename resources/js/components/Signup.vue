@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <main id="app">
         <section class="vh-100">
@@ -9,8 +10,8 @@
                                 <img src="../../../public/images/GRABA_LOGO.png" alt="signup form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; height: 100%;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                                <div class="card-body p-4 p-lg-5 text-black" id="app">
-                                    <b-form class="needs-validation" @submit.prevent="submitForm" action="" method="POST" novalidate>
+                                <div id="app" class="card-body p-4 p-lg-5 text-black">
+                                    <b-form method="POST" class="needs-validation" novalidate @submit.prevent="submitForm" >
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <span class="h1 fw-bold mb-0">Grab.A</span>
                                         </div>
@@ -92,12 +93,7 @@
 </template>
 
 <script>
-    import Navigation from './Navigation';
-
     export default {
-        components: {
-            Navigation
-        },
         data() {
             return {
                 firstname: "Bernard",

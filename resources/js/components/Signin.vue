@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <main id="app">
         <section class="vh-100">
@@ -68,12 +69,7 @@
 </template>
 
 <script>
-    import Navigation from './Navigation';
-
     export default {
-        components: {
-            Navigation
-        },
         data() {
             return {
                 email: "",

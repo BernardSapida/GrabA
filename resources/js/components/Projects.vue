@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div id="app">
         <Navigation />
@@ -14,7 +15,7 @@
 
             <!-- Add project modal -->
             <b-modal id="add-projectModal" title="Project Registration" hide-footer>
-                <b-form @submit.prevent="submitProjectForm" method="POST">
+                <b-form method="POST" @submit.prevent="submitProjectForm">
                     <b-form-group
                         class="mb-3"
                         label="Project Name"
@@ -87,14 +88,14 @@
                     <b-button router-link class="mr-1 my-1" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.index }}">View Analytics</b-button>
                 </template>
                 <template #cell(actions)="row">
-                    <b-button class="mr-1 my-1" variant="dark" size="sm" v-b-modal.edit-projectModal @click="info(row.item, row.index, $event.target)">Edit</b-button>
+                    <b-button v-b-modal.edit-projectModal class="mr-1 my-1" variant="dark" size="sm" @click="info(row.item, row.index, $event.target)">Edit</b-button>
                     <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="info(row.item, row.index, $event.target)">Delete</b-button>
                 </template>
             </b-table>
 
             <!-- edit project modal -->
             <b-modal id="edit-projectModal" title="Edit Project" hide-footer>
-                <b-form @submit.prevent="submitProjectForm" method="POST">
+                <b-form method="POST" @submit.prevent="submitProjectForm">
                     <b-form-group
                         class="mb-3"
                         label="Project Name"
@@ -185,22 +186,22 @@
                     {
                         project_name: "Project A",
                         site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
+                        material_cost: 1000000,
                     },
                     {
                         project_name: "Project B",
                         site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
+                        material_cost: 1000000,
                     },
                     {
                         project_name: "Project C",
                         site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
+                        material_cost: 1000000,
                     },
                     {
                         project_name: "Project D",
                         site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
+                        material_cost: 1000000,
                     },
                 ]
             }

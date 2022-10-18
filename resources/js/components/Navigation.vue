@@ -1,7 +1,8 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div id="app">
         <b-navbar class="px-3" toggleable="lg" type="dark" variant="dark">
-            <b-navbar-brand href="#"><img src="images/GRABA_G.png" width="40"></b-navbar-brand>
+            <b-navbar-brand href="#"><img src="/images/GRABA_G.png" width="40"></b-navbar-brand>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="me-auto">
