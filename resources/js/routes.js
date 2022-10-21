@@ -1,6 +1,7 @@
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
+import Post from './components/NewPost';
 import Projects from './components/Projects';
 import Analytics from './components/Analytics';
 import PageNotFound from './components/PageNotFound';
@@ -22,6 +23,12 @@ export default [
         path: '/dashboard/:id',
         name: 'dashboard',
         component: Dashboard,
+        meta: { memberAuth: true },
+    },
+    {
+        path: '/post',
+        name: 'post',
+        component: Post,
         meta: { memberAuth: true },
     },
     {

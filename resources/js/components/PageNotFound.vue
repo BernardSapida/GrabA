@@ -15,7 +15,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .container {
         display: grid;
         align-items: center;

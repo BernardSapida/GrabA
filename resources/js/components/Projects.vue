@@ -14,7 +14,7 @@
                         class="btn" 
                         variant="primary" 
                         size="sm" >
-                    Add new project
+                        Add new project
                     </b-button>
                 </div>
             </div>
@@ -40,6 +40,7 @@
             </b-form-group>
 
             <!-- Project Table -->
+            <p>List of projects</p>
             <b-table
                 id="project"
                 responsive
@@ -60,7 +61,7 @@
                     <b-button router-link class="mr-1 my-1" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.index }}">View Analytics</b-button>
                 </template>
                 <template #cell(actions)="row">
-                    <b-button class="mr-1 my-1" variant="dark" size="sm" v-b-modal.modal-sm="'edit-project'" @click.prevent="onEditProject(row.item)">Edit</b-button>
+                    <b-button v-b-modal.modal-sm="'edit-project'" class="mr-1 my-1" variant="dark" size="sm" @click.prevent="onEditProject(row.item)">Edit</b-button>
                     <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id)">Delete</b-button>
                 </template>
             </b-table>
