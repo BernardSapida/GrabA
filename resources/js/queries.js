@@ -14,11 +14,25 @@ let queries = {
         getMember {
             email,
         }
+    }`,
+    getProjects: `query getProjects($projectId: String) {
+        getProjects(projectId: $projectId) {
+            id,
+            name,
+            location
+            total_cost
+        }
+    }`,
+    saveProject: `mutation saveProject($project: ProjectInput) {
+        saveProject(project: $project) {
+            error,
+            message
+        }
     }`
         
 };
 
-let memberQueries = ['getMember'];
+let memberQueries = ['getMember', 'getProjects', 'saveProject'];
 
 function getApiUrl(queryName) {
     let segment = '';

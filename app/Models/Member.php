@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use PragmaRX\Google2FA\Google2FA;
 use App\Models\Helper;
+use App\Models\Project;
 use App\Models\OAuthHelper;
 use App\Models\SwsReport;
 use App\Notifications\MemberTemporaryPassword;
@@ -37,20 +38,13 @@ class Member extends Authenticatable
 
     protected $hidden = ['password'];
 
-
-    public function findForPassport($username)
-    {
-        $member = $this->where('email', $username)->first();
-        return $member;
-    }
-
-    public function validateForPassportPasswordGrant($password)
-    {
-        return Hash::check($password, $this->password);
-    }
-
     protected $table = 'users';
     protected $primaryKey = 'id';
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'id', 'user_id');
+    }
 
     public function checkBasicAuthentication($member)
     {

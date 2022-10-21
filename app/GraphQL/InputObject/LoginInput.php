@@ -17,21 +17,12 @@ class LoginInput extends InputType
     public function fields(): array
     {
         return [
-            'code' => [
-                'type' => Type::string(),
-            ],
-            'secret_key' => [
-                'type' => Type::string(),
-            ],
             'email' => [
                 'type' => Type::string(),
             ],
             'password' => [
                 'type' => Type::string(),
-            ],
-            'type' => [
-                'type' => Type::string(),
-            ],
+            ]
         ];
     }
 }

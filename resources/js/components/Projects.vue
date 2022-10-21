@@ -8,49 +8,16 @@
                     <h2 class="mb-2">Projects</h2>
                 </div>
                 <div class="col-auto">
-                    <b-button class="btn" variant="primary" size="sm" @click="$bvModal.show('add-projectModal')">Add new project</b-button>
+                    <b-button 
+                        v-b-modal.modal-sm="'add-project'" 
+                        class="btn" 
+                        variant="primary" 
+                        size="sm" >
+                    Add new project
+                    </b-button>
                 </div>
             </div>
 
-            <!-- Add project modal -->
-            <b-modal id="add-projectModal" title="Project Registration" hide-footer>
-                <b-form @submit.prevent="submitProjectForm" method="POST">
-                    <b-form-group
-                        class="mb-3"
-                        label="Project Name"
-                        label-for="add_projectName"
-                        :state="state_projectName"
-                    >
-                        <b-form-input id="add_projectName" v-model="projectName" :state="state_projectName" trim></b-form-input>
-                        <b-form-invalid-feedback>{{ err_projectName }}</b-form-invalid-feedback>
-                    </b-form-group>
-
-                    <b-form-group
-                        class="mb-3"
-                        label="Site location"
-                        label-for="add_siteLocation"
-                        :state="state_siteLocation"
-                    >
-                        <b-form-input id="add_siteLocation" v-model="siteLocation" :state="state_siteLocation" trim></b-form-input>
-                        <b-form-invalid-feedback>{{ err_siteLocation }}</b-form-invalid-feedback>
-                    </b-form-group>
-
-                    <b-form-group
-                        class="mb-3"
-                        label="Total Material Cost"
-                        label-for="add_materialCost"
-                        :state="state_materialCost"
-                    >
-                        <b-form-input id="add_materialCost" v-model="materialCost" :state="state_materialCost" trim></b-form-input>
-                        <b-form-invalid-feedback>{{ err_materialCost }}</b-form-invalid-feedback>
-                    </b-form-group>
-                    <hr>
-                    <div class="d-grid pt-1 mb-3">
-                        <b-button type="submit" class="mb-2" variant="primary" size="sm">Add project</b-button>
-                        <b-button type="button" variant="outline-dark" size="sm" @click="hideModal('add-projectModal')">Close</b-button>
-                    </div>
-                </b-form>
-            </b-modal>
             <hr>
 
             <!-- Table Search -->
@@ -65,7 +32,7 @@
                   <b-input-group size="sm">
                         <b-form-input
                         id="filter-input"
-                        v-model="filter"
+                        v-model="table_options.filter"
                         type="search"
                         placeholder="Type to Search"
                         ></b-form-input>
@@ -74,180 +41,127 @@
 
             <!-- Project Table -->
             <b-table
-                :items="items" 
-                :fields="fields"
-                :filter="filter"
+                id="project"
+                responsive
+                :items="projects"
+                class="yr-table"
+                :filter="table_options.filter"
+                :fields="table_options.fields"
+                :sort-by.sync="table_options.sortBy"
+                :sort-desc.sync="table_options.sortDesc"
+                :busy="table_options.isBusy"
+                :per-page="table_options.perPage"
+                :current-page="table_options.currentPage"
+                striped
                 show-empty
-                striped 
-                responsive 
-                hover
-            >
+                @filtered="onFiltered">
                 <template #cell(views)="row">
                     <b-button router-link class="mr-1 my-1" variant="primary" size="sm" :to="{name: 'dashboard', params: { id: row.index }}">View Dashboard</b-button>
                     <b-button router-link class="mr-1 my-1" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.index }}">View Analytics</b-button>
                 </template>
                 <template #cell(actions)="row">
-                    <b-button class="mr-1 my-1" variant="dark" size="sm" v-b-modal.edit-projectModal @click="info(row.item, row.index, $event.target)">Edit</b-button>
-                    <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="info(row.item, row.index, $event.target)">Delete</b-button>
+                    <b-button class="mr-1 my-1" variant="dark" size="sm" v-b-modal.modal-sm="'edit-project'" @click.prevent="onEditProject(row.item)">Edit</b-button>
+                    <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id)">Delete</b-button>
                 </template>
             </b-table>
-
-            <!-- edit project modal -->
-            <b-modal id="edit-projectModal" title="Edit Project" hide-footer>
-                <b-form @submit.prevent="submitProjectForm" method="POST">
-                    <b-form-group
-                        class="mb-3"
-                        label="Project Name"
-                        label-for="edit_projectName"
-                        :state="state_projectName"
-                    >
-                        <b-form-input id="edit_projectName" v-model="projectName" :state="state_projectName" trim></b-form-input>
-                        <b-form-invalid-feedback>{{ err_projectName }}</b-form-invalid-feedback>
-                    </b-form-group>
-
-                    <b-form-group
-                        class="mb-3"
-                        label="Site location"
-                        label-for="edit_siteLocation"
-                        :state="state_siteLocation"
-                    >
-                        <b-form-input id="edit_siteLocation" v-model="siteLocation" :state="state_siteLocation" trim></b-form-input>
-                        <b-form-invalid-feedback>{{ err_siteLocation }}</b-form-invalid-feedback>
-                    </b-form-group>
-
-                    <b-form-group
-                        class="mb-3"
-                        label="Total Material Cost"
-                        label-for="edit_materialCost"
-                        :state="state_materialCost"
-                    >
-                        <b-form-input id="edit_materialCost" v-model="materialCost" :state="state_materialCost" trim></b-form-input>
-                        <b-form-invalid-feedback>{{ err_materialCost }}</b-form-invalid-feedback>
-                    </b-form-group>
-                    <hr>
-                    <div class="d-grid pt-1 mb-3">
-                        <b-button type="submit" class="mb-2" variant="primary" size="sm">Save changes</b-button>
-                        <b-button type="button" variant="outline-dark" size="sm" @click="hideModal('edit-projectModal')">Close</b-button>
-                    </div>
-                </b-form>
-            </b-modal>
         </section>
+        <AddProject @success="onSuccess"/>
+        <EditProject :project="project" @success="onSuccess"/>
+
     </div>
 </template>
 
 <script>
     import Navigation from './Navigation';
+    import AddProject from './Projects/AddProject';
+    import EditProject from './Projects/EditProject';
 
     export default {
         components: {
-            Navigation
+            Navigation,
+            AddProject,
+            EditProject
         },
         data() {
             return {
-                // Form state
-                projectName: "",
-                siteLocation: "",
-                materialCost: "",
-
-                state_projectName: null,
-                state_siteLocation: null,
-                state_materialCost: null,
-                
-                err_projectName: null,
-                err_siteLocation: null,
-                err_materialCost: null,
-                
-                // Table state
-                filter: null,
-                fields: [
-                    {
-                        key: 'project_name',
-                        sortable: true
-                    },
-                    {
-                        key: 'site_location',
-                        sortable: true
-                    },
-                    {
-                        key: 'material_cost',
-                        sortable: true,
-                    },
-                    {
-                        key: 'views',
-                        label: 'Views'
-                    },
-                    {
-                        key: 'actions',
-                        label: 'Actions'
-                    }
-                ],
-                items: [
-                    {
-                        project_name: "Project A",
-                        site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
-                    },
-                    {
-                        project_name: "Project B",
-                        site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
-                    },
-                    {
-                        project_name: "Project C",
-                        site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
-                    },
-                    {
-                        project_name: "Project D",
-                        site_location: "Indang, Cavite",
-                        material_cost: 1_000_000,
-                    },
-                ]
-            }
+                table_options: {
+                    isBusy: true,
+                    sortBy: 'title',
+                    sortDesc: false,
+                    selected: '',
+                    show: false,
+                    pageOptions: [5, 10, 20, 50],
+                    fields: [
+                        { key: 'name', sortable: true },
+                        { key: 'location', sortable: true },
+                        { key: 'total_cost', sortable: true },
+                        { key: 'views', sortable: true },
+                        { key: 'actions' },
+                    ],
+                    filter: null,
+                    rows: 1,
+                    currentPage: 1,
+                    perPage: 10,
+                },
+                projects: [],
+                project: []
+            };
+        },
+        computed: {
+            rows() {
+                return this.areas.length;
+            },
+        },
+        created() {
+            this.onCreated();
         },
         methods: {
-            hideModal(modalID) {
-                this.clearState();
-                this.$bvModal.hide(modalID);
-            },
-            submitProjectForm() {
-                this.validateFormInputs();
-            },
-            validateFormInputs() {
-                // Send API request to validate form inputs
-                const result = {
-                    projectName: "Project name is required",
-                    siteLocation: "Site location is required",
-                    materialCost: "Material cost is required",
+        onCreated() {
+            this.$query('getProjects').then((res) => {
+                this.table_options.isBusy = false;
+                this.projects = res.data.data.getProjects;
+            });
+        },
+        onSuccess() {
+            this.onCreated();
+        },
+        onEditProject(data) {
+            this.project = data;
+        },
+        onDeleteProject(id) {
+            this.$swal({
+                title: 'Are you sure?',
+                text: 'You want to delete this record?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    this.$query('getProjects', {
+                        projectId: id.toString(),
+                    }).then(() => {
+                        this.$swal({
+                            title: 'Success',
+                            text: 'Project has been deleted',
+                            icon: 'success'
+                        });
+
+                        this.onCreated();
+
+                    });
                 }
+            });
+        },
+        onFiltered(filteredItems) {
+            this.table_options.rows = filteredItems.length;
 
-                // Looping through the object keys and passing the key and value to the updateStates
-                Object.keys(result).forEach(key => this.updateStates(key, result[key]));
-            },
-            // A function that updates the state of the form inputs and the error message.
-            updateStates(key, response) {
-                if(response == "valid") eval(`this.state_${key} = true`);
-                else {
-                    eval(`this.state_${key} = false`);
-                    eval(`this.err_${key} = '${response}'`);
-                }
-            },
-            clearState() {
-                // Reset form state
-                this.projectName = "";
-                this.siteLocation = "";
-                this.materialCost = "";
-
-                // Reset form input state
-                this.state_projectName = null;
-                this.state_siteLocation = null;
-                this.state_materialCost = null;
-
-                // Reset error form input state
-                this.err_projectName = null;
-                this.err_siteLocation = null;
-                this.err_materialCost = null;
-            }
-        }
+            this.showEntries(
+                this.table_options.perPage,
+                this.table_options.currentPage,
+                this.table_options.perPage,
+                filteredItems.length,
+            );
+        },
+    },
     }
 </script>

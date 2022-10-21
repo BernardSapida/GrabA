@@ -98,10 +98,11 @@ return [
             'query' => [
                 // ExampleQuery::class,
                 'getMember' => App\GraphQL\Queries\MemberQuery::class,
+                'getProjects' => App\GraphQL\Queries\ProjectQuery::class,
                 
             ],
             'mutation' => [
-                
+                'saveProject' => App\GraphQL\Mutations\ProjectMutation::class,
             ],
 
             // Laravel HTTP middleware
@@ -131,9 +132,11 @@ return [
         //types
         'ResponseFrontType' => App\GraphQL\Types\ResponseFrontType::class,
         'MemberType' => App\GraphQL\Types\MemberType::class,
+        'ProjectType' => App\GraphQL\Types\ProjectType::class,
 
         //inputs
         'LoginInput' => App\GraphQL\InputObject\LoginInput::class,
+        'ProjectInput' => App\GraphQL\InputObject\ProjectInput::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request
