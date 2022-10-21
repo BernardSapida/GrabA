@@ -35,6 +35,7 @@
                         id="purpose"
                         v-model="purpose"
                         placeholder="Enter something..."
+                        :state="purpose_state"
                         rows="3"
                         max-rows="6"
                     ></b-form-textarea>
@@ -111,7 +112,6 @@
                 address_state: null,
                 contact_state: null,
 
-                capital_budget: 7056000,
                 fields: [
                     {
                         key: 'quantity',
