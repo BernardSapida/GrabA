@@ -1,7 +1,9 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div id="app">
+    <div>
         <Navigation />
         <section class="container my-5">
+            <b-button id="btn-newPost" class="rounded-circle" variant="primary">+</b-button>
             <div class="row justify-content-between g-2">
                 <div class="col-auto">
                     <b-form-group
@@ -25,16 +27,16 @@
                 </div>
             </div>
             <div id="container_posts">
-                <div class="mb-5" v-for="item in items" :key="item.id">
+                <div v-for="item in items" :key="item.id" class="mb-5">
                     <hr class="mb-4">
                     <div class="d-flex mb-3 justify-content-between">
                         <div class="d-flex">
-                            <div>
-                                <img class="rounded-circle" src="../../../public/images/default.jpg" alt="" height="70" width="70">
+                            <div class="mr-3">
+                                <img src="/images/default.jpg" class="rounded-circle" alt="User profile" height="70" width="70">
                             </div>
                             <div class="ms-3">
-                                <p class="m-0 "><strong>{{ item.username }}</strong></p>
-                                <p class="m-0 "><strong>{{ item.jobPosition }}</strong></p>
+                                <p class="m-0"><strong>{{ item.username }}</strong></p>
+                                <p class="m-0"><strong>{{ item.jobPosition }}</strong></p>
                                 <p class="m-0 text-muted">{{ item.date }}</p>
                             </div>
                         </div>
@@ -84,7 +86,7 @@
         },
         data() {
             return {
-                capital_budget: 7_056_000,
+                capital_budget: 7056000,
                 filter: null,
                 fields: [
                     {

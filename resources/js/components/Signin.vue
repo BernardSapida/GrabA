@@ -1,5 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <main id="app">
+    <main>
         <section class="vh-100">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -68,12 +69,7 @@
 </template>
 
 <script>
-    import Navigation from './Navigation';
-
     export default {
-        components: {
-            Navigation
-        },
         data() {
             return {
                 email: "",

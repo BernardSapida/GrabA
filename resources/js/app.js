@@ -1,3 +1,4 @@
+/* eslint-disable vue/multi-word-component-names */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueMeta from 'vue-meta';
@@ -24,7 +25,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueSweetalert2);
 
-Vue.component('multiselect', Multiselect);
+Vue.component('Multiselect', Multiselect);
 
 
 const router = new VueRouter({
@@ -34,12 +35,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some((m) => m.meta.memberAuth === false)) {
-        console.log(store.state.member_api_token)
         let member_is_authenthicated = store.state.member_api_token;
 
-        if (member_is_authenthicated) {
-            next('/projects');
-        }
+        if (member_is_authenthicated) next('/projects');
 
         next();
         return;
@@ -47,15 +45,8 @@ router.beforeEach((to, from, next) => {
 
     if (to.matched.some((m) => m.meta.memberAuth === true)) {
         var access_token = store.state.member_api_token;
-
-        if (access_token) {
-            next();
-        } 
-
-        if (access_token == '') {
-            next('/');
-        }
-
+        if (access_token) next();
+        if (access_token == '') next('/');
         return;
     }
 

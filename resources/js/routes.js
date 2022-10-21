@@ -3,6 +3,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Projects from './components/Projects';
 import Analytics from './components/Analytics';
+import PageNotFound from './components/PageNotFound';
 
 export default [
     {
@@ -35,4 +36,9 @@ export default [
         component: Analytics,
         meta: { memberAuth: true },
     },
+    {
+        path: '*',
+        name: '404',
+        component: PageNotFound
+    }
 ]

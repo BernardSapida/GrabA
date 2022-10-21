@@ -1,5 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div id="app">
+    <div>
         <Navigation />
         <section class="container my-5">
             <!-- Button for add project modal -->
@@ -24,8 +25,7 @@
             <b-form-group
                 label="Search project"
                 label-for="filter-input"
-                label-cols-sm="3"
-                label-align-sm="right"
+                label-align-sm="left"
                 label-size="sm"
                 class="mb-3"
             >
@@ -116,52 +116,52 @@
             this.onCreated();
         },
         methods: {
-        onCreated() {
-            this.$query('getProjects').then((res) => {
-                this.table_options.isBusy = false;
-                this.projects = res.data.data.getProjects;
-            });
-        },
-        onSuccess() {
-            this.onCreated();
-        },
-        onEditProject(data) {
-            this.project = data;
-        },
-        onDeleteProject(id) {
-            this.$swal({
-                title: 'Are you sure?',
-                text: 'You want to delete this record?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Delete',
-            }).then((res) => {
-                if (res.isConfirmed) {
-                    this.$query('getProjects', {
-                        projectId: id.toString(),
-                    }).then(() => {
-                        this.$swal({
-                            title: 'Success',
-                            text: 'Project has been deleted',
-                            icon: 'success'
+            onCreated() {
+                this.$query('getProjects').then((res) => {
+                    this.table_options.isBusy = false;
+                    this.projects = res.data.data.getProjects;
+                });
+            },
+            onSuccess() {
+                this.onCreated();
+            },
+            onEditProject(data) {
+                this.project = data;
+            },
+            onDeleteProject(id) {
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: 'You want to delete this record?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        this.$query('getProjects', {
+                            projectId: id.toString(),
+                        }).then(() => {
+                            this.$swal({
+                                title: 'Success',
+                                text: 'Project has been deleted',
+                                icon: 'success'
+                            });
+
+                            this.onCreated();
+
                         });
+                    }
+                });
+            },
+            onFiltered(filteredItems) {
+                this.table_options.rows = filteredItems.length;
 
-                        this.onCreated();
-
-                    });
-                }
-            });
+                this.showEntries(
+                    this.table_options.perPage,
+                    this.table_options.currentPage,
+                    this.table_options.perPage,
+                    filteredItems.length,
+                );
+            },
         },
-        onFiltered(filteredItems) {
-            this.table_options.rows = filteredItems.length;
-
-            this.showEntries(
-                this.table_options.perPage,
-                this.table_options.currentPage,
-                this.table_options.perPage,
-                filteredItems.length,
-            );
-        },
-    },
     }
 </script>

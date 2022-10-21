@@ -3,9 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Yrock Reporting System</title>
-        <link rel="icon" href="{{ url('images/y-fav.png') }}">
+        <title>Grab.A</title>
+        <link rel="icon" href="{{ url('images/GRABA_G_GRAY.png') }}">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/dashboard.css') }}">
     </head>
     <body>
         <div id="app"></div>
