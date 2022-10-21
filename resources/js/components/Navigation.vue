@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div id="app">
+    <div>
         <b-navbar class="px-3" toggleable="lg" type="dark" variant="dark">
             <b-navbar-brand href="#"><img src="/images/GRABA_G.png" width="40"></b-navbar-brand>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

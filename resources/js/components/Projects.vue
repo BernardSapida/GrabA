@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div id="app">
+    <div>
         <Navigation />
         <section class="container my-5">
             <!-- Button for add project modal -->
