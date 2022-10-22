@@ -4,18 +4,18 @@
     use GraphQL;
     use GraphQL\Type\Definition\Type;
     use Rebing\GraphQL\Support\Query;
-    use App\Models\Project;
+    use App\Models\Post;
     use App\Models\Outreach;
 
-    class ProjectQuery extends Query
+    class PostQuery extends Query
     {
         protected $attributes = [
-            'name' => 'ProjectQuery query',
+            'name' => 'PostQuery query',
         ];
 
         public function type(): Type
         {
-            return Type::listOf(GraphQL::type('ProjectType'));
+            return Type::listOf(GraphQL::type('PostType'));
         }
 
         public function args(): array
@@ -27,14 +27,14 @@
         
         public function resolve($root, $args)
         {
-            $project = new Project();
-            $projectData = $project->getProject();
+            $post = new Post();
+            $postData = $post->getPost();
 
             if (isset($args['projectId'])) {
-                $project->deleteProject($args['projectId']);
+                $post->deleteProject($args['projectId']);
             }
 
-            return $projectData;
+            return $postData;
         }
     }
 ?>
