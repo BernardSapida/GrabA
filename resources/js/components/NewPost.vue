@@ -3,7 +3,7 @@
     <section>
         <Navigation/>
         <div class="container my-5">
-            <b-form @submit.prevent="submitPostForm">
+            <b-form id="PostForm" @submit.prevent="submitPostForm">
                 <div class="d-flex mb-5 justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="mr-3">
@@ -24,9 +24,39 @@
                         </b-button>
                     </div>
                 </div>
-
+                <div class="mb-2 py-2 px-3 bg-danger text-white rounded" v-if="!this.materials_state">Please answer all table fields</div>
                 <p>List of materials</p>
-                <b-table striped responsive hover :items="items" :fields="fields"></b-table>
+                <table class="table table-hover mb-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Unit Cost</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="materials.length == 0">
+                        <tr>
+                            <td class="text-center" colspan="6">There are no records to show</td>
+                        </tr>
+                    </tbody>
+                    <tbody v-for="(material, index) in materials" v-else :key="index">
+                        <tr v-append="material"></tr>
+                    </tbody>
+                    <tfoot>
+                        <b-button 
+                            class="btn mt-2" 
+                            size = "sm" 
+                            variant="dark" 
+                            type="button"
+                            @click="addMaterial"
+                        >
+                            Add new material
+                        </b-button>
+                    </tfoot>
+                </table>
 
                 <b-form-group>
                     <label for="Purpose">Purpose:</label>
@@ -106,49 +136,14 @@
                 address_error: '',
                 contact_error: '',
 
+                materials_state: null,
                 purpose_state: null,
                 fullname_state: null,
                 address_state: null,
                 contact_state: null,
 
-                fields: [
-                    {
-                        key: 'quantity',
-                        sortable: true
-                    },
-                    {
-                        key: 'unit',
-                        sortable: true
-                    },
-                    {
-                        key: 'item',
-                        sortable: true,
-                    },
-                    {
-                        key: 'unit_cost',
-                        sortable: true,
-                    },
-                    {
-                        key: 'amount',
-                        sortable: true,
-                    }
-                ],
-                items: [
-                    {
-                        quantity: 100,
-                        unit: "70 M3",
-                        item: "Item 1",
-                        unit_cost: 26000,
-                        amount: 26000,
-                    },
-                    {
-                        quantity: 100,
-                        unit: "70 M3",
-                        item: "Item 1",
-                        unit_cost: 26000,
-                        amount: 26000,
-                    }
-                ]
+                input_id: 0,
+                materials: []
             }
         },
         methods: {
@@ -164,10 +159,76 @@
                 this.address_error = '';
                 this.contact_error = '';
 
+                this.materials_state = false;
                 this.purpose_state = null;
                 this.fullname_state = null;
                 this.address_state = null;
                 this.contact_state = null;
+            },
+            addMaterial() {
+                let { input_id } = this;
+                this.input_id++;
+                
+                this.materials.push(`
+                    <td>
+                        <input
+                            id="quantity_${input_id}"
+                            name="quantity_${input_id}"
+                            type="text"
+                            class="form-control"
+                            placeholder="Quantity"
+                            >
+                        </input>
+                    </td>
+                    <td>
+                        <input
+                            id="unit_${input_id}"
+                            name="unit_${input_id}"
+                            type="text"
+                            class="form-control"
+                            placeholder="Unit"
+                            >
+                        </-input>
+                    </td>
+                    <td>
+                        <input
+                            id="item_${input_id}"
+                            name="item_${input_id}"
+                            type="text"
+                            class="form-control"
+                            placeholder="Item"
+                            >
+                        </input>
+                    </td>
+                    <td>
+                        <input
+                            id="unitCost_${input_id}"
+                            name="unitCost_${input_id}"
+                            type="text"
+                            class="form-control"
+                            placeholder="Unit Cost"
+                            >
+                        </input>
+                    </td>
+                    <td>
+                        <input
+                            id="amount_${input_id}"
+                            name=""
+                            type="text"
+                            class="form-control"
+                            placeholder="Amount"
+                            >
+                        </input>
+                    </td>
+                    <td>
+                        <button 
+                            class="btn btn-danger" 
+                            type="button"
+                            onclick="this.parentNode.parentNode.remove()"
+                        >
+                            Delete
+                        </button>
+                    </td>`);
             },
             submitPostForm() {
                 this.onClearErrors();

@@ -5,6 +5,7 @@ import VueMeta from 'vue-meta';
 import App from './App.vue';
 import routes from './routes';
 import store from './store';
+import VueAppend from 'vue-append'
 
 import './queries';
 import './../sass/app.scss';
@@ -24,6 +25,7 @@ Vue.use(VueMeta);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueSweetalert2);
+Vue.use(VueAppend);
 
 Vue.component('Multiselect', Multiselect);
 
