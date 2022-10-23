@@ -38,7 +38,7 @@ class PostMutation extends Mutation
     public function validationErrorMessages(array $args = []): array
     {
         return [
-            'post.materials.required' => 'Purpose is required',
+            'post.materials.required' => 'List of materials are required',
             'post.purpose.required' => 'Purpose is required',
             'post.fullname.required' => 'Fullname is required',
             'post.address.required' => 'Address is required',

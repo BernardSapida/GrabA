@@ -3,7 +3,7 @@
     <section>
         <Navigation/>
         <div class="container my-5">
-            <b-form id="PostForm" @submit.prevent="submitPostForm">
+            <b-form id="PostForm" @submit.prevent="submitPostForm($event)">
                 <div class="d-flex mb-5 justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="mr-3">
@@ -24,7 +24,7 @@
                         </b-button>
                     </div>
                 </div>
-                <div class="mb-2 py-2 px-3 bg-danger text-white rounded" v-if="!this.materials_state">Please answer all table fields</div>
+                <div v-if="materials_error.length > 0" class="mb-2 py-2 px-3 bg-danger text-white rounded">{{ materials_error }}</div>
                 <p>List of materials</p>
                 <table class="table table-hover mb-4">
                     <thead>
@@ -37,12 +37,12 @@
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    <tbody v-if="materials.length == 0">
+                    <tbody v-if="materialsDOM.length == 0">
                         <tr>
                             <td class="text-center" colspan="6">There are no records to show</td>
                         </tr>
                     </tbody>
-                    <tbody v-for="(material, index) in materials" v-else :key="index">
+                    <tbody v-for="(material, index) in materialsDOM" v-else :key="index">
                         <tr v-append="material"></tr>
                     </tbody>
                     <tfoot>
@@ -118,7 +118,8 @@
 </template>
 
 <script>
-    import Navigation from './Navigation';
+    import { stringify } from 'json5';
+import Navigation from './Navigation';
 
     export default {
         components: {
@@ -126,24 +127,26 @@
         },
         data() {
             return {
+                materialsList: [],
                 purpose: "",
                 fullname: "",
                 address: "",
                 contact: "",
 
+                materials_error: '',
                 purpose_error: '',
                 fullname_error: '',
                 address_error: '',
                 contact_error: '',
 
-                materials_state: null,
+                materialsDOM_state: null,
                 purpose_state: null,
                 fullname_state: null,
                 address_state: null,
                 contact_state: null,
 
                 input_id: 0,
-                materials: []
+                materialsDOM: [],
             }
         },
         methods: {
@@ -154,12 +157,15 @@
                 this.contact = '';
             },
             onClearErrors() {
+                this.materialsList = [];
+
+                this.materials_error = '';
                 this.purpose_error = '';
                 this.fullname_error = '';
                 this.address_error = '';
                 this.contact_error = '';
 
-                this.materials_state = false;
+                this.materialsDOM_state = null;
                 this.purpose_state = null;
                 this.fullname_state = null;
                 this.address_state = null;
@@ -169,7 +175,7 @@
                 let { input_id } = this;
                 this.input_id++;
                 
-                this.materials.push(`
+                this.materialsDOM.push(`
                     <td>
                         <input
                             id="quantity_${input_id}"
@@ -213,7 +219,7 @@
                     <td>
                         <input
                             id="amount_${input_id}"
-                            name=""
+                            name="amount_${input_id}"
                             type="text"
                             class="form-control"
                             placeholder="Amount"
@@ -230,12 +236,13 @@
                         </button>
                     </td>`);
             },
-            submitPostForm() {
+            submitPostForm(e) {
                 this.onClearErrors();
+                this.getMaterialList(e.target)
                 this.$query('savePost', {
                     post: {
                         id: '0',
-                        materials: '[{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"}]',
+                        materials: this.materialsList,
                         purpose: this.purpose,
                         fullname: this.fullname,
                         address: this.address,
@@ -259,6 +266,8 @@
 
                             if(this[name]) this[state] = false;
                         };
+
+                        error_message('materials_error', 'post.materials', 'materialsDOM_state');
                         error_message('purpose_error', 'post.purpose', 'purpose_state');
                         error_message('fullname_error', 'post.fullname', 'fullname_state');
                         error_message('address_error', 'post.address', 'address_state');
@@ -283,6 +292,35 @@
                         }
                     }
                 });
+            },
+            getMaterialList(target) {
+                const formData = new FormData(target);
+                const data = {};
+                formData.forEach((value, key) => (data[key] = value));
+                const keys = Object.keys(data);
+                let tempObj = {};
+
+                if(keys.length == 0) {
+                    this.materialsList = '';
+                    return;
+                }
+
+                for(let i = 0; i < keys.length; i++) {
+                    tempObj[keys[i]] = data[keys[i]];
+
+                    if(data[keys[i]].length == 0) {
+                        this.materialsList = '';
+                        this.materialsDOM_state = true;
+                        return;
+                    }
+
+                    if((i+1) % 5 == 0) {
+                        this.materialsList.push(tempObj);
+                        tempObj = {};
+                    }
+                }
+
+                this.materialsList = stringify(this.materialsList);
             }
         }
     }
