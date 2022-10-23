@@ -52,13 +52,13 @@ class SignupMutation extends Mutation
     public function validationErrorMessages(array $args = []): array
     {
         return [
-            'account.firstname.required' => 'Please enter your firstname',
-            'account.lastname.required' => 'Please enter your lastname',
-            'account.email.required' => 'Please enter your email',
-            'account.email.email' => 'Please enter your valid email address',
-            'account.jobPosition.required' => 'Please enter your job position',
-            'account.password.required' => 'Please enter your password',
-            'account.password_confirmation.required' => 'Please enter your password'
+            'account.firstname.required' => 'Firstname is required',
+            'account.lastname.required' => 'Lastname is required',
+            'account.email.required' => 'Email address is required',
+            'account.email.email' => 'Email address must be a valid email address',
+            'account.jobPosition.required' => 'Job position is required',
+            'account.password.required' => 'Password is required',
+            'account.password_confirmation.required' => 'Confirm password is required'
         ];
     }
 

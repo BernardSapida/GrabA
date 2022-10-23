@@ -39,7 +39,6 @@ class User extends Authenticatable
     public function saveAccount($args)
     {
         $response_obj = new \stdClass();
-        // $id = $args['id'];
         try {
             $account = new self();
             $response_obj->message = 'Account was created successfully';

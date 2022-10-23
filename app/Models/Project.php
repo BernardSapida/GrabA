@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use App\Models\Outreach;
-use App\Models\Workplace;
 use App\Models\Member;
 use App\Models\Post;
 
@@ -40,6 +37,7 @@ class Project extends Model
         $member = new Member();
         $member_id = $member->getLoggedInMember()->id;
         $id = $args['id'];
+        
         try {
             if ($id == 0) {
                 $project = new self();

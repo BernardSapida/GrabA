@@ -5,7 +5,6 @@
     use GraphQL\Type\Definition\Type;
     use Rebing\GraphQL\Support\Query;
     use App\Models\Post;
-    use App\Models\Outreach;
 
     class PostQuery extends Query
     {
@@ -31,10 +30,10 @@
             $postData = $post->getPost();
 
             if (isset($args['projectId'])) {
-                $post->deleteProject($args['projectId']);
+                $post->deletePost($args['projectId']);
             }
 
-            return $postData;
+            return $post;
         }
     }
 ?>

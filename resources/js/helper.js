@@ -26,13 +26,7 @@ Vue.mixin({
             this.$swal({
                 title: title,
                 text: text,
-                icon: type,
-                customClass: {
-                    popup: `yr-modal-alert yr-modal-alert-${type}`,
-                    confirmButton: `yr-modal-btn-alert yr-modal-btn-alert-${type}`,
-                    title: `yr-modal-header-alert yr-modal-header-alert-${type}`,
-                    htmlContainer: 'yr-modal-body-text',
-                },
+                icon: type
             });
         },
         showEntries(page, current, perPage, rows) {

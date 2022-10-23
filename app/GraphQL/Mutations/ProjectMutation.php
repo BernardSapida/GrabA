@@ -29,7 +29,6 @@ class ProjectMutation extends Mutation
         $rules = [];
         $project = $args['project'];
         $projectId = $project['id'];
-        // $rules['project.projectName'] = ['required', 'unique:projects,name'];
         $rules['project.siteLocation'] = ['required'];
         $rules['project.materialCost'] = ['required', 'numeric', 'min:0'];
         if ($projectId == 0) {
@@ -45,14 +44,12 @@ class ProjectMutation extends Mutation
     public function validationErrorMessages(array $args = []): array
     {
         return [
-            'project.projectName.required' => 'Please enter your project name',
-            'project.projectName.unique' => 'Project name already exist',
-            'project.siteLocation.required' => 'Please enter your site location',
-            'project.materialCost.required' => 'Please enter your material cost',
+            'project.projectName.required' => 'Project name is required',
+            'project.projectName.unique' => 'Project name must be unique',
+            'project.siteLocation.required' => 'Site location is required',
+            'project.materialCost.required' => 'Material cost is required',
             'project.materialCost.numeric' => 'Material cost must be numeric',
             'project.materialCost.min' => 'Material cost must be greater than 0',
-
-
         ];
     }
 

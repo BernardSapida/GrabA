@@ -3,7 +3,7 @@
     <section>
         <Navigation/>
         <div class="container my-5">
-            <b-form>
+            <b-form @submit.prevent="submitPostForm">
                 <div class="d-flex mb-5 justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="mr-3">
@@ -16,7 +16,6 @@
                     </div>
                     <div>
                         <b-button 
-                            v-b-modal.modal-sm="'add-project'" 
                             class="btn" 
                             variant="primary" 
                             type="submit"
@@ -153,6 +152,12 @@
             }
         },
         methods: {
+            onClearFields() {
+                this.purpose = '';
+                this.fullname = '';
+                this.address = '';
+                this.contact = '';
+            },
             onClearErrors() {
                 this.purpose_error = '';
                 this.fullname_error = '';
@@ -164,6 +169,60 @@
                 this.address_state = null;
                 this.contact_state = null;
             },
+            submitPostForm() {
+                this.onClearErrors();
+                this.$query('savePost', {
+                    post: {
+                        id: '0',
+                        materials: '[{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"},{"quantity": "100","unit": "70 M3","item": "Item 1","unit_cost": "1000","amount": "100000"}]',
+                        purpose: this.purpose,
+                        fullname: this.fullname,
+                        address: this.address,
+                        contact: this.contact,
+                        project_id: this.$route.params.id
+                    },
+                }).then((res) => {
+                    this.is_saving = false;
+                    if (res.data.errors) {
+                        let errors = Object.values(
+                            res.data.errors[0].extensions.validation,
+                        ).flat();
+                        let errors_keys = Object.keys(
+                            res.data.errors[0].extensions.validation,
+                        ).flat();
+
+                        const error_message = (name, index, state) => {
+                            this[name] = errors_keys.some((q) => q == index)
+                                ? errors[errors_keys.indexOf(index)]
+                                : '';
+
+                            if(this[name]) this[state] = false;
+                        };
+                        error_message('purpose_error', 'post.purpose', 'purpose_state');
+                        error_message('fullname_error', 'post.fullname', 'fullname_state');
+                        error_message('address_error', 'post.address', 'address_state');
+                        error_message('contact_error', 'post.contact', 'contact_state');
+                    } else {
+                        let response = res.data.data.savePost;
+                        if (response.error) {
+                            this.$swal({
+                                title: 'Error',
+                                text: response.message,
+                                icon: 'error'
+                            });
+                        } else {
+                            this.$emit('success');
+                            this.onClearFields();
+                            this.onClearErrors();
+                            this.$swal({
+                                title: 'Success',
+                                text: response.message,
+                                icon: 'success'
+                            });
+                        }
+                    }
+                });
+            }
         }
     }
 </script>

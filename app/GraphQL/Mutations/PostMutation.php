@@ -1,7 +1,7 @@
 <?php
 namespace App\GraphQL\Mutations;
 use Closure;
-use App\Models\Project;
+use App\Models\Post;
 use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
@@ -9,57 +9,50 @@ use Rebing\GraphQL\Support\Mutation;
 class PostMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'post',
+        'name' => 'Post',
     ];
+
+    public function args(): array
+    {
+        return [
+            'post' => ['type' => GraphQL::type('PostInput')],
+        ];
+    }
 
     public function type(): Type
     {
         return GraphQL::type('ResponseFrontType');
     }
 
-    public function args(): array
-    {
-        return [
-            'project' => ['type' => GraphQL::type('ProjectInput')],
-        ];
-    }
-
     protected function rules(array $args = []): array
     {
         $rules = [];
-        $project = $args['project'];
-        $projectId = $project['id'];
-
-        $rules['project.siteLocation'] = ['required'];
-        $rules['project.materialCost'] = ['required', 'numeric', 'min:0'];
-        if ($projectId == 0) {
-            $rules['project.projectName'] = ['required', 'unique:projects,name'];
-        } else {
-            $rules['project.projectName'] = ['required', 'unique:projects,name,' . $projectId . ',id'];
-        }
-
+        $rules['post.materials'] = ['required'];
+        $rules['post.purpose'] = ['required'];
+        $rules['post.fullname'] = ['required'];
+        $rules['post.address'] = ['required'];
+        $rules['post.contact'] = ['required'];
         return $rules;
     }
 
     public function validationErrorMessages(array $args = []): array
     {
         return [
-            'project.projectName.required' => 'Please enter your project name',
-            'project.projectName.unique' => 'Project name already exist',
-            'project.siteLocation.required' => 'Please enter your site location',
-            'project.materialCost.required' => 'Please enter your material cost',
-            'project.materialCost.numeric' => 'Material cost must be numeric',
-            'project.materialCost.min' => 'Material cost must be greater than 0',
+            'post.materials.required' => 'Purpose is required',
+            'post.purpose.required' => 'Purpose is required',
+            'post.fullname.required' => 'Fullname is required',
+            'post.address.required' => 'Address is required',
+            'post.contact.required' => 'Contact is required',
         ];
     }
 
     public function resolve($root, $args)
     {
-        $project = $args['project'];
+        $post = $args['post'];
 
-        $projectModel = new Project();
+        $postModel = new Post();
 
-        $response_obj = $projectModel->saveProject($project);
+        $response_obj = $postModel->savePost($post);
 
         return $response_obj;
     }

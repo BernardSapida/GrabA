@@ -26,7 +26,7 @@ export default [
         meta: { memberAuth: true },
     },
     {
-        path: '/post',
+        path: '/post/:id',
         name: 'post',
         component: Post,
         meta: { memberAuth: true },

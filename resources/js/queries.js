@@ -16,6 +16,12 @@ let queries = {
             token
         }
     }`,
+    savePost: `mutation savePost($post: PostInput) {
+        savePost(post: $post) {
+            error,
+            message
+        }
+    }`,
     getMember: `query getMember {
         getMember {
             email,
@@ -38,7 +44,7 @@ let queries = {
         
 };
 
-let memberQueries = ['getMember', 'getProjects', 'saveProject'];
+let memberQueries = ['getMember', 'getProjects', 'saveProject', 'savePost'];
 
 function getApiUrl(queryName) {
     let segment = '';
