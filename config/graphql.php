@@ -79,6 +79,7 @@ return [
             'mutation' => [
                 // ExampleMutation::class,
                 'saveLogin' => App\GraphQL\Mutations\LoginMutation::class,
+                'saveAccount' => App\GraphQL\Mutations\SignupMutation::class,
             ],
             // The types only available in this schema
             'types' => [
@@ -136,6 +137,7 @@ return [
 
         //inputs
         'LoginInput' => App\GraphQL\InputObject\LoginInput::class,
+        'AccountInput' => App\GraphQL\InputObject\AccountInput::class,
         'ProjectInput' => App\GraphQL\InputObject\ProjectInput::class,
     ],
 

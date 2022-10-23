@@ -62,6 +62,7 @@ class Project extends Model
             return $response_obj;
         }
     }
+    
     public function deleteProject($id)
     {
         try {

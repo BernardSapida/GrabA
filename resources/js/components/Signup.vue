@@ -11,7 +11,7 @@
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div id="app" class="card-body p-4 p-lg-5 text-black">
-                                    <b-form method="POST" class="needs-validation" novalidate @submit.prevent="submitForm" >
+                                    <b-form novalidate @submit.prevent="submitSignupForm">
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <span class="h1 fw-bold mb-0">Grab.A</span>
                                         </div>
@@ -23,7 +23,7 @@
                                                 label-for="firstname"
                                                 :state="state_firstname"
                                             >
-                                                <b-form-input id="firstname" v-model="firstname" :state="state_firstname" trim></b-form-input>
+                                                <b-form-input id="firstname" v-model="firstname" :state="state_firstname" placeholder="Firstname" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_firstname }}</b-form-invalid-feedback>
                                             </b-form-group>
                                             <b-form-group
@@ -32,7 +32,7 @@
                                                 label-for="lastname"
                                                 :state="state_lastname"
                                             >
-                                                <b-form-input id="lastname" v-model="lastname" :state="state_lastname" trim></b-form-input>
+                                                <b-form-input id="lastname" v-model="lastname" :state="state_lastname" placeholder="Lastname" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_lastname }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
@@ -42,7 +42,7 @@
                                                 label-for="email"
                                                 :state="state_email"
                                             >
-                                                <b-form-input id="email" v-model="email" :state="state_email" trim></b-form-input>
+                                                <b-form-input id="email" v-model="email" :state="state_email" placeholder="Email" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_email }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
@@ -52,7 +52,7 @@
                                                 label-for="jobPosition"
                                                 :state="state_jobPosition"
                                             >
-                                                <b-form-input id="jobPosition" v-model="jobPosition" :state="state_jobPosition" trim></b-form-input>
+                                                <b-form-input id="jobPosition" v-model="jobPosition" :state="state_jobPosition" placeholder="Password" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_jobPosition }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
@@ -63,18 +63,18 @@
                                                 label-for="password"
                                                 :state="state_password"
                                             >
-                                                <b-form-input id="password" v-model="password" :state="state_password" trim></b-form-input>
+                                                <b-form-input id="password" v-model="password" type="password" :state="state_password" placeholder="Password" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_password }}</b-form-invalid-feedback>
                                             </b-form-group>
 
                                             <b-form-group
                                                 class="col-md-6 col-sm-12 mb-4"
                                                 label="Confirm password"
-                                                label-for="confirmPassword"
-                                                :state="state_confirmPassword"
+                                                label-for="password_confirmation"
+                                                :state="state_password_confirmation"
                                             >
-                                                <b-form-input id="confirmPassword" v-model="password" :state="state_confirmPassword" trim></b-form-input>
-                                                <b-form-invalid-feedback>{{ err_confirmPassword }}</b-form-invalid-feedback>
+                                                <b-form-input id="password_confirmation" v-model="password_confirmation" type="password" :state="state_password_confirmation" placeholder="Confirm password" trim></b-form-input>
+                                                <b-form-invalid-feedback>{{ err_password_confirmation }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
                                         <div class="d-grid mb-3">
@@ -98,51 +98,108 @@
             return {
                 firstname: "Bernard",
                 lastname: "Sapida",
-                email: "",
-                jobPosition: "",
-                password: "",
-                confirmPassword: "",
+                email: "bernard.sapida@cvsu.edu.ph",
+                jobPosition: "Software Engineer",
+                password: "@Oop1708131117",
+                password_confirmation: "@Oop1708131117",
 
                 state_firstname: null,
                 state_lastname: null,
                 state_email: null,
                 state_jobPosition: null,
                 state_password: null,
-                state_confirmPassword: null,
+                state_password_confirmation: null,
 
                 err_firstname: null,
                 err_lastname: null,
                 err_email: null,
                 err_jobPosition: null,
                 err_password: null,
-                err_confirmPassword: null,
+                err_password_confirmation: null,
             }
         },
         methods: {
-            submitForm() {
-                this.validateFormInputs();
+            onClearFields() {
+                this.firstname = '';
+                this.lastname = '';
+                this.email = '';
+                this.jobPosition = '';
+                this.password = '';
+                this.password_confirmation = '';
             },
-            validateFormInputs() {
-                // Send API request to validate form inputs
-                const result = {
-                    firstname: "valid",
-                    lastname: "valid",
-                    email: "Invalid email address",
-                    jobPosition: "Job position is required",
-                    password: "Password is required",
-                    confirmPassword: "Confirm password is required",
-                }
+            onClearErrors() {
+                this.err_firstname = '';
+                this.err_lastname = '';
+                this.err_email = '';
+                this.err_jobPosition = '';
+                this.err_password = '';
+                this.err_password_confirmation = '';
 
-                // Looping through the object keys and passing the key and value to the updateStates
-                Object.keys(result).forEach(key => this.updateStates(key, result[key]));
+                this.state_firstname = null;
+                this.state_lastname = null;
+                this.state_email = null;
+                this.state_jobPosition = null;
+                this.state_password = null;
+                this.state_password_confirmation = null;
             },
-            // A function that updates the state of the form inputs and the error message.
-            updateStates(key, response) {
-                if(response == "valid") eval(`this.state_${key} = true`);
-                else {
-                    eval(`this.state_${key} = false`);
-                    eval(`this.err_${key} = '${response}'`);
-                }
+            submitSignupForm() {
+                this.onClearErrors();
+                this.$query('saveAccount', {
+                    account: {
+                        firstname: this.firstname,
+                        lastname: this.lastname,
+                        email: this.email,
+                        jobPosition: this.jobPosition,
+                        password: this.password,
+                        password_confirmation: this.password_confirmation,
+                    },
+                }).then((res) => {
+                    this.is_saving = false;
+
+                    if (res.data.errors) {
+                        let errors = Object.values(
+                            res.data.errors[0].extensions.validation,
+                        ).flat();
+                        let errors_keys = Object.keys(
+                            res.data.errors[0].extensions.validation,
+                        ).flat();
+
+                        const error_message = (name, index, state) => {
+                            this[name] = errors_keys.some((q) => q == index)
+                                ? (errors[errors_keys.indexOf(index)].indexOf("account.password") != -1 ?
+                                    errors[errors_keys.indexOf(index)].split("account.password").join("password") 
+                                    : errors[errors_keys.indexOf(index)])
+                                : '';
+
+                            if(this[name]) this[state] = false;
+                        };
+
+                        error_message('err_firstname', 'account.firstname', 'state_firstname');
+                        error_message('err_lastname', 'account.lastname', 'state_lastname');
+                        error_message('err_email', 'account.email', 'state_email');
+                        error_message('err_jobPosition', 'account.jobPosition', 'state_jobPosition');
+                        error_message('err_password', 'account.password', 'state_password');
+                        error_message('err_password_confirmation', 'account.password_confirmation', 'state_password_confirmation');
+                    } else {
+                        let response = res.data.data.saveAccount;
+                        if (response.error) {
+                            this.$swal({
+                                title: 'Error',
+                                text: response.message,
+                                icon: 'error'
+                            });
+                        } else {
+                            this.$emit('success');
+                            this.onClearFields();
+                            this.onClearErrors();
+                            this.$swal({
+                                title: 'Success',
+                                text: response.message,
+                                icon: 'success'
+                            }).then(() => window.location.href = 'http://www.graba.test/');
+                        }
+                    }
+                });
             }
         }
     }

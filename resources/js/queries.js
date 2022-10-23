@@ -3,6 +3,12 @@ import axios from 'axios';
 import store from './store';
 
 let queries = {
+    saveAccount: `mutation saveAccount($account: AccountInput) {
+        saveAccount(account: $account) {
+            error,
+            message
+        }
+    }`,
     saveLogin: `mutation saveLogin($member: LoginInput) {
         saveLogin(member: $member) {
             error, 

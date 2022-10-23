@@ -6,8 +6,6 @@ use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
 
-use Log;
-
 class ProjectMutation extends Mutation
 {
     protected $attributes = [

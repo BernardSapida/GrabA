@@ -45,7 +45,6 @@
                 id="project"
                 responsive
                 :items="projects"
-                class="yr-table"
                 :filter="table_options.filter"
                 :fields="table_options.fields"
                 :sort-by.sync="table_options.sortBy"
@@ -68,7 +67,6 @@
         </section>
         <AddProject @success="onSuccess"/>
         <EditProject :project="project" @success="onSuccess"/>
-
     </div>
 </template>
 
