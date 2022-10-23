@@ -118,8 +118,7 @@
 </template>
 
 <script>
-    import { stringify } from 'json5';
-import Navigation from './Navigation';
+    import Navigation from './Navigation';
 
     export default {
         components: {
@@ -180,7 +179,7 @@ import Navigation from './Navigation';
                         <input
                             id="quantity_${input_id}"
                             name="quantity_${input_id}"
-                            type="text"
+                            type="number"
                             class="form-control"
                             placeholder="Quantity"
                             >
@@ -210,7 +209,7 @@ import Navigation from './Navigation';
                         <input
                             id="unitCost_${input_id}"
                             name="unitCost_${input_id}"
-                            type="text"
+                            type="number"
                             class="form-control"
                             placeholder="Unit Cost"
                             >
@@ -220,7 +219,7 @@ import Navigation from './Navigation';
                         <input
                             id="amount_${input_id}"
                             name="amount_${input_id}"
-                            type="text"
+                            type="number"
                             class="form-control"
                             placeholder="Amount"
                             >
@@ -261,7 +260,9 @@ import Navigation from './Navigation';
 
                         const error_message = (name, index, state) => {
                             this[name] = errors_keys.some((q) => q == index)
-                                ? errors[errors_keys.indexOf(index)]
+                                ? (errors[errors_keys.indexOf(index)].indexOf("post.contact") != -1 ?
+                                    errors[errors_keys.indexOf(index)].split("post.contact").join("contact number") 
+                                    : errors[errors_keys.indexOf(index)])
                                 : '';
 
                             if(this[name]) this[state] = false;
@@ -319,8 +320,7 @@ import Navigation from './Navigation';
                         tempObj = {};
                     }
                 }
-
-                this.materialsList = stringify(this.materialsList);
+                this.materialsList = JSON.stringify(this.materialsList);
             }
         }
     }

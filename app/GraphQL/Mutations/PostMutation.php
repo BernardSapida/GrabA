@@ -31,7 +31,7 @@ class PostMutation extends Mutation
         $rules['post.purpose'] = ['required'];
         $rules['post.fullname'] = ['required'];
         $rules['post.address'] = ['required'];
-        $rules['post.contact'] = ['required'];
+        $rules['post.contact'] = ['required', 'starts_with:09', 'size:11'];
         return $rules;
     }
 
