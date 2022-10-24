@@ -28,11 +28,6 @@
         {
             $post = new Post();
             $postData = $post->getPost($args['postId']);
-            // $postData = $post->getPost($args['postId']);
-
-            // if (isset($args['postId'])) {
-            //     $post->deletePost($args['projectId']);
-            // }
 
             return $postData;
         }

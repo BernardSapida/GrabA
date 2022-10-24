@@ -33,6 +33,9 @@ class PostInput extends InputType
             'contact' => [
                 'type' => Type::string(),
             ],
+            'created_at' => [
+                'type' => Type::string(),
+            ],
             'project_id' => [
                 'type' => Type::string(),
             ]

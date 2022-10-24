@@ -9,9 +9,6 @@
                     <div v-if="(this.$route.name == 'analytics' || this.$route.name == 'dashboard' || this.$route.name == 'post')">
                         <router-link class="nav-link" :to="{name: 'projects'}">Projects</router-link>
                     </div>
-                    <div v-if="this.$route.name == 'projects'">
-                        <router-link class="nav-link" :to="{name: 'analytics', params: { id: 1 }}">Analytics</router-link>
-                    </div>
                 </b-navbar-nav>
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item @click="onLogout">Sign Out</b-nav-item>

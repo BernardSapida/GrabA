@@ -26,37 +26,38 @@
                 </div>
                 <div v-if="materials_error.length > 0" class="mb-2 py-2 px-3 bg-danger text-white rounded">{{ materials_error }}</div>
                 <p>List of materials</p>
-                <table class="table table-hover mb-4">
-                    <thead>
-                        <tr>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Unit</th>
-                            <th scope="col">Item</th>
-                            <th scope="col">Unit Cost</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody v-if="materialsDOM.length == 0">
-                        <tr>
-                            <td class="text-center" colspan="6">There are no records to show</td>
-                        </tr>
-                    </tbody>
-                    <tbody v-for="(material, index) in materialsDOM" v-else :key="index">
-                        <tr v-append="material"></tr>
-                    </tbody>
-                    <tfoot>
-                        <b-button 
-                            class="btn mt-2" 
-                            size = "sm" 
-                            variant="dark" 
-                            type="button"
-                            @click="addMaterial"
-                        >
-                            Add new material
-                        </b-button>
-                    </tfoot>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Unit</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Unit Cost</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="materialsDOM.length == 0">
+                            <tr>
+                                <td class="text-center" colspan="6">There are no records to show</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-for="(material, index) in materialsDOM" v-else :key="index">
+                            <tr v-append="material"></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <b-button 
+                    class="btn mt-2 mb-4" 
+                    size = "sm" 
+                    variant="dark" 
+                    type="button"
+                    @click="addMaterial"
+                >
+                    Add new material
+                </b-button>
+                
 
                 <b-form-group>
                     <label for="Purpose">Purpose:</label>
@@ -154,6 +155,7 @@
                 this.fullname = '';
                 this.address = '';
                 this.contact = '';
+                this.materialsDOM = [];
             },
             onClearErrors() {
                 this.materialsList = [];
@@ -309,7 +311,7 @@
                 for(let i = 0; i < keys.length; i++) {
                     tempObj[keys[i]] = data[keys[i]];
 
-                    if(data[keys[i]].length == 0) {
+                    if(data[keys[i]].length == 0 || data[keys[i]] <= 0) {
                         this.materialsList = '';
                         this.materialsDOM_state = true;
                         return;

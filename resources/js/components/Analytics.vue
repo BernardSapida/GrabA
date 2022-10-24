@@ -86,7 +86,6 @@
                 this.$query('getPosts', {
                     postId: this.paramId
                 }).then((res) => {
-                    let cacheObj = {};
                     let postObj;
 
                     if(res.data.errors != null) return this.$router.push({ name: '404'});
@@ -108,30 +107,37 @@
                         return value;
                     });
 
-                    postObj.filter(post => {
-                        let materialsArr = post.materials;
-
-                        for(let index in materialsArr) {
-                            let materialObj = materialsArr[index];
-                            let itemName = Object.keys(materialObj)[0];
-
-                            // console.log(materialObj[Object.keys(materialObj)[0]])
-                            if(Object.prototype.hasOwnProperty.call(cacheObj, materialObj[itemName])) {
-                                cacheObj[materialObj[itemName]]['quantity'] += +materialObj['quantity'];
-                                cacheObj[materialObj[itemName]]['cost'] += (+materialObj['amount'] * +materialObj['quantity']);
-                            } else {
-                                cacheObj[materialObj[itemName]] = {
-                                    'name': materialObj[itemName],
-                                    'cost': +materialObj['amount'] * +materialObj['quantity'],
-                                    'quantity': +materialObj['quantity']
-                                };
-                            }
-                        }
-                    });
-
-                    this.items = Object.values(cacheObj);
+                    this.setTableValues(postObj);
                 });
 
+                this.getProjects();
+            },
+            setTableValues(object){
+                let cacheObj = {};
+
+                object.filter(post => {
+                    let materialsArr = post.materials;
+
+                    for(let index in materialsArr) {
+                        let materialObj = materialsArr[index];
+                        let itemName = Object.keys(materialObj)[0];
+
+                        if(Object.prototype.hasOwnProperty.call(cacheObj, materialObj[itemName])) {
+                            cacheObj[materialObj[itemName]]['quantity'] += +materialObj['quantity'];
+                            cacheObj[materialObj[itemName]]['cost'] += (+materialObj['amount'] * +materialObj['quantity']);
+                        } else {
+                            cacheObj[materialObj[itemName]] = {
+                                'name': materialObj[itemName],
+                                'cost': +materialObj['amount'] * +materialObj['quantity'],
+                                'quantity': +materialObj['quantity']
+                            };
+                        }
+                    }
+                })
+                
+                this.items = Object.values(cacheObj);
+            },
+            getProjects() {
                 this.$query('getProjects').then((res) => {
                     this.projects = res.data.data.getProjects;
 
@@ -142,7 +148,7 @@
                         }
                     }) 
                 });
-            },
+            }
         }
     }
 </script>

@@ -122,6 +122,8 @@
                 }).then((res) => {
                     if(res.data.errors != null) return this.$router.push({ name: '404'});
 
+                    console.log(res.data.data.getPosts)
+
                     this.posts = res.data.data.getPosts.map((value) => {
                         let parsedMaterialArr = JSON.parse(value.materials);
                         value.materials = [];
@@ -143,7 +145,3 @@
         }
     }
 </script>
-
-<!-- 
-    Query created_at, member (firstname, lastname)
- -->
