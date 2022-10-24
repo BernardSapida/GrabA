@@ -177,11 +177,11 @@
                 this.materialsDOM.push(`
                     <td>
                         <input
-                            id="quantity_${input_id}"
-                            name="quantity_${input_id}"
-                            type="number"
+                            id="item_${input_id}"
+                            name="item_${input_id}"
+                            type="text"
                             class="form-control"
-                            placeholder="Quantity"
+                            placeholder="Item"
                             >
                         </input>
                     </td>
@@ -197,11 +197,11 @@
                     </td>
                     <td>
                         <input
-                            id="item_${input_id}"
-                            name="item_${input_id}"
-                            type="text"
+                            id="quantity_${input_id}"
+                            name="quantity_${input_id}"
+                            type="number"
                             class="form-control"
-                            placeholder="Item"
+                            placeholder="Quantity"
                             >
                         </input>
                     </td>

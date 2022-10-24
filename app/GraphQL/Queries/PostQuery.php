@@ -27,7 +27,7 @@
         public function resolve($root, $args)
         {
             $post = new Post();
-            $postData = $post->getPost(1);
+            $postData = $post->getPost($args['postId']);
             // $postData = $post->getPost($args['postId']);
 
             // if (isset($args['postId'])) {

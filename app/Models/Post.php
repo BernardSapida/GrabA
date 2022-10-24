@@ -23,7 +23,8 @@ class Post extends Model
     {
         $member = new Member();
         $user_id = $member->getLoggedInMember()->id;
-        $project_id = Project::where('user_id', $user_id)->where('id', 1)->get();
+        $user_position = $member->where('id', $user_id)->get();
+        $project_id = Project::where('user_id', $user_id)->where('id', $id)->get();
         return self::where('project_id', $project_id[0]['id'])->get();
     }
 

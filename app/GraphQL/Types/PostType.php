@@ -36,6 +36,10 @@ class PostType extends GraphQLType
             'contact' => [
                 'type' => Type::string(),
                 'alias' => 'contact',
+            ],
+            'created_at' => [
+                'type' => Type::string(),
+                'alias' => 'created_at',
             ]
         ];
     }
