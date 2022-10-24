@@ -232,7 +232,7 @@
         methods: {
             onCreated() {
                 this.$query('getPosts', {
-                    postId: '1'
+                    postId: '2'
                 }).then((res) => {
                     console.log(res.data.data.getPosts);
                 });

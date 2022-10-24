@@ -21,14 +21,10 @@ class Post extends Model
 
     public function getPost($id)
     {
-        // $member = new Member();
-        // $user_id = $member->getLoggedInMember()->id;
-        // $project_id = Project::where('user_id', $user_id)->get('id');
-        // return self::where('project_id', $project_id)->get('id');
-
         $member = new Member();
         $user_id = $member->getLoggedInMember()->id;
-        return self::where('user_id', $user_id)->get();
+        $project_id = Project::where('user_id', $user_id)->where('id', 1)->get();
+        return self::where('project_id', $project_id[0]['id'])->get();
     }
 
     public function savePost($args)
