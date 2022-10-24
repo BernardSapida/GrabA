@@ -19,8 +19,13 @@ class Post extends Model
         return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 
-    public function getPost()
+    public function getPost($id)
     {
+        // $member = new Member();
+        // $user_id = $member->getLoggedInMember()->id;
+        // $project_id = Project::where('user_id', $user_id)->get('id');
+        // return self::where('project_id', $project_id)->get('id');
+
         $member = new Member();
         $user_id = $member->getLoggedInMember()->id;
         return self::where('user_id', $user_id)->get();

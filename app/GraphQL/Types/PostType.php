@@ -13,6 +13,10 @@ class PostType extends GraphQLType
     public function fields(): array
     {
         return [
+            'id' => [
+                'type' => Type::int(),
+                'alias' => 'id',
+            ],
             'materials' => [
                 'type' => Type::string(),
                 'alias' => 'materials',

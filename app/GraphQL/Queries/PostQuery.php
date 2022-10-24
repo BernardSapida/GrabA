@@ -20,20 +20,21 @@
         public function args(): array
         {
             return [
-                'projectId' => ['type' => Type::String()],
+                'postId' => ['type' => Type::String()],
             ];
         }
         
         public function resolve($root, $args)
         {
             $post = new Post();
-            $postData = $post->getPost();
+            $postData = $post->getPost(1);
+            // $postData = $post->getPost($args['postId']);
 
-            if (isset($args['projectId'])) {
-                $post->deletePost($args['projectId']);
-            }
+            // if (isset($args['postId'])) {
+            //     $post->deletePost($args['projectId']);
+            // }
 
-            return $post;
+            return $postData;
         }
     }
 ?>

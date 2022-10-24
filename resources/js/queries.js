@@ -27,6 +27,16 @@ let queries = {
             email,
         }
     }`,
+    getPosts: `query getPosts($postId: String) {
+        getPosts(postId: $postId) {
+            id,
+            materials,
+            purpose,
+            fullname,
+            address,
+            contact
+        }
+    }`,
     getProjects: `query getProjects($projectId: String) {
         getProjects(projectId: $projectId) {
             id,
@@ -44,7 +54,7 @@ let queries = {
         
 };
 
-let memberQueries = ['getMember', 'getProjects', 'saveProject', 'savePost'];
+let memberQueries = ['getMember', 'getProjects', 'getPosts', 'saveProject', 'savePost'];
 
 function getApiUrl(queryName) {
     let segment = '';

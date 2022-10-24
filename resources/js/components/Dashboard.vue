@@ -110,6 +110,7 @@
                         sortable: true,
                     }
                 ],
+                posts: [],
                 items: [
                     {
                         id: '0',
@@ -225,5 +226,24 @@
                 ]
             }
         },
+        created() {
+            this.onCreated();
+        },
+        methods: {
+            onCreated() {
+                this.$query('getPosts', {
+                    postId: '1'
+                }).then((res) => {
+                    console.log(res.data.data.getPosts);
+                });
+
+                // this.$query('getPosts', {
+                //     postId: 1,
+                // }).then((res) => {
+                //     this.posts = res.data.data.getPosts;
+                //     console.log(this.posts)
+                // });
+            },
+        }
     }
 </script>
