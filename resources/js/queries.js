@@ -3,6 +3,12 @@ import axios from 'axios';
 import store from './store';
 
 let queries = {
+    saveAccount: `mutation saveAccount($account: AccountInput) {
+        saveAccount(account: $account) {
+            error,
+            message
+        }
+    }`,
     saveLogin: `mutation saveLogin($member: LoginInput) {
         saveLogin(member: $member) {
             error, 
@@ -10,9 +16,25 @@ let queries = {
             token
         }
     }`,
+    savePost: `mutation savePost($post: PostInput) {
+        savePost(post: $post) {
+            error,
+            message
+        }
+    }`,
     getMember: `query getMember {
         getMember {
             email,
+        }
+    }`,
+    getPosts: `query getPosts($postId: String) {
+        getPosts(postId: $postId) {
+            id,
+            materials,
+            purpose,
+            fullname,
+            address,
+            contact
         }
     }`,
     getProjects: `query getProjects($projectId: String) {
@@ -32,7 +54,7 @@ let queries = {
         
 };
 
-let memberQueries = ['getMember', 'getProjects', 'saveProject'];
+let memberQueries = ['getMember', 'getProjects', 'getPosts', 'saveProject', 'savePost'];
 
 function getApiUrl(queryName) {
     let segment = '';

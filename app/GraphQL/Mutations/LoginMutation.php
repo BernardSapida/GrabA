@@ -38,9 +38,9 @@ class LoginMutation extends Mutation
     public function validationErrorMessages(array $args = []): array
     {
         return [
-            'member.email.required' => 'Please enter your email',
-            'member.password.required' => 'Please enter your password',
-            'member.email.email' => 'Please enter your valid email address'
+            'member.email.required' => 'Email address is required',
+            'member.email.email' => 'Email address must be a valid email address',
+            'member.password.required' => 'Password is required'
         ];
     }
 

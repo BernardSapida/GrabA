@@ -79,6 +79,7 @@ return [
             'mutation' => [
                 // ExampleMutation::class,
                 'saveLogin' => App\GraphQL\Mutations\LoginMutation::class,
+                'saveAccount' => App\GraphQL\Mutations\SignupMutation::class,
             ],
             // The types only available in this schema
             'types' => [
@@ -99,9 +100,10 @@ return [
                 // ExampleQuery::class,
                 'getMember' => App\GraphQL\Queries\MemberQuery::class,
                 'getProjects' => App\GraphQL\Queries\ProjectQuery::class,
-                
+                'getPosts' => App\GraphQL\Queries\PostQuery::class,
             ],
             'mutation' => [
+                'savePost' => App\GraphQL\Mutations\PostMutation::class,
                 'saveProject' => App\GraphQL\Mutations\ProjectMutation::class,
             ],
 
@@ -133,9 +135,12 @@ return [
         'ResponseFrontType' => App\GraphQL\Types\ResponseFrontType::class,
         'MemberType' => App\GraphQL\Types\MemberType::class,
         'ProjectType' => App\GraphQL\Types\ProjectType::class,
+        'PostType' => App\GraphQL\Types\PostType::class,
 
         //inputs
         'LoginInput' => App\GraphQL\InputObject\LoginInput::class,
+        'AccountInput' => App\GraphQL\InputObject\AccountInput::class,
+        'PostInput' => App\GraphQL\InputObject\PostInput::class,
         'ProjectInput' => App\GraphQL\InputObject\ProjectInput::class,
     ],
 

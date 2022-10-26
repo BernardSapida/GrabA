@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use App\Models\Outreach;
-use App\Models\Workplace;
 use App\Models\Member;
+use App\Models\Post;
 
 class Project extends Model
 {
@@ -19,6 +17,11 @@ class Project extends Model
     public function member()
     {
         return $this->belongsTo(Member::class, 'user_id', 'id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'project_id', 'id');
     }
 
     public function getProject()
@@ -34,6 +37,7 @@ class Project extends Model
         $member = new Member();
         $member_id = $member->getLoggedInMember()->id;
         $id = $args['id'];
+        
         try {
             if ($id == 0) {
                 $project = new self();
@@ -56,6 +60,7 @@ class Project extends Model
             return $response_obj;
         }
     }
+    
     public function deleteProject($id)
     {
         try {

@@ -96,9 +96,7 @@ export default {
                             ? errors[errors_keys.indexOf(index)]
                             : '';
 
-                        if (this[name]) {
-                            this[state] = false;
-                        }
+                        if (this[name]) this[state] = false;
                     };
                     error_message('err_projectName', 'project.projectName', 'state_projectName');
                     error_message('err_siteLocation', 'project.siteLocation', 'state_siteLocation');
@@ -119,14 +117,7 @@ export default {
                         this.$swal({
                             title: 'Success',
                             text: response.message,
-                            icon: 'success',
-                            customClass: {
-                                popup: 'yr-modal-alert yr-modal-alert-success',
-                                confirmButton:
-                                    'yr-modal-btn-alert yr-modal-btn-alert-success',
-                                title: 'yr-modal-header-alert yr-modal-header-alert-success',
-                                htmlContainer: 'yr-modal-body-text',
-                            },
+                            icon: 'success'
                         });
                     }
                 }

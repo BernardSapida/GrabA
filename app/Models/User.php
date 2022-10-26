@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -34,4 +35,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function saveAccount($args)
+    {
+        $response_obj = new \stdClass();
+        try {
+            $account = new self();
+            $response_obj->message = 'Account was created successfully';
+            $response_obj->error = false;
+            $account->firstname = $args['firstname'];
+            $account->lastname = $args['lastname'];
+            $account->email = $args['email'];
+            $account->position = $args['jobPosition'];
+            $account->password = Hash::make($args['password']);
+            $account->save();
+        } catch (Exception $e) {
+            Log::debug(print_r($e->getMessage(), true));
+            $response_obj->error = true;
+            $response_obj->message = $e->getMessage();
+        } finally {
+            return $response_obj;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="app">
         <router-view></router-view>
     </div>
 </template>
@@ -56,14 +56,7 @@ export default {
                     this.$swal({
                         title: 'Information',
                         text: 'Session expired! Please login again',
-                        icon: 'info',
-                        customClass: {
-                            popup: 'yr-modal-alert yr-modal-alert-info',
-                            confirmButton:
-                                'yr-modal-btn-alert yr-modal-btn-alert-info',
-                            title: 'yr-modal-header-alert yr-modal-header-alert-info',
-                            htmlContainer: 'yr-modal-body-text',
-                        },
+                        icon: 'info'
                     }).then((res) => {
                         if (res.isConfirmed) {
                             this.onResetMember();

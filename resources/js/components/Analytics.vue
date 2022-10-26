@@ -6,10 +6,10 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h2>Analytics</h2>
-                    <p>Project name: Project A</p>
+                    <p>Project name: {{ projectName }}</p>
                 </div>
                 <div>
-                    <router-link class="btn btn-dark" :to="{name: 'dashboard', params: { id: 1 }}">Go to dashboard</router-link>
+                    <router-link class="btn btn-dark" :to="{name: 'dashboard', params: { id: paramId }}">Go to dashboard</router-link>
                 </div>
             </div>
             <hr>
@@ -19,9 +19,9 @@
                     <p class="fs-3 m-0"><strong>Php {{ formatToMoney(computed_cost) }}</strong></p>
                 </div>
                 <div class="col-4">
-                    <p class="text-primary text-end">Out of <strong>Php {{ formatToMoney(capital_budget) }}</strong></p>
+                    <p class="text-primary text-end">Out of <strong>Php {{ formatToMoney(capitalBudget) }}</strong></p>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-label="Example 20px high" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar" role="progressbar" :style="{width: costProgress + '%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,8 @@
         },
         data() {
             return {
-                capital_budget: 7056000,
+                projectName: '',
+                capitalBudget: 0,
                 fields: [
                     {
                         key: 'name',
@@ -57,40 +58,96 @@
                         sortable: true,
                     }
                 ],
-                items: [
-                    {
-                        name: "Sand",
-                        quantity: "70 M3",
-                        cost: 26000,
-                    },
-                    {
-                        name: "Cement",
-                        quantity: "100 BAGS",
-                        cost: 24000,
-                    },
-                    {
-                        name: "Gravel",
-                        quantity: "60 M3",
-                        cost: 20000,
-                    },
-                    {
-                        name: "10MM Stell Bars",
-                        quantity: "2 PCS",
-                        cost: 560,
-                    },
-                ]
+                items: []
             }
         },
         computed: {
             computed_cost() {
-                let totalCost = 0;
-                this.items.forEach(item => totalCost += item.cost);
-                return totalCost;
+                let materialCost = 0;
+                this.items.forEach(item => materialCost += item.cost);
+                return materialCost;
+            },
+            costProgress() {
+                let materialCost = 0;
+                this.items.forEach(item => materialCost += item.cost);
+                return Math.floor(materialCost/this.capitalBudget*100);
             }
+            
+        },
+        created() {
+            this.paramId = this.$route.params.id;
+            this.onCreated();
         },
         methods: {
             formatToMoney(n) {
                 return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
+            onCreated() {
+                this.$query('getPosts', {
+                    postId: this.paramId
+                }).then((res) => {
+                    let postObj;
+
+                    if(res.data.errors != null) return this.$router.push({ name: '404'});
+
+                    postObj = res.data.data.getPosts.map((value) => {
+                        let parsedMaterialArr = JSON.parse(value.materials);
+                        value.materials = [];
+
+                        parsedMaterialArr.forEach(materials => {
+                            let tempObj = {};
+                            for(const key in materials) {
+                                let underscoreIndex = key.indexOf("_");
+                                tempObj[key.slice(0, underscoreIndex)] = materials[key];
+                            }
+
+                            value.materials.push(tempObj);
+                        })
+
+                        return value;
+                    });
+
+                    this.setTableValues(postObj);
+                });
+
+                this.getProjects();
+            },
+            setTableValues(object){
+                let cacheObj = {};
+
+                object.filter(post => {
+                    let materialsArr = post.materials;
+
+                    for(let index in materialsArr) {
+                        let materialObj = materialsArr[index];
+                        let itemName = Object.keys(materialObj)[0];
+
+                        if(Object.prototype.hasOwnProperty.call(cacheObj, materialObj[itemName])) {
+                            cacheObj[materialObj[itemName]]['quantity'] += +materialObj['quantity'];
+                            cacheObj[materialObj[itemName]]['cost'] += (+materialObj['amount'] * +materialObj['quantity']);
+                        } else {
+                            cacheObj[materialObj[itemName]] = {
+                                'name': materialObj[itemName],
+                                'cost': +materialObj['amount'] * +materialObj['quantity'],
+                                'quantity': +materialObj['quantity']
+                            };
+                        }
+                    }
+                })
+                
+                this.items = Object.values(cacheObj);
+            },
+            getProjects() {
+                this.$query('getProjects').then((res) => {
+                    this.projects = res.data.data.getProjects;
+
+                    this.projects.filter(projectObj => {
+                        if(projectObj['id'] == this.paramId) {
+                            this.projectName = projectObj['name'];
+                            this.capitalBudget = Number(projectObj['total_cost']);
+                        }
+                    }) 
+                });
             }
         }
     }

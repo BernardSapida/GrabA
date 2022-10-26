@@ -19,6 +19,7 @@ class MemberQuery extends Query
     {
         return GraphQL::type('MemberType');
     }
+    
     public function resolve($root, $args)
     {
         try {

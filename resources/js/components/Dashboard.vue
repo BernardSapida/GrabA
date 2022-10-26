@@ -3,7 +3,7 @@
     <div>
         <Navigation />
         <section class="container my-5">
-            <b-button id="btn-newPost" class="rounded-circle" variant="primary">+</b-button>
+            <b-button id="btn-newPost" class="rounded-circle" router-link :to="{name: 'post'}" variant="primary">+</b-button>
             <div class="row justify-content-between g-2">
                 <div class="col-auto">
                     <b-form-group
@@ -23,11 +23,11 @@
                     </b-form-group>
                 </div>
                 <div class="col-auto">
-                    <b-button router-link variant="dark" :to="{name: 'analytics', params: { id: 1 }}">Go to analytics</b-button>
+                    <b-button router-link variant="dark" :to="{name: 'analytics', params: { id: paramId }}">Go to analytics</b-button>
                 </div>
             </div>
             <div id="container_posts">
-                <div v-for="item in items" :key="item.id" class="mb-5">
+                <div v-for="post in posts" :key="post.id" class="mb-5">
                     <hr class="mb-4">
                     <div class="d-flex mb-3 justify-content-between">
                         <div class="d-flex">
@@ -35,9 +35,9 @@
                                 <img src="/images/default.jpg" class="rounded-circle" alt="User profile" height="70" width="70">
                             </div>
                             <div class="ms-3">
-                                <p class="m-0"><strong>{{ item.username }}</strong></p>
-                                <p class="m-0"><strong>{{ item.jobPosition }}</strong></p>
-                                <p class="m-0 text-muted">{{ item.date }}</p>
+                                <p class="m-0"><strong>{{ post.username }}</strong></p>
+                                <p class="m-0"><strong>Site Engineer</strong></p>
+                                <p class="m-0 text-muted">{{ post.created_at }}</p>
                             </div>
                         </div>
                         <div>
@@ -49,15 +49,14 @@
                     </div>
                     <div class="table-responsive mb-3">
                         <div class="table-responsive">
-                            <b-table striped responsive hover :items="item.table" :fields="fields"></b-table>
+                            <b-table striped responsive hover :items="post.materials" :fields="fields"></b-table>
                         </div>
                     </div>
-                    <p><strong>Purpose: </strong>{{ item.purpose }}</p>
-                    <p><strong>Hardware: </strong></p>
-                    <p><strong>Name: </strong>{{ item.name }}</p>
-                    <p><strong>Address: </strong>{{ item.address }}</p>
-                    <p><strong>Contact No.: </strong>{{ item.contact }}</p>
-                    {{ item.image }}
+                    <p><strong>Purpose: </strong>{{ post.purpose }}</p>
+                    <p><strong>Name: </strong>{{ post.fullname }}</p>
+                    <p><strong>Address: </strong>{{ post.address }}</p>
+                    <p><strong>Contact No.: </strong>{{ post.contact }}</p>
+                    {{ post.image }}
                     <b-carousel
                         id="carousel-fade"
                         style="text-shadow: 0px 0px 2px #000"
@@ -67,7 +66,7 @@
                         img-height="480"
                     >
                         <b-carousel-slide
-                            v-for="image, index in item.images" :key="index"
+                            v-for="image, index in post.images" :key="index"
                             :img-src=image
                         ></b-carousel-slide>
                     </b-carousel>
@@ -86,7 +85,6 @@
         },
         data() {
             return {
-                capital_budget: 7056000,
                 filter: null,
                 fields: [
                     {
@@ -110,120 +108,40 @@
                         sortable: true,
                     }
                 ],
-                items: [
-                    {
-                        id: '0',
-                        username: 'Nickerson Torres',
-                        jobPosition: 'Site Engineer',
-                        date: 'October 01, 2022',
-                        table: [
-                            {
-                                item: 'Item 2',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            },
-                            {
-                                item: 'Item 3',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            },
-                            {
-                                item: 'Item 4',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            },
-                            {
-                                item: 'Item 5',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            },
-                            {
-                                item: 'Item 6',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            }
-                        ],
-                        purpose: "Construction of footing 1 and 2",
-                        name: "Jen Hardware",
-                        address: "001 Indang, Cavite",
-                        contact: '09129461876',
-                        images: [
-                            'https://picsum.photos/1024/480/?image=1',
-                            'https://picsum.photos/1024/480/?image=2',
-                            'https://picsum.photos/1024/480/?image=3',
-                        ]
-                    },
-                    {
-                        id: 1,
-                        username: 'Nickerson Torres',
-                        jobPosition: 'Site Engineer',
-                        date: 'October 01, 2022',
-                        table: [
-                            {
-                                item: 'Item 1',
-                                quantity: 1,
-                                unit: 1,
-                                unitCost: 1,
-                                amount: 1,
-                            },
-                            {
-                                item: 'Item 2',
-                                quantity: 1,
-                                unit: 1,
-                                unitCost: 1,
-                                amount: 1,
-                            },
-                            {
-                                item: 'Item 3',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            },
-                            {
-                                item: 'Item 4',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            },
-                            {
-                                item: 'Item 5',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            },
-                            {
-                                item: 'Item 6',
-                                quantity: '0',
-                                unit: '0',
-                                unitCost: '0',
-                                amount: '0',
-                            }
-                        ],
-                        purpose: "Construction of footing 3 and 4",
-                        name: "Zo Hardware",
-                        address: "001 Imus, Cavite",
-                        contact: '09472126029',
-                        images: [
-                            'https://picsum.photos/1024/480/?image=4',
-                            'https://picsum.photos/1024/480/?image=5',
-                            'https://picsum.photos/1024/480/?image=6',
-                        ]
-                    }
-                ]
+                posts: [],
             }
         },
+        created() {
+            this.paramId = this.$route.params.id;
+            this.onCreated();
+        },
+        methods: {
+            onCreated() {
+                this.$query('getPosts', {
+                    postId: this.paramId
+                }).then((res) => {
+                    if(res.data.errors != null) return this.$router.push({ name: '404'});
+
+                    console.log(res.data.data.getPosts)
+
+                    this.posts = res.data.data.getPosts.map((value) => {
+                        let parsedMaterialArr = JSON.parse(value.materials);
+                        value.materials = [];
+
+                        parsedMaterialArr.forEach(materials => {
+                            let tempObj = {};
+                            for(const key in materials) {
+                                let underscoreIndex = key.indexOf("_");
+                                tempObj[key.slice(0, underscoreIndex)] = materials[key];
+                            }
+
+                            value.materials.push(tempObj);
+                        })
+
+                        return value;
+                    });
+                });
+            },
+        }
     }
 </script>

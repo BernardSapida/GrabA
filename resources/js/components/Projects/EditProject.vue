@@ -60,6 +60,14 @@ export default {
             err_materialCost: "",
         }
     },
+    watch: {
+        project(proj) {
+            this.projectName = proj.name ? proj.name : '';
+            this.siteLocation = proj.location ? proj.location : '';
+            this.materialCost = proj.total_cost ? proj.total_cost : '';
+            this.id = proj.id ? proj.id : '';
+        }
+    },
     methods: {
         onClearFields() {
             this.projectName = this.project.name ? this.project.name : '';
@@ -137,14 +145,6 @@ export default {
             this.onClearFields();
             this.onClearErrors();
         },
-    },
-    watch: {
-        project(proj) {
-            this.projectName = proj.name ? proj.name : '';
-            this.siteLocation = proj.location ? proj.location : '';
-            this.materialCost = proj.total_cost ? proj.total_cost : '';
-            this.id = proj.id ? proj.id : '';
-        }
-    },
+    }
 }
 </script>
