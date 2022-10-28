@@ -63,8 +63,9 @@ class Post extends Model
         if($id == 0) {
             $count = self::count();
             if($count > 0) {
-                $current_increment = DB::select("SHOW TABLE STATUS LIKE 'posts'");
-                $nextId = $current_increment[0]->Auto_increment;
+                $post = self::orderBy('id', 'DESC')->first();
+                // $current_increment = DB::select("SHOW TABLE STATUS LIKE 'posts'");
+                $nextId = $post->id + 1;
                 $foldeId = $nextId;
             } else {
                 $foldeId = 1;

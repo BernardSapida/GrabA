@@ -96,12 +96,12 @@
     export default {
         data() {
             return {
-                firstname: "Bernard",
-                lastname: "Sapida",
-                email: "bernard.sapida@cvsu.edu.ph",
-                jobPosition: "Software Engineer",
-                password: "@Oop1708131117",
-                password_confirmation: "@Oop1708131117",
+                firstname: "",
+                lastname: "",
+                email: "",
+                jobPosition: "",
+                password: "",
+                password_confirmation: "",
 
                 state_firstname: null,
                 state_lastname: null,

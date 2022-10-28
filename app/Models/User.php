@@ -35,7 +35,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function findForPassport($username)
+    {
+        $member = $this->where('email', $username)->first();
+        return $member;
+    }
 
+    public function validateForPassportPasswordGrant($password)
+    {
+        return Hash::check($password, $this->password);
+    }
     public function saveAccount($args)
     {
         $response_obj = new \stdClass();

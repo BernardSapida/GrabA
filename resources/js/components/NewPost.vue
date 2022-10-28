@@ -57,8 +57,70 @@
                 >
                     Add new material
                 </b-button>
-                
-
+                <b-row>
+                     <b-col lg="6" md="6" sm="12">
+                        <b-form-group>
+                            <label for="name">Name:</label>
+                            <b-form-input
+                                id="name"
+                                v-model="name"
+                                type="text"
+                                class="form-control"
+                                placeholder="Name"
+                                :state="name_state"
+                                trim>
+                            </b-form-input>
+                            <b-form-invalid-feedback>{{ name_error }}</b-form-invalid-feedback>
+                        </b-form-group>
+                    </b-col>
+                    <b-col lg="6" md="6" sm="12">
+                        <b-form-group>
+                            <label for="name">Position:</label>
+                            <b-form-input
+                                id="position"
+                                v-model="position"
+                                type="text"
+                                class="form-control"
+                                placeholder="Position"
+                                :state="position_state"
+                                trim>
+                            </b-form-input>
+                            <b-form-invalid-feedback>{{ position_error }}</b-form-invalid-feedback>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col lg="6" md="6" sm="12">
+                        <b-form-group>
+                            <label for="fullname">Name of hardware:</label>
+                            <b-form-input
+                                id="fullname"
+                                v-model="fullname"
+                                type="text"
+                                class="form-control"
+                                placeholder="Name of hardware"
+                                :state="fullname_state"
+                                trim>
+                            </b-form-input>
+                            <b-form-invalid-feedback>{{ fullname_error }}</b-form-invalid-feedback>
+                        </b-form-group>
+                    </b-col>
+                    <b-col lg="6" md="6" sm="12">
+                        <b-form-group>
+                            <label for="contact">Contact No.:</label>
+                            <b-form-input
+                                id="contact"
+                                v-model="contact"
+                                type="text"
+                                class="form-control"
+                                placeholder="Contact no."
+                                :state="contact_state"
+                                trim>
+                            </b-form-input>
+                            <b-form-invalid-feedback>{{ contact_error }}</b-form-invalid-feedback>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
                 <b-form-group>
                     <label for="Purpose">Purpose:</label>
                     <b-form-textarea
@@ -72,19 +134,7 @@
                     <b-form-invalid-feedback>{{ purpose_error }}</b-form-invalid-feedback>
                 </b-form-group>
 
-                <b-form-group>
-                    <label for="fullname">Name of hardware:</label>
-                    <b-form-input
-                        id="fullname"
-                        v-model="fullname"
-                        type="text"
-                        class="form-control"
-                        placeholder="Name of hardware"
-                        :state="fullname_state"
-                        trim>
-                    </b-form-input>
-                    <b-form-invalid-feedback>{{ fullname_error }}</b-form-invalid-feedback>
-                </b-form-group>
+                
 
                 <b-form-group>
                     <label for="address">Address:</label>
@@ -98,20 +148,6 @@
                         trim>
                     </b-form-input>
                     <b-form-invalid-feedback>{{ address_error }}</b-form-invalid-feedback>
-                </b-form-group>
-
-                <b-form-group>
-                    <label for="contact">Contact No.:</label>
-                    <b-form-input
-                        id="contact"
-                        v-model="contact"
-                        type="text"
-                        class="form-control"
-                        placeholder="Contact no."
-                        :state="contact_state"
-                        trim>
-                    </b-form-input>
-                    <b-form-invalid-feedback>{{ contact_error }}</b-form-invalid-feedback>
                 </b-form-group>
                 <div class="custom-file">
                     <input 
@@ -251,7 +287,6 @@
             submitPostForm(e) {
                 this.onClearErrors();
                 this.getMaterialList(e.target)
-                console.log(this.image)
                 if(this.image) {
                     this.$query('savePost', {
                         post: {
@@ -309,7 +344,7 @@
                                 this.$query('savePostImage', {
                                     image: this.image
                                 }).then (res => {
-                                    console.log(res)
+                                    // console.log(res)
                                 })
                             }
                         }

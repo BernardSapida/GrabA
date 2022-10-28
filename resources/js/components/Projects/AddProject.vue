@@ -33,7 +33,7 @@
                 </b-form-group>
                 <b-form-group
                     class="mb-3"
-                    label="Fullname"
+                    label="Person-in-Charge"
                     label-for="add_fullname"
                     :state="state_fullname"
                 >
