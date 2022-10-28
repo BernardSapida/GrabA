@@ -1,5 +1,6 @@
 <?php
 namespace App\GraphQL\Types;
+use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
@@ -40,7 +41,13 @@ class PostType extends GraphQLType
             'created_at' => [
                 'type' => Type::string(),
                 'alias' => 'created_at',
-            ]
+            ],
+            'project' => [
+                'type' => GraphQL::type('ProjectType'),
+            ],
+            'imageName' => [
+                'type' => Type::string(),
+            ],
         ];
     }
 }

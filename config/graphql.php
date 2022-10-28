@@ -104,6 +104,7 @@ return [
             ],
             'mutation' => [
                 'savePost' => App\GraphQL\Mutations\PostMutation::class,
+                'savePostImage' => App\GraphQL\Mutations\PostImageMutation::class,
                 'saveProject' => App\GraphQL\Mutations\ProjectMutation::class,
             ],
 
@@ -132,6 +133,7 @@ return [
         // ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,
         //types
+        'Upload' => \Rebing\GraphQL\Support\UploadType::class,
         'ResponseFrontType' => App\GraphQL\Types\ResponseFrontType::class,
         'MemberType' => App\GraphQL\Types\MemberType::class,
         'ProjectType' => App\GraphQL\Types\ProjectType::class,

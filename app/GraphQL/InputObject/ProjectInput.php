@@ -28,6 +28,12 @@ class ProjectInput extends InputType
             ],
             'materialCost' => [
                 'type' => Type::string(),
+            ],
+            'fullname' => [
+                'type' => Type::string(),
+            ],
+            'position' => [
+                'type' => Type::string(),
             ]
         ];
     }

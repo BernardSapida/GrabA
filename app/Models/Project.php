@@ -50,10 +50,12 @@ class Project extends Model
             $project->name = $args['projectName'];
             $project->location = $args['siteLocation'];
             $project->total_cost = $args['materialCost'];
+            $project->fullname = $args['fullname'];
+            $project->position = $args['position'];
             $project->user_id = $member_id;
             $project->save();
         } catch (Exception $e) {
-            Log::debug(print_r($e->getMessage(), true));
+            Log::debug(print_r($e->getMessage(), true)); 
             $response_obj->error = true;
             $response_obj->message = $e->getMessage();
         } finally {

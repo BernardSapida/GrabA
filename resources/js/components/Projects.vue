@@ -38,12 +38,13 @@
                         ></b-form-input>
                   </b-input-group>
             </b-form-group>
-
             <!-- Project Table -->
             <p>List of projects</p>
             <b-table
                 id="project"
                 responsive
+                hover
+                stacked
                 :items="projects"
                 :filter="table_options.filter"
                 :fields="table_options.fields"
@@ -56,14 +57,38 @@
                 show-empty
                 @filtered="onFiltered">
                 <template #cell(views)="row">
-                    <b-button router-link class="mr-1 my-1" variant="primary" size="sm" :to="{name: 'dashboard', params: { id: row.index }}">View Dashboard</b-button>
-                    <b-button router-link class="mr-1 my-1" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.index }}">View Analytics</b-button>
+                    <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="primary" size="sm" :to="{name: 'dashboard', params: { id: row.item.id }}">View Dashboard</b-button>
+                    <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.item.id }}">View Analytics</b-button>
                 </template>
                 <template #cell(actions)="row">
                     <b-button v-b-modal.modal-sm="'edit-project'" class="mr-1 my-1" variant="dark" size="sm" @click.prevent="onEditProject(row.item)">Edit</b-button>
                     <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id)">Delete</b-button>
                 </template>
             </b-table>
+            <b-col>
+                <h6>
+                    {{
+                        showEntries(
+                            table_options.perPage,
+                            table_options.currentPage,
+                            table_options.perPage,
+                            table_options.rows,
+                        )
+                    }}
+                </h6>
+            </b-col>
+            <b-col class="my-1">
+                <b-pagination
+                    v-model="table_options.currentPage"
+                    :total-rows="table_options.rows"
+                    :per-page="table_options.perPage"
+                    align="right"
+                    size="sm"
+                    class="yr-table-paginate"
+                    aria-controls="area"
+                >
+                </b-pagination>
+            </b-col>
         </section>
         <AddProject @success="onSuccess"/>
         <EditProject :project="project" @success="onSuccess"/>
@@ -91,9 +116,11 @@
                     show: false,
                     pageOptions: [5, 10, 20, 50],
                     fields: [
+                        { key: 'purpose', sortable: true },
                         { key: 'name', sortable: true },
-                        { key: 'location', sortable: true },
-                        { key: 'total_cost', sortable: true },
+                        { key: 'contact', sortable: true },
+                        { key: 'address', sortable: true },
+                        { key: 'position', sortable: true },
                         { key: 'views', sortable: true },
                         { key: 'actions' },
                     ],
@@ -108,7 +135,7 @@
         },
         computed: {
             rows() {
-                return this.areas.length;
+                return this.projects.length;
             },
         },
         created() {
@@ -119,6 +146,7 @@
                 this.$query('getProjects').then((res) => {
                     this.table_options.isBusy = false;
                     this.projects = res.data.data.getProjects;
+                    this.table_options.rows = this.projects.length;
                 });
             },
             onSuccess() {

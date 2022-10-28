@@ -15,7 +15,7 @@
                         <b-input-group size="sm">
                             <b-form-input
                             id="filter-input"
-                            v-model="filter"
+                            v-model="table_options.filter"
                             type="search"
                             placeholder="Search post"
                             ></b-form-input>
@@ -27,51 +27,93 @@
                 </div>
             </div>
             <div id="container_posts">
-                <div v-for="post in posts" :key="post.id" class="mb-5">
-                    <hr class="mb-4">
-                    <div class="d-flex mb-3 justify-content-between">
-                        <div class="d-flex">
-                            <div class="mr-3">
-                                <img src="/images/default.jpg" class="rounded-circle" alt="User profile" height="70" width="70">
+                <b-table 
+                    id="project"
+                    responsive
+                    :items="posts"
+                    :filter="table_options.filter"
+                    :fields="table_options.fields"
+                    :sort-by.sync="table_options.sortBy"
+                    :sort-desc.sync="table_options.sortDesc"
+                    :busy="table_options.isBusy"
+                    :per-page="table_options.perPage"
+                    :current-page="table_options.currentPage"
+                    striped
+                    show-empty
+                    @filtered="onFiltered">
+                    <!-- <template #cell(image)="row"> 
+                        <div class="mr-3">
+                            <img src="/images/default.jpg" class="rounded-circle" alt="User profile" height="70" width="70">
+                        </div>
+                    </template> -->
+                    <template #cell(name)="row">
+                        {{ row.item.project.fullname }}
+                    </template>
+                    <template #cell(position)="row">
+                        {{row.item.project.position}}
+                    </template>
+                    <template #cell(name_of_hardware)="row">
+                        {{row.item.fullname}}
+                    </template>
+                    <template #cell(show_details)="row">
+                        <b-button size="sm" @click="row.toggleDetails" class="mr-2"> Show</b-button>
+                    </template>
+                    <template #row-details="row">
+                        <b-card>
+                        <b-row class="mb-2">
+                            <b-col sm="3"><b>Items:</b></b-col>
+                            <div class="table-responsive mb-3">
+                                <div class="table-responsive">
+                                    <b-table striped responsive hover :items="row.item.materials" :fields="fields"></b-table>
+                                </div>
                             </div>
-                            <div class="ms-3">
-                                <p class="m-0"><strong>{{ post.username }}</strong></p>
-                                <p class="m-0"><strong>Site Engineer</strong></p>
-                                <p class="m-0 text-muted">{{ post.created_at }}</p>
-                            </div>
-                        </div>
-                        <div>
-                            <b-dropdown id="dropdown-right" right text="•••" variant="none" class="m-2">
-                                <b-dropdown-item href="#">Edit</b-dropdown-item>
-                                <b-dropdown-item href="#">Delete post</b-dropdown-item>
-                            </b-dropdown>
-                        </div>
-                    </div>
-                    <div class="table-responsive mb-3">
-                        <div class="table-responsive">
-                            <b-table striped responsive hover :items="post.materials" :fields="fields"></b-table>
-                        </div>
-                    </div>
-                    <p><strong>Purpose: </strong>{{ post.purpose }}</p>
-                    <p><strong>Name: </strong>{{ post.fullname }}</p>
-                    <p><strong>Address: </strong>{{ post.address }}</p>
-                    <p><strong>Contact No.: </strong>{{ post.contact }}</p>
-                    {{ post.image }}
-                    <b-carousel
-                        id="carousel-fade"
-                        style="text-shadow: 0px 0px 2px #000"
-                        fade
-                        indicators
-                        img-width="1024"
-                        img-height="480"
-                    >
-                        <b-carousel-slide
-                            v-for="image, index in post.images" :key="index"
-                            :img-src=image
-                        ></b-carousel-slide>
-                    </b-carousel>
-                </div>
+                        </b-row>
+
+                        <b-row class="mb-2">
+                            <b-col sm="3"><b>Images:</b></b-col>
+                            <b-carousel
+                                id="carousel-fade"
+                                style="text-shadow: 0px 0px 2px #000"
+                                fade
+                                indicators
+                                img-width="1024"
+                                img-height="480"
+                            >
+                                <b-carousel-slide
+                                    :img-src=row.item.imageName
+                                ></b-carousel-slide>
+                            </b-carousel>
+                        </b-row>
+
+                        <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
+                        </b-card>
+                </template>
+                </b-table>
             </div>
+            <b-col>
+                <h6>
+                    {{
+                        showEntries(
+                            table_options.perPage,
+                            table_options.currentPage,
+                            table_options.perPage,
+                            table_options.rows,
+                        )
+                    }}
+                </h6>
+            </b-col>
+            <b-col class="my-1">
+                <b-pagination
+                    v-model="table_options.currentPage"
+                    :total-rows="table_options.rows"
+                    :per-page="table_options.perPage"
+                    align="right"
+                    size="sm"
+                    class="yr-table-paginate"
+                    aria-controls="area"
+                >
+                </b-pagination>
+            </b-col>
         </section>
     </div>
 </template>
@@ -86,33 +128,40 @@
         data() {
             return {
                 filter: null,
-                fields: [
-                    {
-                        key: 'item',
-                        sortable: true,
-                    },
-                    {
-                        key: 'quantity',
-                        sortable: true
-                    },
-                    {
-                        key: 'unit',
-                        sortable: true
-                    },
-                    {
-                        key: 'unitCost',
-                        sortable: true,
-                    },
-                    {
-                        key: 'amount',
-                        sortable: true,
-                    }
-                ],
+                table_options: {
+                    isBusy: true,
+                    sortBy: 'title',
+                    sortDesc: false,
+                    selected: '',
+                    show: false,
+                    pageOptions: [5, 10, 20, 50],
+                    fields: [
+                        // { key: 'image', sortable: true },
+                        { key: 'name', sortable: true },
+                        { key: 'position', sortable: true },
+                        { key: 'purpose', sortable: true },
+                        { key: 'name_of_hardware', sortable: true },
+                        { key: 'address', sortable: true },
+                        { key: 'contact', sortable: true },
+                        { key: 'show_details', sortable: true },
+
+                    ],
+                    filter: null,
+                    rows: 1,
+                    currentPage: 1,
+                    perPage: 10,
+                },
+                
                 posts: [],
             }
         },
+        computed: {
+            rows() {
+                return this.posts.length;
+            },
+        },
         created() {
-            this.paramId = this.$route.params.id;
+            this.paramId = this.$route.params.id.toString();
             this.onCreated();
         },
         methods: {
@@ -121,8 +170,6 @@
                     postId: this.paramId
                 }).then((res) => {
                     if(res.data.errors != null) return this.$router.push({ name: '404'});
-
-                    console.log(res.data.data.getPosts)
 
                     this.posts = res.data.data.getPosts.map((value) => {
                         let parsedMaterialArr = JSON.parse(value.materials);
@@ -140,7 +187,18 @@
 
                         return value;
                     });
+                    this.table_options.rows = this.posts.length;
                 });
+            },
+            onFiltered(filteredItems) {
+                this.table_options.rows = filteredItems.length;
+
+                this.showEntries(
+                    this.table_options.perPage,
+                    this.table_options.currentPage,
+                    this.table_options.perPage,
+                    filteredItems.length,
+                );
             },
         }
     }

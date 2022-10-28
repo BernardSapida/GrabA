@@ -1,5 +1,6 @@
 <?php
 namespace App\GraphQL\Types;
+use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
@@ -28,6 +29,17 @@ class ProjectType extends GraphQLType
             'total_cost' => [
                 'type' => Type::string(),
                 'alias' => 'total_cost',
+            ],
+            'fullname' => [
+                'type' => Type::string(),
+                'alias' => 'fullname',
+            ],
+            'position' => [
+                'type' => Type::string(),
+                'alias' => 'position',
+            ],
+            'member' => [
+                'type' => GraphQL::type('MemberType'),
             ]
         ];
     }

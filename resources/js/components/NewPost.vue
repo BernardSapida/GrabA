@@ -73,13 +73,13 @@
                 </b-form-group>
 
                 <b-form-group>
-                    <label for="fullname">Fullname:</label>
+                    <label for="fullname">Name of hardware:</label>
                     <b-form-input
                         id="fullname"
                         v-model="fullname"
                         type="text"
                         class="form-control"
-                        placeholder="Fullname"
+                        placeholder="Name of hardware"
                         :state="fullname_state"
                         trim>
                     </b-form-input>
@@ -113,6 +113,15 @@
                     </b-form-input>
                     <b-form-invalid-feedback>{{ contact_error }}</b-form-invalid-feedback>
                 </b-form-group>
+                <div class="custom-file">
+                    <input 
+                    type="file" 
+                    id="add_post_image"
+                    ref="image"
+                    @change="onHandleUpload($event)">
+                    <label for="add_post_image">Choose Image</label>
+                    <span class="whiz-form-error">{{image_error}}</span>
+                </div>
             </b-form>
         </div>
     </section>
@@ -147,6 +156,8 @@
 
                 input_id: 0,
                 materialsDOM: [],
+                image: "",
+                image_error: ""
             }
         },
         methods: {
@@ -240,61 +251,73 @@
             submitPostForm(e) {
                 this.onClearErrors();
                 this.getMaterialList(e.target)
-                this.$query('savePost', {
-                    post: {
-                        id: '0',
-                        materials: this.materialsList,
-                        purpose: this.purpose,
-                        fullname: this.fullname,
-                        address: this.address,
-                        contact: this.contact,
-                        project_id: this.$route.params.id
-                    },
-                }).then((res) => {
-                    this.is_saving = false;
-                    if (res.data.errors) {
-                        let errors = Object.values(
-                            res.data.errors[0].extensions.validation,
-                        ).flat();
-                        let errors_keys = Object.keys(
-                            res.data.errors[0].extensions.validation,
-                        ).flat();
+                console.log(this.image)
+                if(this.image) {
+                    this.$query('savePost', {
+                        post: {
+                            id: '0',
+                            materials: this.materialsList,
+                            purpose: this.purpose,
+                            fullname: this.fullname,
+                            address: this.address,
+                            contact: this.contact,
+                            project_id: this.$route.params.id.toString()
+                        },
+                    }).then((res) => {
+                        this.is_saving = false;
+                        if (res.data.errors) {
+                            let errors = Object.values(
+                                res.data.errors[0].extensions.validation,
+                            ).flat();
+                            let errors_keys = Object.keys(
+                                res.data.errors[0].extensions.validation,
+                            ).flat();
 
-                        const error_message = (name, index, state) => {
-                            this[name] = errors_keys.some((q) => q == index)
-                                ? (errors[errors_keys.indexOf(index)].indexOf("post.contact") != -1 ?
-                                    errors[errors_keys.indexOf(index)].split("post.contact").join("contact number") 
-                                    : errors[errors_keys.indexOf(index)])
-                                : '';
+                            const error_message = (name, index, state) => {
+                                this[name] = errors_keys.some((q) => q == index)
+                                    ? (errors[errors_keys.indexOf(index)].indexOf("post.contact") != -1 ?
+                                        errors[errors_keys.indexOf(index)].split("post.contact").join("contact number") 
+                                        : errors[errors_keys.indexOf(index)])
+                                    : '';
 
-                            if(this[name]) this[state] = false;
-                        };
+                                if(this[name]) this[state] = false;
+                            };
 
-                        error_message('materials_error', 'post.materials', 'materialsDOM_state');
-                        error_message('purpose_error', 'post.purpose', 'purpose_state');
-                        error_message('fullname_error', 'post.fullname', 'fullname_state');
-                        error_message('address_error', 'post.address', 'address_state');
-                        error_message('contact_error', 'post.contact', 'contact_state');
-                    } else {
-                        let response = res.data.data.savePost;
-                        if (response.error) {
-                            this.$swal({
-                                title: 'Error',
-                                text: response.message,
-                                icon: 'error'
-                            });
+                            error_message('materials_error', 'post.materials', 'materialsDOM_state');
+                            error_message('purpose_error', 'post.purpose', 'purpose_state');
+                            error_message('fullname_error', 'post.fullname', 'fullname_state');
+                            error_message('address_error', 'post.address', 'address_state');
+                            error_message('contact_error', 'post.contact', 'contact_state');
                         } else {
-                            this.$emit('success');
-                            this.onClearFields();
-                            this.onClearErrors();
-                            this.$swal({
-                                title: 'Success',
-                                text: response.message,
-                                icon: 'success'
-                            });
+                            let response = res.data.data.savePost;
+                            if (response.error) {
+                                this.$swal({
+                                    title: 'Error',
+                                    text: response.message,
+                                    icon: 'error'
+                                });
+                            } else {
+                                this.$emit('success');
+                                this.onClearFields();
+                                this.onClearErrors();
+                                this.$router.push({ name: 'dashboard' });
+                                this.$swal({
+                                    title: 'Success',
+                                    text: response.message,
+                                    icon: 'success'
+                                });
+                                this.$query('savePostImage', {
+                                    image: this.image
+                                }).then (res => {
+                                    console.log(res)
+                                })
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    this.image_error = "Please upload a file"
+                }
+                
             },
             getMaterialList(target) {
                 const formData = new FormData(target);
@@ -323,6 +346,9 @@
                     }
                 }
                 this.materialsList = JSON.stringify(this.materialsList);
+            },
+            onHandleUpload() {
+                 this.image = this.$refs.image.files[0];
             }
         }
     }

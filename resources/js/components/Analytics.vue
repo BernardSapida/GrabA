@@ -75,7 +75,7 @@
             
         },
         created() {
-            this.paramId = this.$route.params.id;
+            this.paramId = this.$route.params.id.toString();
             this.onCreated();
         },
         methods: {

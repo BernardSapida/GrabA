@@ -31,9 +31,43 @@
                     <b-form-input id="add_materialCost" v-model="materialCost" :state="state_materialCost" trim></b-form-input>
                     <b-form-invalid-feedback>{{ err_materialCost }}</b-form-invalid-feedback>
                 </b-form-group>
+                <b-form-group
+                    class="mb-3"
+                    label="Fullname"
+                    label-for="add_fullname"
+                    :state="state_fullname"
+                >
+                    <b-form-input id="add_fullname" v-model="fullname" :state="state_fullname" trim></b-form-input>
+                    <b-form-invalid-feedback>{{ err_fullname }}</b-form-invalid-feedback>
+                </b-form-group>
+                <b-form-group
+                    class="mb-3"
+                    label="Position"
+                    label-for="add_position"
+                    :state="state_position"
+                >
+                    <b-form-input id="add_position" v-model="position" :state="state_position" trim></b-form-input>
+                    <b-form-invalid-feedback>{{ err_position }}</b-form-invalid-feedback>
+                </b-form-group>
                 <hr>
                 <div class="d-grid pt-1 mb-3">
-                    <b-button type="submit" class="mb-2" variant="primary" size="sm">Add project</b-button>
+                    <b-form-group>
+                        <b-button
+                            v-if="!isSaving"
+                            variant="primary"
+                            size="sm"
+                            type="submit">
+                        Add project
+                        </b-button>
+                        <b-button
+                            v-else
+                            variant="primary"
+                            size="sm"
+                            disabled>
+                            <b-spinner small type="grow"></b-spinner>
+                        Adding
+                        </b-button>
+                    </b-form-group>
                 </div>
             </b-form>
         </b-modal>
@@ -48,14 +82,22 @@ export default {
             projectName: "",
             siteLocation: "",
             materialCost: "",
+            fullname: "",
+            position: "",
 
             state_projectName: null,
             state_siteLocation: null,
             state_materialCost: null,
-            
+            state_fullname: null,
+            state_position: null,
+
             err_projectName: "",
             err_siteLocation: "",
             err_materialCost: "",
+            err_fullname: "",
+            err_position: "",
+
+            isSaving: false,
         }
     },
     methods: {
@@ -63,6 +105,8 @@ export default {
             this.projectName = '';
             this.siteLocation = '';
             this.materialCost = '';
+            this.position = '';
+            this.fullname = '';
         },
         onClearErrors() {
             this.err_projectName = '';
@@ -71,18 +115,25 @@ export default {
             this.state_siteLocation = null;
             this.err_materialCost = '';
             this.state_materialCost = null;
+            this.err_fullname = '';
+            this.state_fullname = null;
+            this.err_position = '';
+            this.state_position = null;
         },
         submitProjectForm() {
+            this.isSaving = true;
             this.onClearErrors();
             this.$query('saveProject', {
                 project: {
                     id: '0',
                     projectName: this.projectName,
                     siteLocation: this.siteLocation,
-                    materialCost: this.materialCost
+                    materialCost: this.materialCost,
+                    fullname: this.fullname,
+                    position: this.position,
                 },
             }).then((res) => {
-                this.is_saving = false;
+                this.isSaving = false;
                 if (res.data.errors) {
                     let errors = Object.values(
                         res.data.errors[0].extensions.validation,
@@ -101,6 +152,8 @@ export default {
                     error_message('err_projectName', 'project.projectName', 'state_projectName');
                     error_message('err_siteLocation', 'project.siteLocation', 'state_siteLocation');
                     error_message('err_materialCost', 'project.materialCost', 'state_materialCost');
+                    error_message('err_fullname', 'project.fullname', 'state_fullname');
+                    error_message('err_position', 'project.position', 'state_position');
                 } else {
                     let response = res.data.data.saveProject;
                     if (response.error) {

@@ -2,6 +2,7 @@
 namespace App\GraphQL\Mutations;
 use Closure;
 use App\Models\Post;
+use App\Models\Helper;
 use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
@@ -16,6 +17,7 @@ class PostMutation extends Mutation
     {
         return [
             'post' => ['type' => GraphQL::type('PostInput')],
+            'image' => ['type' => GraphQL::type('Upload')],
         ];
     }
 
@@ -48,9 +50,10 @@ class PostMutation extends Mutation
 
     public function resolve($root, $args)
     {
-        $post = $args['post'];
-
+        $helper = new Helper();
         $postModel = new Post();
+
+        $post = $args['post'];
 
         $response_obj = $postModel->savePost($post);
 

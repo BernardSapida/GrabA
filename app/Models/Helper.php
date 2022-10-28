@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Log;
 use Crypt;
+use Str;
 
 class Helper extends Eloquent
 {
@@ -23,6 +24,17 @@ class Helper extends Eloquent
             $new_id = self::decryptValue($id);
         }
         return $new_id;
+    }
+    public function uploadImage($image, $id, $model) {
+        if($image) {
+            $path =  'uploads/'.$model.'/'.$id.'/';
+            $original_name = Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)).'.'.$image->getClientOriginalExtension();
+            $image->move('public/'.$path, $original_name);
+            $final_path = $original_name;
+        } else {
+            $final_path = "";
+        }
+        return $final_path;
     }
 }
 

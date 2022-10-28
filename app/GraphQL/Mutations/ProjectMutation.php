@@ -30,6 +30,8 @@ class ProjectMutation extends Mutation
         $project = $args['project'];
         $projectId = $project['id'];
         $rules['project.siteLocation'] = ['required'];
+        $rules['project.fullname'] = ['required'];
+        $rules['project.position'] = ['required'];
         $rules['project.materialCost'] = ['required', 'numeric', 'min:0'];
         if ($projectId == 0) {
             $rules['project.projectName'] = ['required', 'unique:projects,name'];
@@ -45,6 +47,8 @@ class ProjectMutation extends Mutation
     {
         return [
             'project.projectName.required' => 'Project name is required',
+            'project.fullname.required' => 'Full name is required',
+            'project.position.required' => 'Position is required',
             'project.projectName.unique' => 'Project name must be unique',
             'project.siteLocation.required' => 'Site location is required',
             'project.materialCost.required' => 'Material cost is required',
