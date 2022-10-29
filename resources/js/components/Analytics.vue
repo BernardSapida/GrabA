@@ -19,10 +19,9 @@
                     <p class="fs-3 m-0"><strong>Php {{ formatToMoney(computed_cost) }}</strong></p>
                 </div>
                 <div class="col-4">
-                    <p class="text-primary text-end">Out of <strong>Php {{ formatToMoney(capitalBudget) }}</strong></p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" :style="{width: costProgress + '%'}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+                    <p class="text-primary text-end m-0">Out of <strong>Php {{ formatToMoney(capitalBudget) }}</strong></p>
+                    <b-progress :value="computed_cost" :max="capitalBudget"></b-progress>
+                    <p>Percentage: {{ costProgress }}%</p>
                 </div>
             </div>
             <hr>

@@ -44,10 +44,12 @@ class Post extends Model
             $response_obj->message = 'Post was uploaded successfully';
             $response_obj->error = false;
             $post->materials = $args['materials'];
-            $post->purpose = $args['purpose'];
             $post->fullname = $args['fullname'];
-            $post->address = $args['address'];
+            $post->position = $args['position'];
+            $post->hardware = $args['fullname'];
             $post->contact = $args['contact'];
+            $post->address = $args['address'];
+            $post->purpose = $args['purpose'];
             $post->project_id = $args['project_id'];
             $post->save();
         } catch (Exception $e) {

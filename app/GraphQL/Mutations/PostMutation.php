@@ -30,10 +30,12 @@ class PostMutation extends Mutation
     {
         $rules = [];
         $rules['post.materials'] = ['required'];
-        $rules['post.purpose'] = ['required'];
         $rules['post.fullname'] = ['required'];
-        $rules['post.address'] = ['required'];
+        $rules['post.position'] = ['required'];
+        $rules['post.hardware'] = ['required'];
         $rules['post.contact'] = ['required', 'starts_with:09', 'size:11'];
+        $rules['post.address'] = ['required'];
+        $rules['post.purpose'] = ['required'];
         return $rules;
     }
 
@@ -41,10 +43,12 @@ class PostMutation extends Mutation
     {
         return [
             'post.materials.required' => 'List of materials are required',
-            'post.purpose.required' => 'Purpose is required',
             'post.fullname.required' => 'Fullname is required',
-            'post.address.required' => 'Address is required',
+            'post.position.required' => 'Position is required',
+            'post.hardware.required' => 'Hardware is required',
             'post.contact.required' => 'Contact is required',
+            'post.address.required' => 'Address is required',
+            'post.purpose.required' => 'Purpose is required',
         ];
     }
 

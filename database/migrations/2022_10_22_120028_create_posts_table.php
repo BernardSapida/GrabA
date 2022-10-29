@@ -16,10 +16,12 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->json('materials');
-            $table->string('purpose');
             $table->string('fullname');
-            $table->string('address');
+            $table->string('position');
+            $table->string('hardware');
             $table->string('contact');
+            $table->string('address');
+            $table->string('purpose');
             $table
                 ->bigInteger('project_id')
                 ->unsigned()
