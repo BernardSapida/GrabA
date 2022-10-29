@@ -37,10 +37,12 @@ let queries = {
         getPosts(postId: $postId) {
             id,
             materials,
-            purpose,
             fullname,
-            address,
+            position,
+            hardware,
             contact
+            address,
+            purpose,
             created_at,
             imageName
             project {

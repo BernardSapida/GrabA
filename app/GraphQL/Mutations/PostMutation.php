@@ -54,7 +54,6 @@ class PostMutation extends Mutation
 
     public function resolve($root, $args)
     {
-        $helper = new Helper();
         $postModel = new Post();
 
         $post = $args['post'];
