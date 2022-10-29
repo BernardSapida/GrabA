@@ -295,6 +295,7 @@
                             type="number"
                             class="form-control"
                             style="pointer-events: none;"
+                            value="0"
                             >
                         </input>
                     </td>
