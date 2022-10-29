@@ -21,16 +21,22 @@ class PostInput extends InputType
             'materials' => [
                 'type' => Type::string(),
             ],
-            'purpose' => [
+            'fullname' => [
                 'type' => Type::string(),
             ],
-            'fullname' => [
+            'position' => [
+                'type' => Type::string(),
+            ],
+            'hardware' => [
+                'type' => Type::string(),
+            ],
+            'contact' => [
                 'type' => Type::string(),
             ],
             'address' => [
                 'type' => Type::string(),
             ],
-            'contact' => [
+            'purpose' => [
                 'type' => Type::string(),
             ],
             'created_at' => [

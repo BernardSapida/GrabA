@@ -17,10 +17,10 @@
                     <div>
                         <b-button 
                             class="btn" 
-                            variant="primary" 
-                            type="submit"
+                            variant="dark" 
+                            router-link :to="{name: 'dashboard', params: { id: $route.params.id }}"
                         >
-                            Add new post
+                            Cancel
                         </b-button>
                     </div>
                 </div>
@@ -48,34 +48,37 @@
                         </tbody>
                     </table>
                 </div>
-                <b-button 
-                    class="btn mt-2 mb-4" 
-                    size = "sm" 
-                    variant="dark" 
-                    type="button"
-                    @click="addMaterial"
-                >
-                    Add new material
-                </b-button>
+                <div class="d-flex bg-red justify-content-end">
+                    <b-button 
+                        class="btn mt-2 mb-4" 
+                        size = "sm" 
+                        variant="dark" 
+                        type="button"
+                        @click="addMaterial"
+                    >
+                        Add new material
+                    </b-button>
+                </div>
+                
                 <b-row>
                      <b-col lg="6" md="6" sm="12">
                         <b-form-group>
-                            <label for="name">Name:</label>
+                            <label for="fullname">Name:</label>
                             <b-form-input
-                                id="name"
-                                v-model="name"
+                                id="fullname"
+                                v-model="fullname"
                                 type="text"
                                 class="form-control"
-                                placeholder="Name"
-                                :state="name_state"
+                                placeholder="Fullname"
+                                :state="fullname_state"
                                 trim>
                             </b-form-input>
-                            <b-form-invalid-feedback>{{ name_error }}</b-form-invalid-feedback>
+                            <b-form-invalid-feedback>{{ fullname_error }}</b-form-invalid-feedback>
                         </b-form-group>
                     </b-col>
                     <b-col lg="6" md="6" sm="12">
                         <b-form-group>
-                            <label for="name">Position:</label>
+                            <label for="position">Position:</label>
                             <b-form-input
                                 id="position"
                                 v-model="position"
@@ -89,20 +92,21 @@
                         </b-form-group>
                     </b-col>
                 </b-row>
+
                 <b-row>
                     <b-col lg="6" md="6" sm="12">
                         <b-form-group>
-                            <label for="fullname">Name of hardware:</label>
+                            <label for="hardware">Name of hardware:</label>
                             <b-form-input
-                                id="fullname"
-                                v-model="fullname"
+                                id="hardware"
+                                v-model="hardware"
                                 type="text"
                                 class="form-control"
                                 placeholder="Name of hardware"
-                                :state="fullname_state"
+                                :state="hardware_state"
                                 trim>
                             </b-form-input>
-                            <b-form-invalid-feedback>{{ fullname_error }}</b-form-invalid-feedback>
+                            <b-form-invalid-feedback>{{ hardware_error }}</b-form-invalid-feedback>
                         </b-form-group>
                     </b-col>
                     <b-col lg="6" md="6" sm="12">
@@ -121,20 +125,6 @@
                         </b-form-group>
                     </b-col>
                 </b-row>
-                <b-form-group>
-                    <label for="Purpose">Purpose:</label>
-                    <b-form-textarea
-                        id="purpose"
-                        v-model="purpose"
-                        placeholder="Enter something..."
-                        :state="purpose_state"
-                        rows="3"
-                        max-rows="6"
-                    ></b-form-textarea>
-                    <b-form-invalid-feedback>{{ purpose_error }}</b-form-invalid-feedback>
-                </b-form-group>
-
-                
 
                 <b-form-group>
                     <label for="address">Address:</label>
@@ -149,14 +139,38 @@
                     </b-form-input>
                     <b-form-invalid-feedback>{{ address_error }}</b-form-invalid-feedback>
                 </b-form-group>
+
+                <b-form-group>
+                    <label for="Purpose">Purpose:</label>
+                    <b-form-textarea
+                        id="purpose"
+                        v-model="purpose"
+                        placeholder="Enter something..."
+                        :state="purpose_state"
+                        rows="3"
+                        max-rows="6"
+                    ></b-form-textarea>
+                    <b-form-invalid-feedback>{{ purpose_error }}</b-form-invalid-feedback>
+                </b-form-group>
+
                 <div class="custom-file">
+                    <label for="add_post_image">Choose Image</label><br>
                     <input 
-                    type="file" 
                     id="add_post_image"
                     ref="image"
+                    type="file" 
                     @change="onHandleUpload($event)">
-                    <label for="add_post_image">Choose Image</label>
                     <span class="whiz-form-error">{{image_error}}</span>
+                </div>
+
+                <div class="d-flex bg-red justify-content-end">
+                    <b-button 
+                        class="btn" 
+                        variant="primary" 
+                        type="submit"
+                    >
+                        Post
+                    </b-button>
                 </div>
             </b-form>
         </div>
@@ -173,22 +187,28 @@
         data() {
             return {
                 materialsList: [],
-                purpose: "",
                 fullname: "",
+                position: "",
+                hardware: "",
                 address: "",
                 contact: "",
+                purpose: "",
 
                 materials_error: '',
-                purpose_error: '',
                 fullname_error: '',
+                position_error: '',
+                hardware_error: '',
                 address_error: '',
                 contact_error: '',
+                purpose_error: '',
 
                 materialsDOM_state: null,
-                purpose_state: null,
                 fullname_state: null,
-                address_state: null,
+                position_state: null,
+                hardware_state: null,
                 contact_state: null,
+                address_state: null,
+                purpose_state: null,
 
                 input_id: 0,
                 materialsDOM: [],
@@ -198,26 +218,32 @@
         },
         methods: {
             onClearFields() {
-                this.purpose = '';
-                this.fullname = '';
-                this.address = '';
-                this.contact = '';
                 this.materialsDOM = [];
+                this.name = '';
+                this.position = '';
+                this.hardware = '';
+                this.contact = '';
+                this.address = '';
+                this.purpose = '';
             },
             onClearErrors() {
                 this.materialsList = [];
 
                 this.materials_error = '';
-                this.purpose_error = '';
-                this.fullname_error = '';
-                this.address_error = '';
+                this.name_error = '';
+                this.position_error = '';
+                this.hardware_error = '';
                 this.contact_error = '';
+                this.address_error = '';
+                this.purpose_error = '';
 
                 this.materialsDOM_state = null;
-                this.purpose_state = null;
                 this.fullname_state = null;
-                this.address_state = null;
+                this.position_state = null;
+                this.hardware_state = null;
                 this.contact_state = null;
+                this.address_state = null;
+                this.purpose_state = null;
             },
             addMaterial() {
                 let { input_id } = this;
@@ -230,7 +256,6 @@
                             name="item_${input_id}"
                             type="text"
                             class="form-control"
-                            placeholder="Item"
                             >
                         </input>
                     </td>
@@ -240,7 +265,6 @@
                             name="unit_${input_id}"
                             type="text"
                             class="form-control"
-                            placeholder="Unit"
                             >
                         </-input>
                     </td>
@@ -250,7 +274,7 @@
                             name="quantity_${input_id}"
                             type="number"
                             class="form-control"
-                            placeholder="Quantity"
+                            onkeyup="document.getElementById('amount_${input_id}').value = this.value * document.getElementById('unitCost_${input_id}').value"
                             >
                         </input>
                     </td>
@@ -260,7 +284,7 @@
                             name="unitCost_${input_id}"
                             type="number"
                             class="form-control"
-                            placeholder="Unit Cost"
+                            onkeyup="document.getElementById('amount_${input_id}').value = this.value * document.getElementById('quantity_${input_id}').value"
                             >
                         </input>
                     </td>
@@ -270,7 +294,8 @@
                             name="amount_${input_id}"
                             type="number"
                             class="form-control"
-                            placeholder="Amount"
+                            style="pointer-events: none;"
+                            value="0"
                             >
                         </input>
                     </td>
@@ -284,6 +309,9 @@
                         </button>
                     </td>`);
             },
+            test() {
+                console.log("TEST");
+            },
             submitPostForm(e) {
                 this.onClearErrors();
                 this.getMaterialList(e.target)
@@ -291,12 +319,14 @@
                     this.$query('savePost', {
                         post: {
                             id: '0',
+                            project_id: this.$route.params.id.toString(),
                             materials: this.materialsList,
-                            purpose: this.purpose,
                             fullname: this.fullname,
-                            address: this.address,
+                            position: this.position,
+                            hardware: this.hardware,
                             contact: this.contact,
-                            project_id: this.$route.params.id.toString()
+                            address: this.address,
+                            purpose: this.purpose,
                         },
                     }).then((res) => {
                         this.is_saving = false;
@@ -319,10 +349,12 @@
                             };
 
                             error_message('materials_error', 'post.materials', 'materialsDOM_state');
-                            error_message('purpose_error', 'post.purpose', 'purpose_state');
                             error_message('fullname_error', 'post.fullname', 'fullname_state');
-                            error_message('address_error', 'post.address', 'address_state');
+                            error_message('position_error', 'post.position', 'position_state');
+                            error_message('hardware_error', 'post.hardware', 'hardware_state');
                             error_message('contact_error', 'post.contact', 'contact_state');
+                            error_message('address_error', 'post.address', 'address_state');
+                            error_message('purpose_error', 'post.purpose', 'purpose_state');
                         } else {
                             let response = res.data.data.savePost;
                             if (response.error) {
@@ -344,7 +376,7 @@
                                 this.$query('savePostImage', {
                                     image: this.image
                                 }).then (res => {
-                                    // console.log(res)
+                                    console.log(res)
                                 })
                             }
                         }

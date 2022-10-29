@@ -15,7 +15,6 @@ mix.js('resources/js/app.js', 'public/js')
     .version()
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/dashboard.scss', 'public/css')
     .options({
         processCssUrls: false,
     });

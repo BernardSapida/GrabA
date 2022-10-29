@@ -22,21 +22,29 @@ class PostType extends GraphQLType
                 'type' => Type::string(),
                 'alias' => 'materials',
             ],
-            'purpose' => [
-                'type' => Type::string(),
-                'alias' => 'purpose',
-            ],
             'fullname' => [
                 'type' => Type::string(),
                 'alias' => 'fullname',
+            ],
+            'position' => [
+                'type' => Type::string(),
+                'alias' => 'position',
+            ],
+            'hardware' => [
+                'type' => Type::string(),
+                'alias' => 'hardware',
+            ],
+            'contact' => [
+                'type' => Type::string(),
+                'alias' => 'contact',
             ],
             'address' => [
                 'type' => Type::string(),
                 'alias' => 'address',
             ],
-            'contact' => [
+            'purpose' => [
                 'type' => Type::string(),
-                'alias' => 'contact',
+                'alias' => 'purpose',
             ],
             'created_at' => [
                 'type' => Type::string(),

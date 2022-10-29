@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div>
+    <div class="dashboard_container">
         <Navigation />
         <section class="container my-5">
             <b-button id="btn-newPost" class="rounded-circle" router-link :to="{name: 'post'}" variant="primary">+</b-button>
@@ -29,15 +29,15 @@
             <div id="container_posts">
                 <b-table 
                     id="project"
-                    responsive
                     :items="posts"
                     :filter="table_options.filter"
-                    :fields="table_options.fields"
                     :sort-by.sync="table_options.sortBy"
                     :sort-desc.sync="table_options.sortDesc"
                     :busy="table_options.isBusy"
                     :per-page="table_options.perPage"
                     :current-page="table_options.currentPage"
+                    :fields="table_options.fields"
+                    responsive
                     striped
                     show-empty
                     @filtered="onFiltered">
@@ -47,47 +47,54 @@
                         </div>
                     </template> -->
                     <template #cell(name)="row">
-                        {{ row.item.project.fullname }}
+                        {{ row.item.fullname }}
                     </template>
                     <template #cell(position)="row">
-                        {{row.item.project.position}}
+                        {{ row.item.position }}
+                    </template>
+                    <template #cell(purpose)="row">
+                        {{ row.item.purpose }}
                     </template>
                     <template #cell(name_of_hardware)="row">
-                        {{row.item.fullname}}
+                        {{ row.item.hardware }}
+                    </template>
+                    <template #cell(address)="row">
+                        {{ row.item.address }}
+                    </template>
+                    <template #cell(contact)="row">
+                        {{ row.item.contact }}
                     </template>
                     <template #cell(show_details)="row">
-                        <b-button size="sm" @click="row.toggleDetails" class="mr-2"> Show</b-button>
+                        <b-button size="sm" class="mr-2" @click="row.toggleDetails"> Show</b-button>
                     </template>
                     <template #row-details="row">
                         <b-card>
-                        <b-row class="mb-2">
-                            <b-col sm="3"><b>Items:</b></b-col>
-                            <div class="table-responsive mb-3">
-                                <div class="table-responsive">
-                                    <b-table striped responsive hover :items="row.item.materials" :fields="fields"></b-table>
+                            <b-row class="mb-2">
+                                <b-col sm="3"><b>Items:</b></b-col>
+                                <div class="table-responsive mb-3">
+                                    <div class="table-responsive">
+                                        <b-table striped responsive hover :items="row.item.materials" :fields="fields"></b-table>
+                                    </div>
                                 </div>
-                            </div>
-                        </b-row>
-
-                        <b-row class="mb-2">
-                            <b-col sm="3"><b>Images:</b></b-col>
-                            <b-carousel
-                                id="carousel-fade"
-                                style="text-shadow: 0px 0px 2px #000"
-                                fade
-                                indicators
-                                img-width="1024"
-                                img-height="480"
-                            >
-                                <b-carousel-slide
-                                    :img-src=row.item.imageName
-                                ></b-carousel-slide>
-                            </b-carousel>
-                        </b-row>
-
-                        <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
+                            </b-row>
+                            <b-row class="mb-2">
+                                <b-col sm="3"><b>Images:</b></b-col>
+                                <b-carousel
+                                    id="carousel-fade"
+                                    style="text-shadow: 0px 0px 2px #000"
+                                    fade
+                                    indicators
+                                    img-width="1024"
+                                    img-height="480"
+                                >
+                                    <b-carousel-slide
+                                        :img-src=row.item.imageName
+                                    ></b-carousel-slide>
+                                </b-carousel>
+                            </b-row>
+                            <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
                         </b-card>
-                </template>
+                    </template>
                 </b-table>
             </div>
             <b-col>
@@ -128,6 +135,7 @@
         data() {
             return {
                 filter: null,
+                fields: [],
                 table_options: {
                     isBusy: true,
                     sortBy: 'title',
@@ -136,15 +144,13 @@
                     show: false,
                     pageOptions: [5, 10, 20, 50],
                     fields: [
-                        // { key: 'image', sortable: true },
                         { key: 'name', sortable: true },
                         { key: 'position', sortable: true },
                         { key: 'purpose', sortable: true },
                         { key: 'name_of_hardware', sortable: true },
                         { key: 'address', sortable: true },
                         { key: 'contact', sortable: true },
-                        { key: 'show_details', sortable: true },
-
+                        { key: 'show_details', sortable: true }
                     ],
                     filter: null,
                     rows: 1,
@@ -203,3 +209,21 @@
         }
     }
 </script>
+
+<style scoped>
+    div.dashboard_container {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    div section.container {
+        position: relative;
+    }
+
+    div section.container #btn-newPost {
+        position: fixed;
+        right: 40px;
+        bottom: 40px;
+        z-index: 2;
+    }
+</style>
