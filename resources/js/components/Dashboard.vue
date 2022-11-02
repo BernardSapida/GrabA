@@ -47,7 +47,7 @@
                         </div>
                     </template> -->
                     <template #cell(name)="row">
-                        {{ row.item.fullname }}
+                        {{ row.item.name }}
                     </template>
                     <template #cell(position)="row">
                         {{ row.item.position }}
@@ -55,8 +55,11 @@
                     <template #cell(purpose)="row">
                         {{ row.item.purpose }}
                     </template>
+                    <template #cell(date)="row">
+                        {{ formatDate(row.item.created_at) }}
+                    </template>
                     <template #cell(name_of_hardware)="row">
-                        {{ row.item.hardware }}
+                        {{ row.item.fullname }}
                     </template>
                     <template #cell(address)="row">
                         {{ row.item.address }}
@@ -88,13 +91,18 @@
                                     img-height="480"
                                 >
                                     <b-carousel-slide
-                                        :img-src=row.item.imageName
+                                     v-for="image, index in row.item.images" :key="index"
+                                        :img-src=image
                                     ></b-carousel-slide>
                                 </b-carousel>
                             </b-row>
                             <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
                         </b-card>
                     </template>
+                    <template #cell(actions)="row">
+                        <b-button v-b-modal.modal-sm="'edit-project'" class="mr-1 my-1" variant="dark" size="sm" @click.prevent="onEditProject(row.item)">Edit</b-button>
+                        <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id, paramId)">Delete</b-button>
+                </template>
                 </b-table>
             </div>
             <b-col>
@@ -147,10 +155,12 @@
                         { key: 'name', sortable: true },
                         { key: 'position', sortable: true },
                         { key: 'purpose', sortable: true },
+                        { key: 'date', sortable: true },
                         { key: 'name_of_hardware', sortable: true },
                         { key: 'address', sortable: true },
                         { key: 'contact', sortable: true },
-                        { key: 'show_details', sortable: true }
+                        { key: 'show_details', sortable: true },
+                        { key: 'actions'}
                     ],
                     filter: null,
                     rows: 1,
@@ -206,6 +216,33 @@
                     filteredItems.length,
                 );
             },
+            onEditProject(item) {
+                this.$router.push(`/post/${this.$route.params.id}/${item.id}`);
+            },
+            onDeleteProject(postId, projectId) {
+                console.log(postId, projectId)
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: 'You want to delete this record?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        this.$query('deletePost', {
+                            postId: parseInt(postId),
+                        }).then(() => {
+                            this.$swal({
+                                title: 'Success',
+                                text: 'Post has been deleted',
+                                icon: 'success'
+                            });
+
+                            this.onCreated();
+                        });
+                    }
+                });
+            }
         }
     }
 </script>

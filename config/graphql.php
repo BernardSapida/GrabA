@@ -101,11 +101,15 @@ return [
                 'getMember' => App\GraphQL\Queries\MemberQuery::class,
                 'getProjects' => App\GraphQL\Queries\ProjectQuery::class,
                 'getPosts' => App\GraphQL\Queries\PostQuery::class,
+                'getEditPost' => App\GraphQL\Queries\EditPostQuery::class,
+                'deletePost' => App\GraphQL\Queries\DeletePostQuery::class,
             ],
             'mutation' => [
                 'savePost' => App\GraphQL\Mutations\PostMutation::class,
                 'savePostImage' => App\GraphQL\Mutations\PostImageMutation::class,
                 'saveProject' => App\GraphQL\Mutations\ProjectMutation::class,
+                'saveEditPost' => App\GraphQL\Mutations\EditPostMutation::class,
+                'saveEditPostImage' =>  App\GraphQL\Mutations\EditPostImageMutation::class,
             ],
 
             // Laravel HTTP middleware
@@ -133,7 +137,7 @@ return [
         // ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,
         //types
-        'Upload' => \Rebing\GraphQL\Support\UploadType::class,
+        \Rebing\GraphQL\Support\UploadType::class,
         'ResponseFrontType' => App\GraphQL\Types\ResponseFrontType::class,
         'MemberType' => App\GraphQL\Types\MemberType::class,
         'ProjectType' => App\GraphQL\Types\ProjectType::class,

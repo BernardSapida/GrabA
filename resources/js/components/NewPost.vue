@@ -9,10 +9,6 @@
                         <div class="mr-3">
                             <img src="/images/default.jpg" class="rounded-circle" alt="User profile" height="70" width="70">
                         </div>
-                        <div class="ms-3">
-                            <p class="m-0"><strong>Nickerson Torres</strong></p>
-                            <p class="m-0"><strong>Site Engineer</strong></p>
-                        </div>
                     </div>
                     <div>
                         <b-button 
@@ -159,10 +155,11 @@
                     id="add_post_image"
                     ref="image"
                     type="file" 
+                    multiple
                     @change="onHandleUpload($event)">
-                    <span class="whiz-form-error">{{image_error}}</span>
+ 
                 </div>
-
+                <span class="text-danger mt-2">{{image_error}}</span>
                 <div class="d-flex bg-red justify-content-end">
                     <b-button 
                         class="btn" 
@@ -217,6 +214,26 @@
             }
         },
         methods: {
+            onValidate(){ 
+                this.fullname != "" ? (this.fullname_error = "", this.fullname_state = null) :( this.fullname_error =  "Fullname is required", this.fullname_state = false);
+                this.position != "" ? (this.position_error = "",  this.position_state = null) : (this.position_error =  "Position is required", this.position_state = false);
+                this.hardware != "" ? (this.hardware_error = "", this.hardware_state = null) : (this.hardware_error =  "Hardware is required", this.hardware_state = false);
+                this.contact != "" ? (this.contact_error = "" ,  this.contact_state = null) :( this.contact_error =  "Contact is required", this.contact_state = false);
+                this.address != "" ? (this.address_error = "", this.address_state = null) : (this.address_error =  "Address is required", this.address_state = false);
+                this.purpose != "" ? (this.purpose_error = "", this.purpose_state = null) : (this.purpose_error =  "Purpose is required", this.purpose_state = false);
+                this.materialsList.length > 0 ? this.materials_error = "" : (this.materials_error =  "List of materials are required" , this.materialsDOM_state = false);
+                this.image !== "" ? this.image_error ="" : this.image_error = "Image is required";
+
+                let result = !this.fullname_error && 
+                        !this.position_error && 
+                        !this.hardware_error && 
+                        !this.contact_error && 
+                        !this.address_error && 
+                        !this.purpose_error && 
+                        !this.materials_error;
+
+                return result;
+            }, 
             onClearFields() {
                 this.materialsDOM = [];
                 this.name = '';
@@ -309,13 +326,10 @@
                         </button>
                     </td>`);
             },
-            test() {
-                console.log("TEST");
-            },
             submitPostForm(e) {
                 this.onClearErrors();
                 this.getMaterialList(e.target)
-                if(this.image) {
+                if (this.onValidate()) {
                     this.$query('savePost', {
                         post: {
                             id: '0',
@@ -374,15 +388,14 @@
                                     icon: 'success'
                                 });
                                 this.$query('savePostImage', {
-                                    image: this.image
+                                    image: this.image,
+                                    postId: parseInt(response.id)
                                 }).then (res => {
-                                    console.log(res)
+                                    // console.log(res)
                                 })
                             }
                         }
                     });
-                } else {
-                    this.image_error = "Please upload a file"
                 }
                 
             },
@@ -412,10 +425,11 @@
                         tempObj = {};
                     }
                 }
+
                 this.materialsList = JSON.stringify(this.materialsList);
             },
             onHandleUpload() {
-                 this.image = this.$refs.image.files[0];
+                 this.image = this.$refs.image.files;
             }
         }
     }

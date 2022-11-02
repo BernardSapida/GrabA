@@ -25,12 +25,15 @@ class Helper extends Eloquent
         }
         return $new_id;
     }
-    public function uploadImage($image, $id, $model) {
-        if($image) {
-            $path =  'uploads/'.$model.'/'.$id.'/';
-            $original_name = Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)).'.'.$image->getClientOriginalExtension();
-            $image->move('public/'.$path, $original_name);
-            $final_path = $original_name;
+    public function uploadImage($images, $id, $model) {
+        if($images) {
+            $final_path = [];
+            foreach($images as $image) {
+                $path =  'uploads/'.$model.'/'.$id.'/';
+                $original_name = Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)).'.'.$image->getClientOriginalExtension();
+                $image->move('public/'.$path, $original_name);
+                array_push($final_path, $original_name);
+            }
         } else {
             $final_path = "";
         }

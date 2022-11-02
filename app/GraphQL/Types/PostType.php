@@ -3,6 +3,7 @@ namespace App\GraphQL\Types;
 use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
+use GraphQL\Type\Definition\CustomScalarType;
 
 class PostType extends GraphQLType
 {
@@ -55,6 +56,19 @@ class PostType extends GraphQLType
             ],
             'imageName' => [
                 'type' => Type::string(),
+            ],
+            'name' => [
+                'type' => Type::string(),
+                'alias' => 'name',
+            ],
+            'images' => [  
+                'type' => new CustomScalarType([
+                    'name' => 'images',
+                    'serialize' => function($value) {
+                        return unserialize($value);
+                    } 
+                ]),
+               'alias' => 'images',      
             ],
         ];
     }

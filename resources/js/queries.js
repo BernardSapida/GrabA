@@ -19,11 +19,12 @@ let queries = {
     savePost: `mutation savePost($post: PostInput) {
         savePost(post: $post) {
             error,
-            message
+            message,
+            id
         }
     }`,
-    savePostImage: `mutation savePostImage($image: Upload) {
-        savePostImage(image: $image) {
+    savePostImage: `mutation savePostImage($image: [Upload!], $postId: Int) {
+        savePostImage(image: $image, postId: $postId) {
             error,
             message
         }
@@ -42,7 +43,10 @@ let queries = {
             address,
             contact
             created_at,
-            imageName
+            imageName,
+            name,
+            position,
+            images
             project {
                 id,
                 name
@@ -72,13 +76,58 @@ let queries = {
             error,
             message
         }
+    }`,
+    getEditPost: `query getEditPost($postId: Int, $projectId: Int) {
+        getEditPost(postId: $postId, projectId: $projectId) {
+            id,
+            materials,
+            purpose,
+            fullname,
+            address,
+            contact
+            created_at,
+            imageName,
+            images
+            name,
+            position
+            project {
+                id,
+                name
+                fullname
+                position
+                member {
+                    id,
+                    firstname,
+                    lastname,
+                    position
+                }
+            }
+        }
+    }`,
+    saveEditPost: `mutation saveEditPost($post: PostInput) {
+        saveEditPost(post: $post) {
+            error,
+            message
+        }
+    }`,
+    deletePost: `query deletePost($postId: Int, $projectId: Int) {
+        deletePost(postId: $postId, projectId: $projectId) {
+            error,
+            message
+        }
+    }`,
+    saveEditPostImage:`mutation saveEditPostImage($image: [Upload!], $postId: Int) {
+        saveEditPostImage(image: $image, postId: $postId) {
+            error,
+            message
+        }
     }`
         
 };
 
-let memberQueries = ['getMember', 'getProjects', 'getPosts', 'saveProject', 'savePost', 'savePostImage'];
+let memberQueries = ['getMember', 'getProjects', 'getPosts', 'saveProject', 'savePost', 'savePostImage', 'getEditPost', 'saveEditPost', 'deletePost', 'saveEditPostImage'];
 
-let uploadQueries = ['savePostImage']
+let uploadQueries = ['savePostImage', 'saveEditPostImage']
 
 function getApiUrl(queryName) {
     let segment = '';
@@ -101,16 +150,23 @@ Vue.prototype.$query = function (queryName, queryVariables) {
         token = store.state.member_api_token;
         let bodyFormData = new FormData();
 
+        let objects = Object.values(queryVariables.image)
+
         bodyFormData.set('operations', JSON.stringify({
             'query': queries[queryName],
-            'variables': {"attachment": queryVariables.image}
+            'variables': queryVariables
         }));
-
         bodyFormData.set('operationName', null);
-        bodyFormData.set('map', JSON.stringify({"file":["variables.image"]}));
-        bodyFormData.append('file', queryVariables.image);
-        bodyFormData.append('data', JSON.stringify(queryVariables.post));
+ 
+        
+        
+        // bodyFormData.set('map', JSON.stringify(queryVariables.image));
 
+        for (let i = 0; i<objects.length; i++){
+            bodyFormData.append('file[]', objects[i]);
+            // bodyFormData.append('file', objects[i]);
+            bodyFormData.append('map', JSON.stringify({"file":[`variables.image.${[i]}`]}));
+        }
 
         const uploadUrl = '/graphql/member';
         return axios.post(uploadUrl, bodyFormData, {

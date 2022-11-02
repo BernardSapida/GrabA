@@ -2,6 +2,7 @@ import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Post from './components/NewPost';
+import EditPost from './components/EditPost';
 import Projects from './components/Projects';
 import Analytics from './components/Analytics';
 import PageNotFound from './components/PageNotFound';
@@ -29,6 +30,12 @@ export default [
         path: '/post/:id',
         name: 'post',
         component: Post,
+        meta: { memberAuth: true },
+    },
+    {
+        path: '/post/:id/:postId',
+        name: 'post',
+        component: EditPost,
         meta: { memberAuth: true },
     },
     {

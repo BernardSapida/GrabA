@@ -16,7 +16,8 @@ class PostImageMutation extends Mutation
     public function args(): array
     {
         return [
-            'image' => ['type' => GraphQL::type('Upload')],
+            'postId' => ['type' => Type::int()],
+            'image' => ['type' => GraphQL::type('[Upload!]')],
         ];
     }
 
@@ -28,7 +29,7 @@ class PostImageMutation extends Mutation
     protected function rules(array $args = []): array
     {
         $rules = [];
-        $rules['image'] = ['image', 'max:10240'];
+        $rules['image'] = ['max:10240'];
         return $rules;
     }
 
@@ -44,12 +45,15 @@ class PostImageMutation extends Mutation
     {
         $helper = new Helper();
         $postModel = new Post();
-
-        $image = $args['image'];
-        $folderId = $postModel->checkLatestModelID('0');
+        $count = count($args['image']);
+        $postId = $args['postId'];
+        $images = array_filter($args['image']);
+        $image = $images[$count - 1];
+       
         $profile = "member/image";
-        $profile_name = $helper->uploadImage($image, $folderId - 1, $profile);
-        $response_obj = $postModel->saveImagePost($profile_name, $folderId);
+        $profile_name = $helper->uploadImage($image, $postId, $profile);
+       
+        $response_obj = $postModel->saveImagePost($profile_name, $postId);
 
         return $response_obj;
     }

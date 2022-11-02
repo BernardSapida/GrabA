@@ -22,6 +22,9 @@ class ResponseFrontType extends GraphQLType
             ],
             'token' => [
                 'type' => Type::string(),
+            ],
+            'id' => [
+                'type' => Type::string(),
             ]
         ];
     }
