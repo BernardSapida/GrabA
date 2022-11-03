@@ -19,9 +19,10 @@
                     <p class="fs-3 m-0"><strong>Php {{ formatToMoney(computed_cost) }}</strong></p>
                 </div>
                 <div class="col-4">
-                    <p class="text-primary text-end m-0">Out of <strong>Php {{ formatToMoney(capitalBudget) }}</strong></p>
-                    <b-progress :value="computed_cost" :max="capitalBudget"></b-progress>
-                    <p>Percentage: {{ costProgress }}%</p>
+                    <p class="text-primary text-end m-0" :class="{ 'text-danger': costProgress > 100, 'text-primary': costProgress <= 100 }">Out of <strong>Php {{ formatToMoney(capitalBudget) }}</strong></p>
+                    <b-progress v-if="computed_cost <= capitalBudget" variant="primary" :value="computed_cost" :max="capitalBudget"></b-progress>
+                    <b-progress v-else variant="danger" :value="computed_cost" :max="capitalBudget"></b-progress>
+                    <p>Progress: <strong :class="{ 'text-danger': costProgress > 100, 'text-primary': costProgress <= 100 }">{{ costProgress > 100 ? "Overflow" : costProgress + " %"}}</strong></p>
                 </div>
             </div>
             <hr>
@@ -63,15 +64,14 @@
         computed: {
             computed_cost() {
                 let materialCost = 0;
-                this.items.forEach(item => materialCost += item.cost);
+                this.items.forEach(item => materialCost += item.cost * item.quantity);
                 return materialCost;
             },
             costProgress() {
                 let materialCost = 0;
-                this.items.forEach(item => materialCost += item.cost);
+                this.items.forEach(item => materialCost += item.cost * item.quantity);
                 return Math.floor(materialCost/this.capitalBudget*100);
             }
-            
         },
         created() {
             this.paramId = this.$route.params.id.toString();
