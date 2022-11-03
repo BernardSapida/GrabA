@@ -52,28 +52,38 @@
                     <template #cell(position)="row">
                         {{ row.item.position }}
                     </template>
-                    <template #cell(purpose)="row">
-                        {{ row.item.purpose }}
-                    </template>
-                    <template #cell(date)="row">
-                        {{ formatDate(row.item.created_at) }}
-                    </template>
-                    <template #cell(name_of_hardware)="row">
-                        {{ row.item.fullname }}
-                    </template>
-                    <template #cell(address)="row">
-                        {{ row.item.address }}
-                    </template>
-                    <template #cell(contact)="row">
-                        {{ row.item.contact }}
-                    </template>
+                    
                     <template #cell(show_details)="row">
                         <b-button size="sm" class="mr-2" @click="row.toggleDetails"> Show</b-button>
                     </template>
                     <template #row-details="row">
                         <b-card>
                             <b-row class="mb-2">
-                                <b-col sm="3"><b>Items:</b></b-col>
+                                <b-col sm="3" class="mb-2"><b>Other infromation:</b></b-col>
+                                <div class="table-responsive mb-3">
+                                    <div class="table-responsive">
+                                        <b-table striped responsive hover :items="[row.item]" :fields="newfield">
+                                            <template #cell(purpose)="row">
+                                                {{ row.item.purpose }}
+                                            </template>
+                                            <template #cell(date)="row">
+                                                {{ formatDate(row.item.created_at) }}
+                                            </template>
+                                            <template #cell(name_of_hardware)="row">
+                                                {{ row.item.fullname }}
+                                            </template>
+                                            <template #cell(address)="row">
+                                                {{ row.item.address }}
+                                            </template>
+                                            <template #cell(contact)="row">
+                                                {{ row.item.contact }}
+                                            </template>
+                                        </b-table>
+                                    </div>
+                                </div>
+                            </b-row>
+                            <b-row class="mb-2">
+                                <b-col sm="3"><b>Materials:</b></b-col>
                                 <div class="table-responsive mb-3">
                                     <div class="table-responsive">
                                         <b-table striped responsive hover :items="row.item.materials" :fields="fields"></b-table>
@@ -144,6 +154,13 @@
             return {
                 filter: null,
                 fields: [],
+                newfield: [
+                    { key: 'purpose', sortable: true },
+                    { key: 'date', sortable: true },
+                    { key: 'name_of_hardware', sortable: true },
+                    { key: 'address', sortable: true },
+                    { key: 'contact', sortable: true },
+                ],
                 table_options: {
                     isBusy: true,
                     sortBy: 'title',
@@ -154,11 +171,7 @@
                     fields: [
                         { key: 'name', sortable: true },
                         { key: 'position', sortable: true },
-                        { key: 'purpose', sortable: true },
-                        { key: 'date', sortable: true },
-                        { key: 'name_of_hardware', sortable: true },
-                        { key: 'address', sortable: true },
-                        { key: 'contact', sortable: true },
+                       
                         { key: 'show_details', sortable: true },
                         { key: 'actions'}
                     ],

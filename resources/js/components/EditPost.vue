@@ -175,7 +175,7 @@
                 </b-carousel>
                 <div class="d-flex bg-red justify-content-end">
                     <b-button 
-                        class="btn" 
+                        class="btn mt-2" 
                         variant="primary" 
                         type="submit"
                     >
