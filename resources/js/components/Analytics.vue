@@ -55,7 +55,7 @@
                     },
                     {
                         key: 'unit',
-                        sortable: true,
+                        sortable: true
                     },
                     {
                         key: 'cost',
@@ -68,12 +68,12 @@
         computed: {
             computed_cost() {
                 let materialCost = 0;
-                this.items.forEach(item => materialCost += (item.cost * item.quantity));
+                this.items.forEach(item => materialCost += item.cost);
                 return materialCost;
             },
             costProgress() {
                 let materialCost = 0;
-                this.items.forEach(item => materialCost += item.cost * item.quantity);
+                this.items.forEach(item => materialCost += item.cost);
                 return Math.floor(materialCost/this.capitalBudget*100);
             }
         },
@@ -118,6 +118,7 @@
             setTableValues(object){
                 let cacheObj = {};
 
+
                 object.filter(post => {
                     let materialsArr = post.materials;
 
@@ -127,18 +128,18 @@
 
                         if(Object.prototype.hasOwnProperty.call(cacheObj, materialObj[itemName])) {
                             cacheObj[materialObj[itemName]]['quantity'] += +materialObj['quantity'];
-                            cacheObj[materialObj[itemName]]['cost'] += (+materialObj['amount'] * +materialObj['quantity']);
+                            cacheObj[materialObj[itemName]]['cost'] += (+materialObj['amount']);
                         } else {
                             cacheObj[materialObj[itemName]] = {
                                 'name': materialObj[itemName],
                                 'unit': materialObj['unit'],
-                                'cost': +materialObj['unit'] * +materialObj['quantity'],
+                                'cost': +materialObj['amount'],
                                 'quantity': +materialObj['quantity']
                             };
                         }
                     }
                 })
-                
+
                 this.items = Object.values(cacheObj);
             },
             getProjects() {
