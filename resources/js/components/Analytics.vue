@@ -123,11 +123,11 @@
 
                         if(Object.prototype.hasOwnProperty.call(cacheObj, materialObj[itemName])) {
                             cacheObj[materialObj[itemName]]['quantity'] += +materialObj['quantity'];
-                            cacheObj[materialObj[itemName]]['cost'] += (+materialObj['amount'] * +materialObj['quantity']);
+                            cacheObj[materialObj[itemName]]['cost'] += (+materialObj['amount']);
                         } else {
                             cacheObj[materialObj[itemName]] = {
                                 'name': materialObj[itemName],
-                                'cost': +materialObj['amount'] * +materialObj['quantity'],
+                                'cost': +materialObj['amount'],
                                 'quantity': +materialObj['quantity']
                             };
                         }
