@@ -54,6 +54,10 @@
                         sortable: true
                     },
                     {
+                        key: 'unit',
+                        sortable: true,
+                    },
+                    {
                         key: 'cost',
                         sortable: true,
                     }
@@ -64,7 +68,7 @@
         computed: {
             computed_cost() {
                 let materialCost = 0;
-                this.items.forEach(item => materialCost += item.cost * item.quantity);
+                this.items.forEach(item => materialCost += (item.cost * item.quantity));
                 return materialCost;
             },
             costProgress() {
@@ -127,7 +131,8 @@
                         } else {
                             cacheObj[materialObj[itemName]] = {
                                 'name': materialObj[itemName],
-                                'cost': +materialObj['amount'] * +materialObj['quantity'],
+                                'unit': materialObj['unit'],
+                                'cost': +materialObj['unit'] * +materialObj['quantity'],
                                 'quantity': +materialObj['quantity']
                             };
                         }

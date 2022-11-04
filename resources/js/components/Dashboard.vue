@@ -52,7 +52,9 @@
                     <template #cell(position)="row">
                         {{ row.item.position }}
                     </template>
-                    
+                    <template #cell(date)="row">
+                        {{ formatDate(row.item.created_at) }}
+                    </template>
                     <template #cell(show_details)="row">
                         <b-button size="sm" class="mr-2" @click="row.toggleDetails"> Show</b-button>
                     </template>
@@ -65,9 +67,6 @@
                                         <b-table striped responsive hover :items="[row.item]" :fields="newfield">
                                             <template #cell(purpose)="row">
                                                 {{ row.item.purpose }}
-                                            </template>
-                                            <template #cell(date)="row">
-                                                {{ formatDate(row.item.created_at) }}
                                             </template>
                                             <template #cell(name_of_hardware)="row">
                                                 {{ row.item.fullname }}
@@ -86,7 +85,20 @@
                                 <b-col sm="3"><b>Materials:</b></b-col>
                                 <div class="table-responsive mb-3">
                                     <div class="table-responsive">
-                                        <b-table striped responsive hover :items="row.item.materials" :fields="fields"></b-table>
+                                        <b-table striped responsive hover :items="row.item.materials" :fields="fields">
+                                             <template #cell(item)="row">
+                                                {{ row.item.item }}
+                                            </template>
+                                             <template #cell(quantity)="row">
+                                                {{ row.item.quantity }}
+                                            </template>
+                                             <template #cell(unit)="row">
+                                                {{ row.item.unit }}
+                                            </template>
+                                             <template #cell(amount)="row">
+                                                {{ row.item.amount }}
+                                            </template>
+                                        </b-table>
                                     </div>
                                 </div>
                             </b-row>
@@ -153,10 +165,14 @@
         data() {
             return {
                 filter: null,
-                fields: [],
+                fields: [
+                    { key: 'item', sortable: true },
+                    { key: 'quantity', sortable: true },
+                    { key: 'unit', sortable: true },
+                    { key: 'amount', sortable: true },
+                ],
                 newfield: [
                     { key: 'purpose', sortable: true },
-                    { key: 'date', sortable: true },
                     { key: 'name_of_hardware', sortable: true },
                     { key: 'address', sortable: true },
                     { key: 'contact', sortable: true },
@@ -171,7 +187,7 @@
                     fields: [
                         { key: 'name', sortable: true },
                         { key: 'position', sortable: true },
-                       
+                        { key: 'date', sortable: true },
                         { key: 'show_details', sortable: true },
                         { key: 'actions'}
                     ],
