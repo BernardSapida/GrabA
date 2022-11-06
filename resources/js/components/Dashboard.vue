@@ -92,8 +92,11 @@
                                              <template #cell(quantity)="row">
                                                 {{ row.item.quantity }}
                                             </template>
-                                             <template #cell(unit)="row">
+                                            <template #cell(unit)="row">
                                                 {{ row.item.unit }}
+                                            </template>
+                                             <template #cell(unit_cost)="row">
+                                                {{ row.item.unitCost }}
                                             </template>
                                              <template #cell(amount)="row">
                                                 {{ row.item.amount }}
@@ -168,7 +171,8 @@
                 fields: [
                     { key: 'item', sortable: true },
                     { key: 'quantity', sortable: true },
-                    { key: 'unit', sortable: true },
+                     { key: 'unit', sortable: true },
+                    { key: 'unit_cost', sortable: true },
                     { key: 'amount', sortable: true },
                 ],
                 newfield: [
@@ -215,7 +219,7 @@
                     postId: this.paramId
                 }).then((res) => {
                     if(res.data.errors != null) return this.$router.push({ name: '404'});
-
+                    console.log(res)
                     this.posts = res.data.data.getPosts.map((value) => {
                         let parsedMaterialArr = JSON.parse(value.materials);
                         value.materials = [];
@@ -249,7 +253,6 @@
                 this.$router.push(`/post/${this.$route.params.id}/${item.id}`);
             },
             onDeleteProject(postId, projectId) {
-                console.log(postId, projectId)
                 this.$swal({
                     title: 'Are you sure?',
                     text: 'You want to delete this record?',

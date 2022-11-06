@@ -22,7 +22,7 @@
                     <p class="text-primary text-end m-0" :class="{ 'text-danger': costProgress > 100, 'text-primary': costProgress <= 100 }">Out of <strong>Php {{ formatToMoney(capitalBudget) }}</strong></p>
                     <b-progress v-if="computed_cost <= capitalBudget" variant="primary" :value="computed_cost" :max="capitalBudget"></b-progress>
                     <b-progress v-else variant="danger" :value="computed_cost" :max="capitalBudget"></b-progress>
-                    <p>Progress: <strong :class="{ 'text-danger': costProgress > 100, 'text-primary': costProgress <= 100 }">{{ costProgress > 100 ? "Overflow" : costProgress + " %"}}</strong></p>
+                    <p>Progress: <strong :class="{ 'text-danger': costProgress > 100, 'text-primary': costProgress <= 100 }">{{ costProgress > 100 ? costProgress + " %" : costProgress + " %"}}</strong></p>
                 </div>
             </div>
             <hr>
