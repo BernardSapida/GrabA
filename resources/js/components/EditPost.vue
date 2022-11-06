@@ -7,7 +7,7 @@
                 <div class="d-flex mb-5 justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="mr-3">
-                            <img src="/images/default.jpg" class="rounded-circle" alt="User profile" height="70" width="70">
+                            <img src="/images/iconwithhat.png" class="rounded-circle" alt="User profile" height="70" width="70">
                         </div>
                     </div>
                     <div>
@@ -27,8 +27,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">Item</th>
-                                <th scope="col">Unit</th>
                                 <th scope="col">Quantity</th>
+                                 <th scope="col">Unit</th>
                                 <th scope="col">Unit Cost</th>
                                 <th scope="col">Amount</th>
                                 <th scope="col">Actions</th>
@@ -254,16 +254,6 @@
                     </td>
                     <td>
                         <input
-                            id="unit_${index}"
-                            name="unit_${index}"
-                            type="text"
-                            class="form-control"
-                            value="${Object.values(mat)[1]}"
-                            >
-                        </-input>
-                    </td>
-                    <td>
-                        <input
                             id="quantity_${index}"
                             name="quantity_${index}"
                             type="number"
@@ -272,6 +262,16 @@
                             onkeyup="document.getElementById('amount_${index}').value = this.value * document.getElementById('unitCost_${index}').value"
                             >
                         </input>
+                    </td>
+                    <td>
+                        <input
+                            id="unit_${index}"
+                            name="unit_${index}"
+                            type="text"
+                            class="form-control"
+                            value="${Object.values(mat)[1]}"
+                            >
+                        </-input>
                     </td>
                     <td>
                         <input
@@ -381,15 +381,6 @@
                     </td>
                     <td>
                         <input
-                            id="unit_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
-                            name="unit_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
-                            type="text"
-                            class="form-control"
-                            >
-                        </-input>
-                    </td>
-                    <td>
-                        <input
                             id="quantity_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
                             name="quantity_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
                             type="number"
@@ -397,6 +388,15 @@
                             onkeyup="document.getElementById('amount_${input_id + parseInt(JSON.parse(this.post.materials).length)}').value = this.value * document.getElementById('unitCost_${input_id + parseInt(JSON.parse(this.post.materials).length)}').value"
                             >
                         </input>
+                    </td>
+                    <td>
+                        <input
+                            id="unit_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
+                            name="unit_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
+                            type="text"
+                            class="form-control"
+                            >
+                        </-input>
                     </td>
                     <td>
                         <input

@@ -7,7 +7,7 @@
                 <div class="d-flex mb-5 justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="mr-3">
-                            <img src="/images/default.jpg" class="rounded-circle" alt="User profile" height="70" width="70">
+                            <img src="/images/iconwithhat.png" class="rounded-circle" alt="User profile" height="70" width="70">
                         </div>
                     </div>
                     <div>
@@ -27,8 +27,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">Item</th>
-                                <th scope="col">Unit</th>
                                 <th scope="col">Quantity</th>
+                                <th scope="col">Unit</th>
                                 <th scope="col">Unit Cost</th>
                                 <th scope="col">Amount</th>
                                 <th scope="col">Actions</th>
@@ -278,15 +278,6 @@
                     </td>
                     <td>
                         <input
-                            id="unit_${input_id}"
-                            name="unit_${input_id}"
-                            type="text"
-                            class="form-control"
-                            >
-                        </-input>
-                    </td>
-                    <td>
-                        <input
                             id="quantity_${input_id}"
                             name="quantity_${input_id}"
                             type="number"
@@ -294,6 +285,15 @@
                             onkeyup="document.getElementById('amount_${input_id}').value = this.value * document.getElementById('unitCost_${input_id}').value"
                             >
                         </input>
+                    </td>
+                    <td>
+                        <input
+                            id="unit_${input_id}"
+                            name="unit_${input_id}"
+                            type="text"
+                            class="form-control"
+                            >
+                        </-input>
                     </td>
                     <td>
                         <input
