@@ -8,8 +8,13 @@
                     <h2>Analytics</h2>
                     <p>Project name: {{ projectName }}</p>
                 </div>
-                <div>
-                    <router-link class="btn btn-dark" :to="{name: 'dashboard', params: { id: paramId }}">Go to dashboard</router-link>
+            </div>
+            <div class="row">
+                <div class="col-auto">
+                    <router-link class="btn btn-dark" :to="{name: 'projects'}">Go to Projects</router-link>
+                </div>
+                <div class="col-auto">
+                    <router-link class="btn btn-dark" :to="{name: 'dashboard', params: { id: paramId }}">Go to Dashboard</router-link>
                 </div>
             </div>
             <hr>

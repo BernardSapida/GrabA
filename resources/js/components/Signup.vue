@@ -19,26 +19,26 @@
                                         <div class="row">
                                             <b-form-group
                                                 class="col-md-6 col-sm-12 mb-3"
-                                                label="Firstname"
+                                                label="First Name"
                                                 label-for="firstname"
                                                 :state="state_firstname"
                                             >
-                                                <b-form-input id="firstname" v-model="firstname" :state="state_firstname" placeholder="Firstname" trim></b-form-input>
+                                                <b-form-input id="firstname" v-model="firstname" :state="state_firstname" placeholder="First Name" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_firstname }}</b-form-invalid-feedback>
                                             </b-form-group>
                                             <b-form-group
                                                 class="col-md-6 col-sm-12 mb-3"
-                                                label="Lastname"
+                                                label="Last Name"
                                                 label-for="lastname"
                                                 :state="state_lastname"
                                             >
-                                                <b-form-input id="lastname" v-model="lastname" :state="state_lastname" placeholder="Lastname" trim></b-form-input>
+                                                <b-form-input id="lastname" v-model="lastname" :state="state_lastname" placeholder="Last Mame" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_lastname }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
                                         <div class="mb-3">
                                             <b-form-group
-                                                label="Email address"
+                                                label="Email Address"
                                                 label-for="email"
                                                 :state="state_email"
                                             >
@@ -77,10 +77,39 @@
                                                 <b-form-invalid-feedback>{{ err_password_confirmation }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
+                                        <div class="row mb-3">
+                                            <div v-if="invalidFormat">
+                                                <div class="col-12">
+                                                    <span :class="pass_length ? 'text-success' : 'text-danger'">
+                                                        Longer than 7 characters
+                                                    </span>
+                                                </div>
+                                                <div class="col-12">
+                                                    <span :class="has_uppercase ? 'text-success' : 'text-danger'">
+                                                        Has a Capital Letter
+                                                    </span>
+                                                </div>
+                                                 <div class="col-12">
+                                                    <span :class="has_lowercase ? 'text-success' : 'text-danger'">
+                                                        Have Lowercase Letter
+                                                    </span>
+                                                </div>   
+                                                <div class="col-12">
+                                                    <span :class="has_number ? 'text-success' : 'text-danger'">
+                                                        Has a number
+                                                    </span>
+                                                </div>
+                                                <div class="col-12">
+                                                    <span :class="has_special ? 'text-success' : 'text-danger'">
+                                                        Has a special character
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="d-grid mb-3">
                                             <b-button type="submit" class="btn btn-dark">Create account</b-button>
                                         </div>
-                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Do you have an account? <router-link :to="{name: 'signin'}">Signin here</router-link></p>
+                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Do you have an account? <router-link :to="{name: 'signin'}">Sign In here</router-link></p>
                                     </b-form>
                                 </div>
                             </div>
@@ -118,6 +147,19 @@
                 err_password_confirmation: null,
             }
         },
+        watch: {
+            password() {
+                this.pass_length = this.onValidPassword(this.password).length;
+                this.has_number = this.onValidPassword(this.password).number;
+                this.has_lowercase = this.onValidPassword(this.password).lowercase;
+                this.has_uppercase = this.onValidPassword(this.password).uppercase;
+                this.has_special = this.onValidPassword(this.password).special;
+
+                if(this.pass_length && this.has_number && this.has_lowercase && this.has_uppercase && this.has_special) this.invalidFormat = false;
+                else if(!this.password) this.invalidFormat = false;
+                else this.invalidFormat = true;
+            }
+        }, 
         methods: {
             onClearFields() {
                 this.firstname = '';
@@ -200,7 +242,15 @@
                         }
                     }
                 });
-            }
+            },
+            onValidPassword: password => {
+                const length = password.length >= 8;
+                const number = /\d/.test(password);
+                const lowercase = /[a-z]/.test(password);
+                const uppercase = /[A-Z]/.test(password);
+                const special   = /[!@#\$%\^\&*\)\(+=._-]/.test(password);
+                return {length: length, number: number, lowercase: lowercase, uppercase: uppercase, special: special};
+            },
         }
     }
 </script>

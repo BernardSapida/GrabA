@@ -22,8 +22,11 @@
                         </b-input-group>
                     </b-form-group>
                 </div>
-                <div class="col-auto">
-                    <b-button router-link variant="dark" :to="{name: 'analytics', params: { id: paramId }}">Go to analytics</b-button>
+                <div class="col-auto mb-3">
+                    <b-button router-link variant="dark" :to="{name: 'projects'}">Go to Projects</b-button>
+                </div>
+                <div class="col-auto mb-3">
+                    <b-button router-link variant="dark" :to="{name: 'analytics', params: { id: paramId }}">Go to Analytics</b-button>
                 </div>
             </div>
             <div id="container_posts">

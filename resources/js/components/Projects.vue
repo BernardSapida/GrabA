@@ -14,7 +14,7 @@
                         class="btn" 
                         variant="primary" 
                         size="sm" >
-                        Add new project
+                        Add New Project
                     </b-button>
                 </div>
             </div>
@@ -23,7 +23,7 @@
 
             <!-- Table Search -->
             <b-form-group
-                label="Search project"
+                label="Search Project"
                 label-for="filter-input"
                 label-align-sm="left"
                 label-size="sm"
@@ -39,7 +39,7 @@
                   </b-input-group>
             </b-form-group>
             <!-- Project Table -->
-            <p>List of projects</p>
+            <p>List of Projects</p>
             <b-table
                 id="project"
                 responsive

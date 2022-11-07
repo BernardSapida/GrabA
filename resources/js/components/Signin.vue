@@ -55,7 +55,7 @@
                                         </div>
                                         <p class="account-registration mb-5">
                                             Don't have an account?
-                                            <router-link :to="{name: 'signup'}">Signup here</router-link>
+                                            <router-link :to="{name: 'signup'}">Sign Up here</router-link>
                                         </p>
                                     </b-form>
                                 </div>

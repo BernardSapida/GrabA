@@ -33,12 +33,13 @@ class ProjectMutation extends Mutation
         $rules['project.fullname'] = ['required'];
         $rules['project.position'] = ['required'];
         $rules['project.materialCost'] = ['required', 'numeric', 'min:0'];
-        if ($projectId == 0) {
-            $rules['project.projectName'] = ['required', 'unique:projects,name'];
-        } else {
-            $rules['project.projectName'] = ['required', 'unique:projects,name,' . $projectId . ',id',
-            ];
-        }
+        $rules['project.projectName'] = ['required'];
+        // if ($projectId == 0) {
+        //     $rules['project.projectName'] = ['required', 'unique:projects,name'];
+        // } else {
+        //     $rules['project.projectName'] = ['required', 'unique:projects,name,' . $projectId . ',id',
+        //     ];
+        // }
 
         return $rules;
     }
@@ -49,7 +50,7 @@ class ProjectMutation extends Mutation
             'project.projectName.required' => 'Project name is required',
             'project.fullname.required' => 'Full name is required',
             'project.position.required' => 'Position is required',
-            'project.projectName.unique' => 'Project name must be unique',
+            // 'project.projectName.unique' => 'Project name must be unique',
             'project.siteLocation.required' => 'Site location is required',
             'project.materialCost.required' => 'Material cost is required',
             'project.materialCost.numeric' => 'Material cost must be numeric',
