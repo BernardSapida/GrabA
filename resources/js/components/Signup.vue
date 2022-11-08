@@ -13,7 +13,8 @@
                                 <div id="app" class="card-body p-4 p-lg-5 text-black">
                                     <b-form novalidate @submit.prevent="submitSignupForm">
                                         <div class="d-flex align-items-center mb-3 pb-1">
-                                            <span class="h1 fw-bold mb-0">Grab.A</span>
+                                            <img src="images/GRABA_GRAY.png" alt="GRABA LOGO" width="130"/>
+                                            <!-- <h1 class="h1 fw-bold mb-0"><strong>GRABA</strong></h1> -->
                                         </div>
                                         <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create your account</h5>
                                         <div class="row">
