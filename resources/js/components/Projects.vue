@@ -44,7 +44,6 @@
                 id="project"
                 responsive
                 hover
-                stacked
                 :items="projects"
                 :filter="table_options.filter"
                 :fields="table_options.fields"
@@ -56,6 +55,9 @@
                 striped
                 show-empty
                 @filtered="onFiltered">
+                 <template #cell(person_in_charge)="row">
+                        {{ row.item.fullname }}
+                    </template>
                 <template #cell(views)="row">
                     <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="primary" size="sm" :to="{name: 'dashboard', params: { id: row.item.id }}">View Dashboard</b-button>
                     <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.item.id }}">View Analytics</b-button>
@@ -116,12 +118,11 @@
                     show: false,
                     pageOptions: [5, 10, 20, 50],
                     fields: [
-                        { key: 'purpose', sortable: true },
                         { key: 'name', sortable: true },
-                        { key: 'contact', sortable: true },
-                        { key: 'address', sortable: true },
+                        { key: 'location', sortable: true },
+                        { key: 'person_in_charge', sortable: true },
                         { key: 'position', sortable: true },
-                        { key: 'views', sortable: true },
+                        { key: 'views' },
                         { key: 'actions' },
                     ],
                     filter: null,
@@ -146,6 +147,7 @@
                 this.$query('getProjects').then((res) => {
                     this.table_options.isBusy = false;
                     this.projects = res.data.data.getProjects;
+                    console.log(this.projects)
                     this.table_options.rows = this.projects.length;
                 });
             },

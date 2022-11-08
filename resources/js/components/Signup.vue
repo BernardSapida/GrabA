@@ -52,7 +52,7 @@
                                                 label-for="jobPosition"
                                                 :state="state_jobPosition"
                                             >
-                                                <b-form-input id="jobPosition" v-model="jobPosition" :state="state_jobPosition" placeholder="Password" trim></b-form-input>
+                                                <b-form-input id="jobPosition" v-model="jobPosition" :state="state_jobPosition" placeholder="Job Position" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_jobPosition }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
@@ -238,7 +238,8 @@
                                 title: 'Success',
                                 text: response.message,
                                 icon: 'success'
-                            }).then(() => window.location.href = 'http://www.graba.test/');
+                            });
+                            this.$router.push({ name: 'signin' });
                         }
                     }
                 });
