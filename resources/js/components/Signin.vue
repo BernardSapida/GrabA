@@ -7,12 +7,13 @@
                     <div class="col col-xl-10">
                         <div class="row g-0 align-items-center">
                             <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="images/GRABA_LOGO.png" alt="signin form" class="img-fluid"/>
+                                <img src="images/GRABA_LOGO.png" alt="GRABA LOGO" class="img-fluid"/>
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
                                     <b-form @submit.prevent="onSubmitForm">
-                                        <h1 class="h1 fw-bold mb-0 mb-3">Grab.A</h1>
+                                        <img src="images/GRABA_GRAY.png" class="mb-3" alt="GRABA LOGO" width="130"/>
+                                        <!-- <h1 class="h1 fw-bold mb-0"><strong>GRABA</strong></h1> -->
                                         <h5 class="signin-label mb-3 pb-3" style="letter-spacing: 1px">Sign into your account</h5>
                                         <b-form-group>
                                             <b-form-input
@@ -61,6 +62,19 @@
                                 </div>
                             </div>
                         </div>
+                        <b-avatar v-b-modal.modal-scrollable badge badge-variant="dark" text="?" class="grabaInfo m-0 py-2 px-3"></b-avatar>
+                        
+                        <b-modal id="modal-scrollable" centered scrollable title="GRABA">
+                            <p class="my-4">
+                            "GRABA" is a user-friendly website that can be accessed online designed to provide a tracker 
+                            of construction matertials inventory utilized on-site. Regular users, contractors, managers, 
+                            and admins can use this website.<br/><br/>
+                            This website is a pilot testing for the undergraduate capstone in partial fulfillment for our 
+                            Bachelor of Science in Civil Engineering in Cavite State University - Main Campus, of the following...<br/><br/>
+                            Authors: Jennielle Ann P. Tafalla, Nickerson C. Torres.<br/>
+                            Developers: Enrique Tañada, Bernard Sapida.
+                            </p>
+                        </b-modal>
                     </div>
                 </div>
             </div>
@@ -134,3 +148,23 @@
         }
     }
 </script>
+
+<style lang="scss">
+    main {
+        position: relative;
+
+        section {
+            div.container {
+                div.row {
+                    div.col {
+                        .grabaInfo {
+                            position: fixed;
+                            bottom: 40px;
+                            right: 40px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+</style>
