@@ -64,16 +64,22 @@
                         </div>
                         <b-avatar v-b-modal.modal-scrollable badge badge-variant="dark" text="?" class="grabaInfo m-0 py-2 px-3"></b-avatar>
                         
-                        <b-modal id="modal-scrollable" centered scrollable title="GRABA">
-                            <p class="my-4">
+                        <b-modal id="modal-scrollable" ref="my-modal" centered scrollable hide-footer>
+                            <div slot="modal-title">
+                                <img src="images/GRABA_GRAY.png" alt="GRABA LOGO" width="130"/>
+                            </div>
+                            <p class="my-4 text-justify">
                             "GRABA" is a user-friendly website that can be accessed online designed to provide a tracker 
                             of construction matertials inventory utilized on-site. Regular users, contractors, managers, 
                             and admins can use this website.<br/><br/>
                             This website is a pilot testing for the undergraduate capstone in partial fulfillment for our 
                             Bachelor of Science in Civil Engineering in Cavite State University - Main Campus, of the following...<br/><br/>
                             Authors: Jennielle Ann P. Tafalla, Nickerson C. Torres.<br/>
-                            Developers: Enrique Tañada, Bernard Sapida.
+                            Developers: Enrique B. Tañada III, Bernard V. Sapida.
                             </p>
+                            <div class="col-md-12 text-right">
+                                <b-button class="mt-2 text-right" variant="primary" @click="toggleModal">Ok</b-button>
+                            </div>
                         </b-modal>
                     </div>
                 </div>
@@ -144,6 +150,9 @@
                         }
                     }
                 });
+            },
+            toggleModal() {
+                this.$refs['my-modal'].toggle('#toggle-btn')
             }
         }
     }

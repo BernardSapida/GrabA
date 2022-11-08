@@ -33,7 +33,7 @@
                                                 label-for="lastname"
                                                 :state="state_lastname"
                                             >
-                                                <b-form-input id="lastname" v-model="lastname" :state="state_lastname" placeholder="Last Mame" trim></b-form-input>
+                                                <b-form-input id="lastname" v-model="lastname" :state="state_lastname" placeholder="Last Name" trim></b-form-input>
                                                 <b-form-invalid-feedback>{{ err_lastname }}</b-form-invalid-feedback>
                                             </b-form-group>
                                         </div>
