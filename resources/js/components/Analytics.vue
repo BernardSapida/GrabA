@@ -6,7 +6,7 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h2 class="d-lg-none d-sm-block">Analytics</h2>
-                    <p>Project name: {{ projectName }}</p>
+                    <h2>Project name: {{ projectName }}</h2>
                 </div>
             </div>
             <b-row>
