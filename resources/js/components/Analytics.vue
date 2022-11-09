@@ -5,18 +5,18 @@
         <section class="container my-5">
             <div class="d-flex justify-content-between">
                 <div>
-                    <h2>Analytics</h2>
+                    <h2 class="d-lg-none d-sm-block">Analytics</h2>
                     <p>Project name: {{ projectName }}</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-auto">
-                    <router-link class="btn btn-dark" :to="{name: 'projects'}">Go to Projects</router-link>
-                </div>
-                <div class="col-auto">
-                    <router-link class="btn btn-dark" :to="{name: 'dashboard', params: { id: paramId }}">Go to Dashboard</router-link>
-                </div>
-            </div>
+            <b-row>
+                <b-col offset-md="8" align-self="end">
+                    <router-link class="btn btn-dark" :to="{name: 'projects'}"><b-icon icon="arrow-right"></b-icon> Go to Projects</router-link>
+                </b-col>
+                <b-col align-self="end">
+                    <router-link class="btn btn-dark" :to="{name: 'dashboard', params: { id: paramId }}"><b-icon icon="arrow-right"></b-icon> Go to Dashboard</router-link>
+                </b-col>
+            </b-row>
             <hr>
             <div class="row justify-content-between">
                 <div class="col-6">

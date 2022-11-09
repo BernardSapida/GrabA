@@ -4,17 +4,17 @@
         <Navigation />
         <section class="container my-5">
             <!-- Button for add project modal -->
-            <div class="row justify-content-between">
-                <div class="col-auto">
+            <div class="row">
+                <div class="col-auto d-lg-none d-sm-block">
                     <h2 class="mb-2">Projects</h2>
                 </div>
-                <div class="col-auto">
+                <div class="offset-md-10 px-0">
                     <b-button 
                         v-b-modal.modal-sm="'add-project'" 
                         class="btn" 
                         variant="primary" 
                         size="sm" >
-                        Add New Project
+                        <b-icon icon="plus"></b-icon> Add New Project
                     </b-button>
                 </div>
             </div>
@@ -59,12 +59,12 @@
                         {{ row.item.fullname }}
                     </template>
                 <template #cell(views)="row">
-                    <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="primary" size="sm" :to="{name: 'dashboard', params: { id: row.item.id }}">View Dashboard</b-button>
-                    <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.item.id }}">View Analytics</b-button>
+                    <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="primary" size="sm" :to="{name: 'dashboard', params: { id: row.item.id }}"><b-icon icon="arrow-up-circle-fill"></b-icon> View Dashboard</b-button>
+                    <b-button router-link class="mr-1 my-1" href="javascript:void(0);" variant="success" size="sm" :to="{name: 'analytics', params: { id: row.item.id }}"><b-icon icon="file-bar-graph-fill"></b-icon> View Analytics</b-button>
                 </template>
                 <template #cell(actions)="row">
-                    <b-button v-b-modal.modal-sm="'edit-project'" class="mr-1 my-1" variant="dark" size="sm" @click.prevent="onEditProject(row.item)">Edit</b-button>
-                    <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id)">Delete</b-button>
+                    <b-button v-b-modal.modal-sm="'edit-project'" class="mr-1 my-1" variant="dark" size="sm" @click.prevent="onEditProject(row.item)"><b-icon icon="pencil-square"></b-icon> Edit</b-button>
+                    <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id)"><b-icon icon="trash-fill"></b-icon> Delete</b-button>
                 </template>
             </b-table>
             <b-col>

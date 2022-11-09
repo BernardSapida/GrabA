@@ -16,7 +16,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import { BootstrapVue, IconsPlugin, BootstrapVueIcons} from 'bootstrap-vue';
 import VueSweetalert2 from 'vue-sweetalert2';
 import Multiselect from 'vue-multiselect';
 
@@ -26,6 +26,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueSweetalert2);
 Vue.use(VueAppend);
+Vue.use(BootstrapVueIcons)
 
 Vue.component('Multiselect', Multiselect);
 

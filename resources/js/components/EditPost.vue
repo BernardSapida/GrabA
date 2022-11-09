@@ -239,7 +239,6 @@
                 this.address = p.address;
                 this.purpose = p.purpose;
                 this.images = p.images;
-
                 JSON.parse(p.materials).map((mat, index) => {
                     this.materialsDOM.push(`
                     <td>
@@ -258,7 +257,7 @@
                             name="quantity_${index}"
                             type="number"
                             class="form-control"
-                            value="${Object.values(mat)[2]}"
+                            value="${Object.values(mat)[1]}"
                             onkeyup="document.getElementById('amount_${index}').value = this.value * document.getElementById('unitCost_${index}').value"
                             >
                         </input>
@@ -269,7 +268,7 @@
                             name="unit_${index}"
                             type="text"
                             class="form-control"
-                            value="${Object.values(mat)[1]}"
+                            value="${Object.values(mat)[2]}"
                             >
                         </-input>
                     </td>

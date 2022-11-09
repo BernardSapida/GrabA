@@ -4,8 +4,8 @@
         <Navigation />
         <section class="container my-5">
             <b-button id="btn-newPost" class="rounded-circle" router-link :to="{name: 'post'}" variant="primary">+</b-button>
-            <div class="row justify-content-between g-2">
-                <div class="col-auto">
+            <b-row class=" mb-3">
+                <div class="col-3">
                     <b-form-group
                         label-for="filter-input"
                         label-align-sm="right"
@@ -22,13 +22,14 @@
                         </b-input-group>
                     </b-form-group>
                 </div>
-                <div class="col-auto mb-3">
-                    <b-button router-link variant="dark" :to="{name: 'projects'}">Go to Projects</b-button>
-                </div>
-                <div class="col-auto mb-3">
-                    <b-button router-link variant="dark" :to="{name: 'analytics', params: { id: paramId }}">Go to Analytics</b-button>
-                </div>
-            </div>
+                
+                <b-col offset-md="5" align-self="end">
+                    <router-link class="btn btn-dark" :to="{name: 'projects'}"><b-icon icon="arrow-right"></b-icon> Go to Projects</router-link>
+                </b-col>
+                <b-col align-self="end">
+                    <router-link class="btn btn-dark" :to="{name: 'analytics', params: { id: paramId }}"><b-icon icon="arrow-right"></b-icon> Go to Analytics</router-link>
+                </b-col>
+                </b-row>
             <div id="container_posts">
                 <b-table 
                     id="project"
@@ -128,8 +129,8 @@
                         </b-card>
                     </template>
                     <template #cell(actions)="row">
-                        <b-button v-b-modal.modal-sm="'edit-project'" class="mr-1 my-1" variant="dark" size="sm" @click.prevent="onEditProject(row.item)">Edit</b-button>
-                        <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id, paramId)">Delete</b-button>
+                        <b-button v-b-modal.modal-sm="'edit-project'" class="mr-1 my-1" variant="dark" size="sm" @click.prevent="onEditProject(row.item)"><b-icon icon="pencil-square"></b-icon> Edit</b-button>
+                        <b-button class="mr-1 my-1" variant="danger" size="sm"  @click="onDeleteProject(row.item.id, paramId)"><b-icon icon="trash-fill"></b-icon> Delete</b-button>
                 </template>
                 </b-table>
             </div>
