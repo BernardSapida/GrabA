@@ -1,11 +1,30 @@
 // Body
 $body-bg: #f8fafc;
+$gray: #676767;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    'gray': $gray,
+  ),
+  $theme-colors
+);
+
 .modal-backdrop, .modal-backdrop.fade.in{
     opacity: 0.1;
+}
+
+.links {
+  color: white !important;
+  font-size: 28px;
+  letter-spacing: 3px;
+}
+
+.graba {
+  padding-left: 200px !important;
 }
