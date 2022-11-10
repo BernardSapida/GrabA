@@ -4,32 +4,35 @@
         <Navigation />
         <section class="container my-5">
             <b-button id="btn-newPost" class="rounded-circle" router-link :to="{name: 'post'}" variant="primary">+</b-button>
-            <b-row class=" mb-3">
-                <div class="col-3">
-                    <b-form-group
-                        label-for="filter-input"
-                        label-align-sm="right"
-                        label-size="sm"
-                        class="mb-3"
-                    >
-                        <b-input-group size="sm">
-                            <b-form-input
-                            id="filter-input"
-                            v-model="table_options.filter"
-                            type="search"
-                            placeholder="Search post"
-                            ></b-form-input>
-                        </b-input-group>
-                    </b-form-group>
+            <b-row class="d-flex align-items-center justify-content-between mb-3 px-3">
+                <b-form-group
+                    label-for="filter-input"
+                    label-align-sm="right"
+                    label-size="sm"
+                    class="mb-3"
+                >
+                    <b-input-group size="md">
+                        <b-form-input
+                        id="filter-input"
+                        v-model="table_options.filter"
+                        type="search"
+                        placeholder="Search post"
+                        ></b-form-input>
+                    </b-input-group>
+                </b-form-group>
+                <div class="d-flex align-items-center justify-content-between">
+                    <b-col class="m-0 p-0" style="width: 130px;">
+                        <router-link class="btn btn-dark m-0" style="width: 135px;" :to="{name: 'projects'}">
+                            <b-icon icon="arrow-right"></b-icon> Go to Projects
+                        </router-link>
+                    </b-col>
+                    <b-col class="m-0 p-0" style="width: 180px;">
+                        <router-link class="btn btn-dark m-0" style="width: 165px;" :to="{name: 'analytics', params: { id: paramId }}">
+                            <b-icon icon="arrow-right"></b-icon> Go to Analytics
+                        </router-link>
+                    </b-col>
                 </div>
-                
-                <b-col offset-md="5" align-self="end">
-                    <router-link class="btn btn-dark" :to="{name: 'projects'}"><b-icon icon="arrow-right"></b-icon> Go to Projects</router-link>
-                </b-col>
-                <b-col align-self="end">
-                    <router-link class="btn btn-dark" :to="{name: 'analytics', params: { id: paramId }}"><b-icon icon="arrow-right"></b-icon> Go to Analytics</router-link>
-                </b-col>
-                </b-row>
+            </b-row>
             <div id="container_posts">
                 <b-table 
                     id="project"
@@ -193,7 +196,7 @@
                     show: false,
                     pageOptions: [5, 10, 20, 50],
                     fields: [
-                        { key: 'name', sortable: true },
+                        { key: 'fullname', sortable: true },
                         { key: 'position', sortable: true },
                         { key: 'date', sortable: true },
                         { key: 'show_details', sortable: true },
@@ -223,7 +226,6 @@
                     postId: this.paramId
                 }).then((res) => {
                     if(res.data.errors != null) return this.$router.push({ name: '404'});
-                    console.log(res)
                     this.posts = res.data.data.getPosts.map((value) => {
                         let parsedMaterialArr = JSON.parse(value.materials);
                         value.materials = [];
@@ -241,6 +243,7 @@
                         return value;
                     });
                     this.table_options.rows = this.posts.length;
+                    console.log(this.posts);
                 });
             },
             onFiltered(filteredItems) {
@@ -256,7 +259,7 @@
             onEditProject(item) {
                 this.$router.push(`/post/${this.$route.params.id}/${item.id}`);
             },
-            onDeleteProject(postId, projectId) {
+            onDeleteProject(postId) {
                 this.$swal({
                     title: 'Are you sure?',
                     text: 'You want to delete this record?',

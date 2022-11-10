@@ -8,18 +8,18 @@
 
            
             <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav class="me-auto d-none d-sm-block">
-                    <div v-if="(this.$route.name == 'projects')">
-                        <router-link class="links" :to="{name: 'projects'}">PROJECTS</router-link>
+                <b-navbar-nav class="me-auto d-none d-lg-flex align-items-center">
+                    <div v-if="($route.name == 'projects')">
+                        <p class="text-white m-0" style="font-size: 24px;"><strong>PROJECTS</strong></p>
                     </div>
-                     <div v-if="(this.$route.name == 'analytics')">
-                        <router-link class="links" :to="{name: 'analytics'}">ANALYTICS</router-link>
+                     <div v-if="($route.name == 'analytics')">
+                        <p class="text-white m-0" style="font-size: 24px;"><strong>ANALYTICS</strong></p>
                     </div>
-                     <div v-if="(this.$route.name == 'dashboard')">
-                        <router-link class="links" :to="{name: 'dashboard'}">DASHBOARD</router-link>
+                     <div v-if="($route.name == 'dashboard')">
+                        <p class="text-white m-0" style="font-size: 24px;"><strong>DASHBOARD</strong></p>
                     </div>
                 </b-navbar-nav>
-                <b-navbar-nav class="graba mx-auto d-none d-sm-block">
+                <b-navbar-nav class="graba mx-auto d-none d-lg-block">
                     <b-navbar-brand href="#">
                     <img src="/images/white.png" width="120">
                     </b-navbar-brand>

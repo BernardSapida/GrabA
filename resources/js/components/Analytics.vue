@@ -3,20 +3,17 @@
     <div id="app">
         <Navigation />
         <section class="container my-5">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h2 class="d-lg-none d-sm-block">Analytics</h2>
-                    <h2>Project name: {{ projectName }}</h2>
-                </div>
+            <div class="d-flex justify-content-between align-items-center" style="flex-wrap: wrap; gap: 15px;">
+                <p class="m-0 p-0" style="font-size: 24px">Project Name: <strong>{{ projectName }}</strong></p>
+                <b-row class="d-flex align-items-center justify-content-between">
+                    <b-col class="m-0 p-0" style="width: 130px;">
+                        <router-link class="btn btn-dark m-0" style="width: 135px;" :to="{name: 'projects'}"><b-icon icon="arrow-right"></b-icon> Go to Projects</router-link>
+                    </b-col>
+                    <b-col class="m-0 p-0" style="width: 180px;">
+                        <router-link class="btn btn-dark m-0" style="width: 165px;" :to="{name: 'dashboard', params: { id: paramId }}"><b-icon icon="arrow-right"></b-icon> Go to Dashboard</router-link>
+                    </b-col>
+                </b-row>
             </div>
-            <b-row>
-                <b-col offset-md="8" align-self="end">
-                    <router-link class="btn btn-dark" :to="{name: 'projects'}"><b-icon icon="arrow-right"></b-icon> Go to Projects</router-link>
-                </b-col>
-                <b-col align-self="end">
-                    <router-link class="btn btn-dark" :to="{name: 'dashboard', params: { id: paramId }}"><b-icon icon="arrow-right"></b-icon> Go to Dashboard</router-link>
-                </b-col>
-            </b-row>
             <hr>
             <div class="row justify-content-between">
                 <div class="col-6">
