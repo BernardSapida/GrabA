@@ -3,9 +3,9 @@
     <div id="app">
         <Navigation />
         <section class="container my-5">
-            <div class="d-flex justify-content-between align-items-center" style="flex-wrap: wrap; gap: 15px;">
+            <div class="d-flex justify-content-between align-items-center px-3" style="flex-wrap: wrap; gap: 15px;">
                 <p class="m-0 p-0" style="font-size: 24px">Project Name: <strong>{{ projectName }}</strong></p>
-                <b-row class="d-flex align-items-center justify-content-between">
+                <b-row class="d-flex align-items-center justify-content-between" style="gap: 10px;">
                     <b-col class="m-0 p-0" style="width: 130px;">
                         <router-link class="btn btn-dark m-0" style="width: 135px;" :to="{name: 'projects'}"><b-icon icon="arrow-right"></b-icon> Go to Projects</router-link>
                     </b-col>
@@ -15,12 +15,12 @@
                 </b-row>
             </div>
             <hr>
-            <div class="row justify-content-between">
-                <div class="col-6">
+            <div class="d-flex justify-content-between align-items-center px-3" style="flex-wrap: wrap; gap: 15px;">
+                <div style="width: 100%; max-width: 250px;">
                     <p class="m-0 text-muted"><strong>MATERIAL COST ATM</strong></p>
                     <p class="fs-3 m-0"><strong>Php {{ formatToMoney(computed_cost) }}</strong></p>
                 </div>
-                <div class="col-4">
+                <div style="width: 100%; min-width: 250px; max-width: 350px;">
                     <p class="text-primary text-end m-0" :class="{ 'text-danger': costProgress > 100, 'text-primary': costProgress <= 100 }">Out of <strong>Php {{ formatToMoney(capitalBudget) }}</strong></p>
                     <b-progress v-if="computed_cost <= capitalBudget" variant="primary" :value="computed_cost" :max="capitalBudget"></b-progress>
                     <b-progress v-else variant="danger" :value="computed_cost" :max="capitalBudget"></b-progress>
