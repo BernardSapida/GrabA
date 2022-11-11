@@ -88,7 +88,7 @@
         },
         methods: {
             formatToMoney(n) {
-                return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return n.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
             onCreated() {
                 this.$query('getPosts', {

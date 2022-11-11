@@ -28,7 +28,7 @@ class Project extends Model
     {
         $member = new Member();
         $user_id = $member->getLoggedInMember()->id;
-        return self::where('user_id', $user_id)->get();
+        return self::where('user_id', $user_id)->orderBy('id', 'DESC')->get();
     }
 
     public function saveProject($args)

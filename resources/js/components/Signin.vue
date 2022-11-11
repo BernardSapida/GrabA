@@ -12,7 +12,12 @@
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
                                     <b-form @submit.prevent="onSubmitForm">
-                                        <img src="images/GRABA_GRAY.png" class="mb-3" alt="GRABA LOGO" width="130"/>
+                                        <div class="d-none d-md-block">
+                                            <img src="images/GRABA_GRAY.png" class="mb-3" alt="GRABA LOGO" width="130"/>
+                                        </div>
+                                        <div class="d-md-none d-sm-block">
+                                            <img src="images/GRABA_LOGO.png" class="mb-3" alt="GRABA LOGO" width="200"/>
+                                        </div>
                                         <!-- <h1 class="h1 fw-bold mb-0"><strong>GRABA</strong></h1> -->
                                         <h5 class="signin-label mb-3 pb-3" style="letter-spacing: 1px">Sign into your account</h5>
                                         <b-form-group>
@@ -27,15 +32,31 @@
                                             <b-form-invalid-feedback>{{ email_error }}</b-form-invalid-feedback>
                                         </b-form-group>
                                         <b-form-group>
-                                             <b-form-input
-                                                v-model="password"
-                                                type="password"
-                                                class="form-control form-control-lg"
-                                                placeholder="Enter Password"
-                                                autocomplete="off"
-                                                :state="password_state">
-                                            </b-form-input>
-                                            <b-form-invalid-feedback>{{ password_error }}</b-form-invalid-feedback>
+                                            <b-input-group>
+                                                <b-form-input 
+                                                    v-if="showPassword" 
+                                                    id="password" 
+                                                    v-model="password" 
+                                                    type="text" 
+                                                    :state="password_state" 
+                                                    placeholder="Enter Password" 
+                                                    autocomplete="off" 
+                                                    class="form-control form-control-lg">
+                                                </b-form-input>
+                                                <b-form-input  
+                                                    v-else 
+                                                    id="password" 
+                                                    v-model="password" 
+                                                    type="password" 
+                                                    :state="password_state" 
+                                                    placeholder="Enter Password" 
+                                                    class="form-control form-control-lg">
+                                                    </b-form-input>
+                                                <b-input-group-append>
+                                                    <b-button @click="toggleShow"> <b-icon icon="eye"></b-icon></b-button>
+                                                </b-input-group-append>
+                                                <b-form-invalid-feedback>{{ password_error }}</b-form-invalid-feedback>
+                                            </b-input-group>
                                         </b-form-group>
                                         <div class="d-grid pt-1 mb-3">
                                             <b-form-group>
@@ -107,10 +128,14 @@
                 email_state: null,
                 password_state: null,
 
-                isSaving: false
+                isSaving: false,
+                showPassword: false
             }
         },
         methods: {
+            toggleShow() {
+                this.showPassword = !this.showPassword;
+            },
             onClearErrors() {
                 this.email_error = '';
                 this.password_error = '';

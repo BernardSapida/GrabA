@@ -150,7 +150,6 @@
                 this.$query('getProjects').then((res) => {
                     this.table_options.isBusy = false;
                     this.projects = res.data.data.getProjects;
-                    console.log(this.projects)
                     this.table_options.rows = this.projects.length;
                 });
             },

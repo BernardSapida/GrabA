@@ -28,7 +28,7 @@
                     label-for="add_materialCost"
                     :state="state_materialCost"
                 >
-                    <b-form-input id="add_materialCost" v-model="materialCost" :state="state_materialCost" trim></b-form-input>
+                    <b-form-input id="add_materialCost" v-model="materialCost" :state="state_materialCost" trim type="number" step="0.01"></b-form-input>
                     <b-form-invalid-feedback>{{ err_materialCost }}</b-form-invalid-feedback>
                 </b-form-group>
                                 <b-form-group

@@ -13,7 +13,12 @@
                                 <div id="app" class="card-body p-4 p-lg-5 text-black">
                                     <b-form novalidate @submit.prevent="submitSignupForm">
                                         <div class="d-flex align-items-center mb-3 pb-1">
-                                            <img src="images/GRABA_GRAY.png" alt="GRABA LOGO" width="130"/>
+                                            <div class="d-none d-md-block">
+                                                <img src="images/GRABA_GRAY.png" class="mb-3" alt="GRABA LOGO" width="130"/>
+                                            </div>
+                                            <div class="d-md-none d-sm-block">
+                                                <img src="images/GRABA_LOGO.png" class="mb-3" alt="GRABA LOGO" width="200"/>
+                                            </div>
                                             <!-- <h1 class="h1 fw-bold mb-0"><strong>GRABA</strong></h1> -->
                                         </div>
                                         <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create your account</h5>
@@ -64,8 +69,15 @@
                                                 label-for="password"
                                                 :state="state_password"
                                             >
-                                                <b-form-input id="password" v-model="password" type="password" :state="state_password" placeholder="Password" trim></b-form-input>
-                                                <b-form-invalid-feedback>{{ err_password }}</b-form-invalid-feedback>
+                                                <b-input-group>
+                                                    <b-form-input  v-if="showPassword" id="password" v-model="password" type="text" :state="state_password" placeholder="Password" trim></b-form-input>
+                                                    <b-form-input  v-else id="password" v-model="password" type="password" :state="state_password" placeholder="Password" trim></b-form-input>
+                                                    <b-input-group-append>
+                                                        <b-button @click="toggleShow"> <b-icon icon="eye"></b-icon></b-button>
+                                                    </b-input-group-append>
+                                                    <b-form-invalid-feedback>{{ err_password }}</b-form-invalid-feedback>
+                                                </b-input-group>
+                                                
                                             </b-form-group>
 
                                             <b-form-group
@@ -74,8 +86,14 @@
                                                 label-for="password_confirmation"
                                                 :state="state_password_confirmation"
                                             >
-                                                <b-form-input id="password_confirmation" v-model="password_confirmation" type="password" :state="state_password_confirmation" placeholder="Confirm password" trim></b-form-input>
+                                                <b-input-group>
+                                                    <b-form-input  v-if="showConfirmPassword" id="password_confirmation" v-model="password_confirmation" type="text" :state="state_password_confirmation" placeholder="Confirm password" trim></b-form-input>
+                                                    <b-form-input  v-else id="password_confirmation" v-model="password_confirmation" type="password" :state="state_password_confirmation" placeholder="Confirm password" trim></b-form-input>
+                                                    <b-input-group-append>
+                                                        <b-button @click="toggleShowConfirm"> <b-icon icon="eye"></b-icon></b-button>
+                                                    </b-input-group-append>
                                                 <b-form-invalid-feedback>{{ err_password_confirmation }}</b-form-invalid-feedback>
+                                                </b-input-group>
                                             </b-form-group>
                                         </div>
                                         <div class="row mb-3">
@@ -119,17 +137,11 @@
                 </div>
             </div>
         </section>
-        <Footer />
     </main>
 </template>
 
 <script>
-    import Footer from './Footer';
-
     export default {
-        components: {
-            Footer
-        },
         data() {
             return {
                 firstname: "",
@@ -152,6 +164,9 @@
                 err_jobPosition: null,
                 err_password: null,
                 err_password_confirmation: null,
+
+                showPassword: false,
+                showConfirmPassword: false
             }
         },
         watch: {
@@ -168,6 +183,12 @@
             }
         }, 
         methods: {
+            toggleShow() {
+                this.showPassword = !this.showPassword;
+            },
+            toggleShowConfirm() {
+                this.showConfirmPassword = !this.showConfirmPassword;
+            },
             onClearFields() {
                 this.firstname = '';
                 this.lastname = '';
