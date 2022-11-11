@@ -2,7 +2,7 @@
 <template>
     <div>
         <Navigation />
-        <section class="container my-5">
+        <section class="container my-5" style="min-height: 650px;">
             <!-- Button for add project modal -->
             <div class="row">
                 <div class="col-auto d-lg-none d-sm-block">

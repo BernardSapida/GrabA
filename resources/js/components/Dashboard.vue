@@ -2,7 +2,7 @@
 <template>
     <div class="dashboard_container">
         <Navigation />
-        <section class="container my-5">
+        <section class="container my-5" style="min-height: 650px;">
             <b-button id="btn-newPost" class="rounded-circle" router-link :to="{name: 'post'}" variant="primary">+</b-button>
             <b-row class="d-flex align-items-center justify-content-between mb-3 px-3">
                 <b-form-group

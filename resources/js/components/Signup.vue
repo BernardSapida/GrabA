@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <main>
-        <section>
-            <div class="container py-5">
+        <section class="h-100">
+            <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col col-xl-10">
                         <div class="row">

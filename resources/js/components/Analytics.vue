@@ -2,7 +2,7 @@
 <template>
     <div id="app">
         <Navigation />
-        <section class="container my-5">
+        <section class="container my-5" style="min-height: 650px;">
             <div class="d-flex justify-content-between align-items-center px-3" style="flex-wrap: wrap; gap: 15px;">
                 <p class="m-0 p-0" style="font-size: 24px">Project Name: <strong>{{ projectName }}</strong></p>
                 <b-row class="d-flex align-items-center justify-content-between" style="gap: 10px;">

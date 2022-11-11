@@ -3,7 +3,7 @@
     <footer class="text-white">
         <div class="main-footer p-3">
             <div>
-                <img src="images/GRABA_LOGO.png" alt="GRABA LOGO"/>
+                <img src="/images/GRABA_LOGO.png" alt="GRABA LOGO"/>
                 <p>GRABA is designed to provide a tracker of<br>construction materials inventory utilized on-site.</p>
             </div>
             <div>
