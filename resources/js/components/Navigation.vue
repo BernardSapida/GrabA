@@ -33,31 +33,31 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            member: '',
-        };
-    },
-    created() {
-        this.onCheckMemberLoggedIn();
-    },
-    methods: {
-        onLogout() {
-            this.$store.commit('resetState');
-            this.$appEvents.$emit('member-logout');
-            this.$router.push({ name: 'signin' });
+    export default {
+        data() {
+            return {
+                member: '',
+            };
         },
-        onCheckMemberLoggedIn() {
-            if (this.$store.state.member_api_token) {
-                this.$query('getMember').then((res) => {
-                    this.member = res.data.data.getMember;
-                });
-                return true;
-            } else {
-                return false;
-            }
+        created() {
+            this.onCheckMemberLoggedIn();
         },
-    }
-};
+        methods: {
+            onLogout() {
+                this.$store.commit('resetState');
+                this.$appEvents.$emit('member-logout');
+                this.$router.push({ name: 'signin' });
+            },
+            onCheckMemberLoggedIn() {
+                if (this.$store.state.member_api_token) {
+                    this.$query('getMember').then((res) => {
+                        this.member = res.data.data.getMember;
+                    });
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+        }
+    };
 </script>

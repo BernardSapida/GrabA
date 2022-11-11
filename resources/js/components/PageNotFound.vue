@@ -6,12 +6,16 @@
             <div class="line-breaker"></div>
             <p class="label">The page you requested was not found</p>
         </div>
+        <Footer />
     </div>
 </template>
 
 <script>
+    import Footer from './Footer';
     export default {
-        
+        components: {
+            Footer
+        },
     }
 </script>
 

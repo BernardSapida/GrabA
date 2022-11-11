@@ -85,11 +85,17 @@
                 </div>
             </div>
         </section>
+        <Footer />
     </main>
 </template>
 
 <script>
+    import Footer from './Footer';
+
     export default {
+        components: {
+            Footer
+        },
         data() {
             return {
                 email: "",
@@ -158,7 +164,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     main {
         position: relative;
 

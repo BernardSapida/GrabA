@@ -171,15 +171,18 @@
                 </div>
             </b-form>
         </div>
+        <Footer />
     </section>
 </template>
 
 <script>
     import Navigation from './Navigation';
+    import Footer from './Footer';
 
     export default {
         components: {
-            Navigation
+            Navigation,
+            Footer
         },
         data() {
             return {

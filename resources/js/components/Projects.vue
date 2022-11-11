@@ -94,6 +94,7 @@
         </section>
         <AddProject @success="onSuccess"/>
         <EditProject :project="project" @success="onSuccess"/>
+        <Footer />
     </div>
 </template>
 
@@ -101,12 +102,14 @@
     import Navigation from './Navigation';
     import AddProject from './Projects/AddProject';
     import EditProject from './Projects/EditProject';
+    import Footer from './Footer';
 
     export default {
         components: {
             Navigation,
             AddProject,
-            EditProject
+            EditProject,
+            Footer
         },
         data() {
             return {

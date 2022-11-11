@@ -32,15 +32,18 @@
                 <b-table striped responsive hover :items="items" :fields="fields"></b-table>
             </div>
         </section>
+        <Footer />
     </div>
 </template>
 
 <script>
     import Navigation from './Navigation';
+    import Footer from './Footer';
 
     export default {
         components: {
-            Navigation
+            Navigation,
+            Footer
         },
         data() {
             return {
