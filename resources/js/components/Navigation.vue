@@ -3,7 +3,17 @@
     <div>
         <b-navbar class="px-3" toggleable="lg" type="dark" variant="gray">
             <b-navbar-brand href="#"><img src="/images/GRABA_G.png" width="40"></b-navbar-brand>
-
+            <div class="d-md-none d-sm-block">
+                <div v-if="($route.name == 'projects')">
+                    <p class="text-white m-0" style="font-size: 24px;"><strong>PROJECTS</strong></p>
+                </div>
+                    <div v-if="($route.name == 'analytics')">
+                    <p class="text-white m-0" style="font-size: 24px;"><strong>ANALYTICS</strong></p>
+                </div>
+                    <div v-if="($route.name == 'dashboard')">
+                    <p class="text-white m-0" style="font-size: 24px;"><strong>DASHBOARD</strong></p>
+                </div>
+            </div>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
            

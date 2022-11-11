@@ -199,7 +199,7 @@
                     show: false,
                     pageOptions: [5, 10, 20, 50],
                     fields: [
-                        { key: 'fullname', sortable: true },
+                        { key: 'name', sortable: true },
                         { key: 'position', sortable: true },
                         { key: 'date', sortable: true },
                         { key: 'show_details', sortable: true },

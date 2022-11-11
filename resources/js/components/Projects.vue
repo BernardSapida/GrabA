@@ -5,10 +5,7 @@
         <section class="container my-5" style="min-height: 650px;">
             <!-- Button for add project modal -->
             <div class="row">
-                <div class="col-auto d-lg-none d-sm-block">
-                    <h2 class="mb-2">Projects</h2>
-                </div>
-                <div class="offset-md-10 px-0">
+                <div class="offset-md-10 px-2">
                     <b-button 
                         v-b-modal.modal-sm="'add-project'" 
                         class="btn" 
