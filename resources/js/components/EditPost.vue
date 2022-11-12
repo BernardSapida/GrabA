@@ -386,6 +386,7 @@
                             id="quantity_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
                             name="quantity_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
                             type="number"
+                            step="0.01"
                             class="form-control"
                             onkeyup="document.getElementById('amount_${input_id + parseInt(JSON.parse(this.post.materials).length)}').value = this.value * document.getElementById('unitCost_${input_id + parseInt(JSON.parse(this.post.materials).length)}').value"
                             >
@@ -405,6 +406,7 @@
                             id="unitCost_${input_id + parseInt(JSON.parse(this.post.materials).length) }"
                             name="unitCost_${input_id + parseInt(JSON.parse(this.post.materials).length)}"
                             type="number"
+                            step="0.01"
                             class="form-control"
                             onkeyup="document.getElementById('amount_${input_id + parseInt(JSON.parse(this.post.materials).length)}').value = this.value * document.getElementById('quantity_${input_id + parseInt(JSON.parse(this.post.materials).length)}').value"
                             >

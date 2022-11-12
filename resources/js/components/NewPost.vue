@@ -284,6 +284,7 @@
                             id="quantity_${input_id}"
                             name="quantity_${input_id}"
                             type="number"
+                            step="0.01"
                             class="form-control"
                             onkeyup="document.getElementById('amount_${input_id}').value = this.value * document.getElementById('unitCost_${input_id}').value"
                             >
@@ -303,6 +304,7 @@
                             id="unitCost_${input_id}"
                             name="unitCost_${input_id}"
                             type="number"
+                            step="0.01"
                             class="form-control"
                             onkeyup="document.getElementById('amount_${input_id}').value = this.value * document.getElementById('quantity_${input_id}').value"
                             >
@@ -313,6 +315,7 @@
                             id="amount_${input_id}"
                             name="amount_${input_id}"
                             type="number"
+                            step="0.01"
                             class="form-control"
                             style="pointer-events: none;"
                             value="0"
